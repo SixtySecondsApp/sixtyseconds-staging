@@ -1,0 +1,2633 @@
+/* ══════════════════════════════════════════════════════════════
+   SIXTY SECONDS — concept 5.1 shared design system
+   Extracted from concept-4-machine.html (design winner) and
+   concept-5-outcomes.html (accent-spectrum + frame components).
+   Loaded by every page in /5-1/.
+   ══════════════════════════════════════════════════════════════ */
+
+@font-face{font-family:'Cabinet';src:url('../fonts/CabinetGrotesk-700.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Cabinet';src:url('../fonts/CabinetGrotesk-800.woff2') format('woff2');font-weight:800;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/Inter-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/Inter-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/Inter-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/Inter-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+
+:root{
+  --bg:6 10 20; --s1:16 24 40; --s2:22 33 53; --s3:30 44 68;
+  --violet:139 92 246; --violet-br:172 143 252; --violet-end:145 89 219;
+  --teal:61 171 184; --teal-br:104 220 234;
+  --emerald:52 211 153; --emerald-br:120 236 194; --emerald-strong:16 185 129;
+  --amber:245 176 78; --amber-br:250 205 130;
+  --ink:245 247 251; --body:200 210 226; --muted:143 156 180;
+  /* --faint was 96 111 140, which measured 3.91:1 on --bg. Its only two text
+     uses are both 13px (.card-idx step numbers, .comp-caption source note), so
+     it needed the 4.5:1 small-text minimum, not the 3:1 large-text one. Now
+     4.78:1. Its other uses are decorative dots, unaffected. */
+  --faint:110 125 155;
+  --line:38 50 70; --line-br:70 86 112;
+  --r1:18px; --r2:28px; --r3:40px; --r4:54px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --maxw:1240px;
+  /* outcome accent spectrum — teal → violet, one step per outcome */
+  --a1:61 171 184; --a2:74 158 194; --a3:87 145 205; --a4:100 132 215;
+  --a5:113 118 225; --a6:126 105 236; --a7:139 92 246;
+  /* brightened text-safe variants of the same 7-step ramp, interpolated between
+     --teal-br and --violet-br rather than --teal/--violet. The raw a1..a7 steps
+     read fine as backgrounds/borders/glows (generous opacity + large fill area)
+     but measured 3.54–4.25:1 as literal small text at the violet end (a5–a7) —
+     these -br variants are for text/icon-stroke colour only. */
+  --a1-br:104 220 234; --a2-br:115 207 237; --a3-br:127 194 240; --a4-br:138 182 243;
+  --a5-br:149 169 246; --a6-br:161 156 249; --a7-br:172 143 252;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto;overflow-x:hidden;max-width:100%}
+body{
+  background:rgb(var(--bg));color:rgb(var(--ink));
+  font-family:'Inter',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;max-width:100%;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;position:relative;z-index:1}
+/* per-section ambient orbs — supplement the fixed #field trio with a couple
+   more, scrolling with the page, seated behind specific "centrepiece"
+   sections (chooser grid, engine strip, loop-list) called out as reading
+   flat/empty. Sits behind .wrap's z-index:1 automatically. */
+.sec-orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.sec-orb-v{background:rgb(var(--violet)/.18)}
+/* 5.3 additions — emerald + warm(amber) section-identity variants, alongside
+   the existing -v/-t. Purely additive (new class names), used by index.html's
+   comparator (neutral→emerald as the wipe reveals the living side) and proof
+   strip (warm) section-identity glows. No existing rule touched. */
+.sec-orb-em{background:rgb(var(--emerald)/.20)}
+.sec-orb-warm{background:rgb(var(--amber)/.16)}
+.sec-orb-t{background:rgb(var(--teal)/.15)}
+h1,h2,h3{font-family:'Cabinet',sans-serif;font-weight:800;letter-spacing:-.03em;line-height:.95}
+.grad{background:linear-gradient(96deg,rgb(var(--teal-br)),rgb(var(--violet-br)) 62%,rgb(var(--violet)));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.kicker{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:rgb(var(--body))}
+.kicker:before{content:'';width:7px;height:7px;border-radius:2px;background:rgb(var(--emerald-br));box-shadow:0 0 12px rgb(var(--emerald)/.8);flex-shrink:0}
+svg{display:block}
+::selection{background:rgb(var(--violet)/.4);color:rgb(var(--ink))}
+
+/* ── ambient field ─────────────────────────────────────────── */
+#field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);will-change:transform}
+.o1{width:900px;height:900px;background:rgb(var(--violet)/.28);left:6%;top:-14%}
+.o2{width:700px;height:700px;background:rgb(var(--teal)/.20);right:-6%;top:32%}
+.o3{width:640px;height:640px;background:rgb(var(--violet-br)/.16);left:22%;top:78%}
+.grid-tex{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgb(var(--line)/.34) 1px,transparent 1px),
+                   linear-gradient(90deg,rgb(var(--line)/.34) 1px,transparent 1px);
+  background-size:88px 88px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000 10%,transparent 90%);
+          mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000 10%,transparent 90%)}
+html,body{overflow-x:clip}
+main{position:relative;z-index:1}
+
+/* ── nav ───────────────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:60;padding:20px 0;
+  transition:background .4s var(--ease),backdrop-filter .4s var(--ease),padding .4s var(--ease)}
+nav.stuck{background:rgb(var(--bg)/.86);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);padding:13px 0;
+  border-bottom:1px solid rgb(var(--line)/.7)}
+/* opening the mobile drawer at scroll-top (nav not yet .stuck) used to leave a
+   transparent nav row sitting directly above the drawer's own opaque panel —
+   a visible two-tone seam. Give nav the same solid backdrop whenever the
+   drawer is open, independent of scroll position. */
+nav.drawer-open{background:rgb(var(--bg)/.97);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+nav .inner{max-width:var(--maxw);margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+nav .brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
+nav img{height:26px;display:block}
+.navlinks{display:flex;align-items:center;gap:28px;list-style:none}
+.navlinks a,.navlinks .nd-toggle{color:rgb(var(--muted));text-decoration:none;font-size:14px;font-weight:500;transition:color .3s var(--ease)}
+.navlinks a:hover,.navlinks .nd-toggle:hover{color:rgb(var(--ink))}
+.navbtns{display:flex;gap:10px;align-items:center;flex-shrink:0}
+.navbtns .btn .short{display:none}
+.nav-toggle{display:none;align-items:center;justify-content:center;width:38px;height:38px;flex-shrink:0;
+  border-radius:10px;border:1px solid rgb(var(--line-br)/.6);background:rgb(var(--s1)/.7);
+  color:rgb(var(--ink));cursor:pointer;padding:0}
+.nav-drawer{display:none;flex-direction:column;max-width:var(--maxw);margin:0 auto;padding:6px 32px 18px;
+  background:rgb(var(--bg)/.97);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-bottom:1px solid rgb(var(--line)/.7)}
+.nav-drawer.open{display:flex}
+.nav-drawer a{color:rgb(var(--muted));text-decoration:none;font-size:15px;font-weight:600;
+  padding:13px 2px;border-bottom:1px solid rgb(var(--line)/.6);transition:color .3s var(--ease)}
+.nav-drawer a:last-child{border-bottom:0}
+.nav-drawer a:hover{color:rgb(var(--ink))}
+@media (max-width:860px){
+  .navlinks{display:none}
+  .nav-toggle{display:flex}
+}
+@media (max-width:480px){
+  .navbtns{gap:8px}
+  .navbtns .btn.small{padding:10px 14px;font-size:13px;gap:6px}
+  .navbtns .btn .full{display:none}
+  .navbtns .btn .short{display:inline}
+}
+
+.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid transparent;cursor:pointer;
+  font-family:'Cabinet';font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;
+  background:linear-gradient(135deg,rgb(var(--emerald-br)),rgb(var(--emerald-strong)));color:rgb(3,32,26);
+  box-shadow:0 8px 26px rgb(var(--emerald)/.32);text-decoration:none;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease);will-change:transform}
+.btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 16px 44px rgb(var(--emerald)/.5),0 0 70px rgb(var(--emerald)/.3)}
+.btn:focus-visible{outline:2px solid rgb(var(--emerald-br));outline-offset:3px}
+.btn.ghost{background:transparent;color:rgb(var(--ink));border:1px solid rgb(var(--line-br)/.8);box-shadow:none}
+.btn.ghost:hover{border-color:rgb(var(--violet-br)/.8);box-shadow:0 0 40px rgb(var(--violet)/.25)}
+.btn.ghost:focus-visible{outline:2px solid rgb(var(--violet-br))}
+.btn.big{font-size:17px;padding:17px 32px}
+.btn.small{padding:11px 22px;font-size:14px}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important;box-shadow:0 8px 26px rgb(var(--emerald)/.18)!important}
+
+/* ── section frame ─────────────────────────────────────────── */
+section{padding:100px 0;position:relative}
+.sec-head{max-width:22ch;margin-bottom:16px;font-size:clamp(32px,4.2vw,54px)}
+.sec-sub{font-size:18px;color:rgb(var(--muted));max-width:58ch;line-height:1.65;margin-bottom:20px}
+.sec-top{margin-bottom:40px;position:relative;z-index:0}
+/* soft radial glow seated behind every section heading — problem 2 (no
+   atmosphere): gives every kicker/h2 group a wash of the page's accent
+   colour (falls back to violet on pages with no --accent set) instead of
+   sitting on flat black. Negative z-index is contained by .sec-top's own
+   stacking context (position + explicit z-index:0 above), so it can never
+   drop behind #field/.grid-tex. */
+.sec-top:before{content:'';position:absolute;left:50%;top:-60px;transform:translateX(-50%);
+  width:min(640px,90vw);height:340px;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 60% 60% at 50% 30%,rgb(var(--accent,var(--violet))/.20),transparent 72%);
+  filter:blur(10px)}
+
+/* ── analytics payoff chip (Slack / CRM / watch-bar / retargeting) ── */
+.chip{display:inline-flex;align-items:flex-start;gap:13px;background:rgb(var(--s2)/.92);
+  border:1px solid rgb(var(--line-br)/.55);border-radius:18px;padding:16px 19px;
+  box-shadow:0 24px 60px rgb(0 0 0/.5);max-width:380px;width:100%;margin-top:20px;position:relative;z-index:4}
+.chip .ico{width:36px;height:36px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  background:rgb(var(--accent,var(--violet))/.16);border:1px solid rgb(var(--accent,var(--violet))/.42);color:rgb(var(--accent-br,var(--violet-br)))}
+.chip .ico svg{width:17px;height:17px}
+.chip .tx{min-width:0}
+/* direct-child combinator only — the kicker label (e.g. "COHORT PROGRESS") is a
+   direct <b> child of .tx, but bold segments inside the payoff sentence itself
+   (e.g. "<b>58 of 69</b> completed Module 1") are also <b> elements, nested one
+   level deeper inside .tx p. Without the ">" this rule caught both, forcing the
+   inline bold words onto their own uppercase 11px line and breaking the sentence. */
+.chip .tx > b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgb(var(--accent-br,var(--violet-br)));margin-bottom:4px}
+.chip .tx p{font-size:13.5px;line-height:1.5;color:rgb(var(--body))}
+.chip .tx p b{color:rgb(var(--ink));font-weight:700}
+.chip .tx p .arrow{color:rgb(var(--accent-br,var(--violet-br)));font-weight:700}
+.chip .bar{display:inline-block;height:5px;border-radius:99px;background:rgb(var(--s3));overflow:hidden;margin-top:8px;width:min(150px,100%);vertical-align:middle}
+/* explicit [hidden] override — the bare `.chip .bar` rule above still matched
+   (and re-forced display:inline-block) even when the run-panel JS set
+   barWrap.hidden=true, since `.chip .bar{display:inline-block}` doesn't check
+   [hidden] at all; only the more specific `.run-payoff-chip [data-run-payoff-bar]`
+   rule was scoped with :not([hidden]). A dead grey 0%-fill slab still rendered
+   under the payoff sentence on the 5 outcome pages whose default variant has no
+   bar value. This wins on specificity (class+attribute > class alone). */
+.chip .bar[hidden]{display:none}
+.chip .bar i{display:block;height:100%;border-radius:99px;background:rgb(var(--accent,var(--violet-br)))}
+.chip .live{width:6px;height:6px;border-radius:50%;background:rgb(var(--emerald-br));display:inline-block;
+  margin-right:6px;animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── styled placeholder "video moment" frames ────────────────── */
+.frame{position:relative;aspect-ratio:16/10;border-radius:var(--r3);overflow:hidden;
+  border:1px solid rgb(255 255 255/.14);
+  background:linear-gradient(150deg,rgb(var(--accent,var(--violet))/.55),rgb(var(--bg)) 78%);
+  box-shadow:0 40px 90px rgb(0 0 0/.55),0 0 90px rgb(var(--accent,var(--violet))/.16)}
+.frame:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgb(255 255 255/.10),transparent 44%)}
+.frame .fplay{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;
+  background:rgb(255 255 255/.95);display:flex;align-items:center;justify-content:center;z-index:3;
+  box-shadow:0 0 40px rgb(255 255 255/.3)}
+.frame .fplay:after{content:'';border-left:17px solid rgb(var(--bg));border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.frame .fcap{position:absolute;left:18px;bottom:16px;z-index:3;color:#fff;font-size:14px;font-weight:600;text-shadow:0 2px 10px rgb(0 0 0/.7)}
+.frame .fdur{position:absolute;top:16px;right:16px;z-index:3;font-size:11px;font-weight:700;letter-spacing:.06em;
+  color:#fff;background:rgb(0 0 0/.4);border:1px solid rgb(255 255 255/.22);padding:5px 11px;border-radius:999px}
+.frame .fchip{position:absolute;top:16px;left:16px;z-index:3;font-size:11px;font-weight:700;letter-spacing:.06em;
+  color:#fff;background:rgb(0 0 0/.4);border:1px solid rgb(255 255 255/.22);padding:5px 11px;border-radius:999px}
+
+.fov-browser{position:absolute;left:8%;top:9%;width:84%;height:60%;border-radius:12px;overflow:hidden;
+  background:rgb(10 14 24/.86);border:1px solid rgb(255 255 255/.16);z-index:2}
+.fov-browser .bar{height:22px;display:flex;align-items:center;gap:5px;padding:0 10px;border-bottom:1px solid rgb(255 255 255/.1)}
+.fov-browser .bar i{width:6px;height:6px;border-radius:50%;background:rgb(255 255 255/.3)}
+.fov-browser .bar span{margin-left:8px;font-size:9px;color:rgb(255 255 255/.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fov-browser .body{padding:10px 12px;display:flex;gap:6px;align-items:flex-end;height:calc(100% - 22px)}
+.fov-browser .tier{flex:1;border-radius:6px;background:rgb(255 255 255/.08);border:1px solid rgb(255 255 255/.14)}
+.fov-browser .tier.hi{background:rgb(var(--accent,var(--violet))/.35);border-color:rgb(var(--accent,var(--violet))/.7)}
+.fov-browser .sig{position:absolute;bottom:8px;left:12px;right:12px;height:1px;background:rgb(255 255 255/.25)}
+
+.fov-cal{position:absolute;left:16px;top:16px;z-index:3;background:rgb(0 0 0/.5);border:1px solid rgb(255 255 255/.22);
+  border-radius:12px;padding:8px 12px;text-align:center;line-height:1.2}
+.fov-cal .d1{font-size:10px;letter-spacing:.1em;color:rgb(255 255 255/.65);text-transform:uppercase}
+.fov-cal .d2{font-size:15px;font-weight:800;color:#fff;font-family:'Cabinet'}
+
+/* full month-grid backdrop behind the .fov-cal date badge — the badge alone
+   left ~85% of the frame empty (a lone 60×40px chip in a 533×333px frame).
+   Inset starts at 26% from the top so the grid's own top-left cells clear the
+   badge (badge bottom edge measures ~19% down) rather than sitting under it;
+   the centred .fplay disc simply paints over whichever cell lands behind it,
+   same layering already used by .fov-grid/.fov-browser elsewhere. */
+.fov-calgrid{position:absolute;inset:22% 8% 36px 8%;display:grid;grid-template-columns:repeat(7,1fr);gap:5px;z-index:2}
+.fov-calgrid i{border-radius:5px;background:rgb(255 255 255/.08);border:1px solid rgb(255 255 255/.14);aspect-ratio:1}
+.fov-calgrid i.hi{background:rgb(var(--accent,var(--violet))/.55);border-color:rgb(var(--accent,var(--violet))/.85);
+  box-shadow:0 0 14px rgb(var(--accent,var(--violet))/.5)}
+
+.fov-grid{position:absolute;inset:14% 14% 44px 14%;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;z-index:2}
+.fov-grid i{border-radius:6px;background:rgb(255 255 255/.14);border:1px solid rgb(255 255 255/.18)}
+
+.fov-card{position:absolute;left:10%;top:12%;width:80%;height:64%;border-radius:12px;background:rgb(255 255 255/.94);
+  z-index:2;padding:14px;color:rgb(20,24,34);display:flex;flex-direction:column;justify-content:space-between}
+.fov-card .grp{display:flex;flex-direction:column;gap:6px}
+.fov-card .top{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgb(100,105,120)}
+.fov-card .mid{font-family:'Cabinet';font-weight:800;font-size:15px;color:#141822}
+.fov-card .bot{height:5px;width:60%;border-radius:99px;background:rgb(var(--accent,var(--violet)))}
+.frame.card-frame .fplay{left:auto;top:auto;right:16px;bottom:16px;margin:0;width:44px;height:44px}
+.frame.card-frame .fplay:after{border-left-width:13px;border-top-width:8px;border-bottom-width:8px;margin-left:3px}
+@media (max-width:600px){.frame.card-frame .fdur{display:none}}
+
+.fov-deck{position:absolute;left:12%;top:16%;z-index:2;display:flex}
+.fov-deck i{width:56px;height:70px;border-radius:8px;background:rgb(255 255 255/.9);margin-left:-22px;
+  box-shadow:0 8px 20px rgb(0 0 0/.35);border:1px solid rgb(255 255 255/.4)}
+.fov-deck i:first-child{margin-left:0}
+
+/* real video moment inside a frame slot */
+/* PRD-07 §2 (24 Aug review): thumbnails get a soft drop shadow at 5-10%
+   and sit on a brand-coloured surface rather than bare page — here a
+   tinted mat ring in the section accent plus an 8% close shadow, so the
+   shell reads as lifted off a coloured paper. WHICH brand colour tints
+   the mat is Raph's open decision; the accent is the standing default. */
+.video-shell{position:relative;border-radius:var(--r3);overflow:hidden;
+  border:1px solid rgb(var(--line-br)/.6);
+  box-shadow:0 6px 18px rgb(0 0 0/.08),
+    0 0 0 10px rgb(var(--accent,var(--violet))/.10),
+    0 40px 90px rgb(0 0 0/.55),0 0 90px rgb(var(--accent,var(--violet))/.16)}
+.video-shell video{width:100%;display:block;background:rgb(var(--s1));aspect-ratio:16/9;object-fit:cover}
+/* 16/9, not 16/10. The renders are 1920x1080, so a 16:10 box with
+   object-fit:cover cropped ~10% of the width — which ate the film's own
+   burned-in "Example, not a customer" at bottom-left and its brand chip at
+   top-left. The marker that survives a screenshot has to survive the page. */
+.video-shell .real-badge{position:absolute;left:16px;top:16px;z-index:3;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgb(var(--emerald-br));background:rgb(var(--emerald)/.22);border:1px solid rgb(var(--emerald)/.5);border-radius:999px;padding:6px 12px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+
+/* ── footer ─────────────────────────────────────────────────── */
+footer{border-top:1px solid rgb(var(--line)/.7);padding:44px 0}
+.foot-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.foot-links{display:flex;gap:10px;flex-wrap:wrap}
+.foot-links a{font-size:14px;font-weight:600;color:rgb(var(--muted));text-decoration:none;padding:7px 14px;border-radius:999px;transition:color .3s var(--ease)}
+.foot-links a:hover{color:rgb(var(--ink));background:rgb(var(--s1))}
+footer img{height:22px;opacity:.75}
+.foot-legal{font-size:12.5px;color:rgb(var(--muted));margin-top:26px;text-align:center}
+
+/* ── reveal (IntersectionObserver-driven, no scroll-scrub) ─────
+   visibility is included (not just opacity) so interactive
+   descendants — outcome-chooser cards, CTA buttons — cannot be
+   Tab-focused while still invisible ahead of their reveal. */
+.rv{opacity:0;visibility:hidden;transform:translateY(30px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease),visibility 0s linear .8s}
+.rv.in{opacity:1;visibility:visible;transform:none;transition:opacity .8s var(--ease),transform .8s var(--ease),visibility 0s linear}
+
+/* ══════════════════════════════════════════════════════════════
+   OUTCOME PAGE COMPONENTS — hero, mechanism box, run panel,
+   loop-list board, other-outcomes switcher, mechanism strip
+   ══════════════════════════════════════════════════════════════ */
+
+/* outcome hero */
+#ohero{padding:150px 0 60px}
+/* tighten the run-panel and loop-list section paddings specifically — these
+   were the two spots flagged as reading like a full empty viewport: the
+   band right after the hero (before "See it run") and the band right after
+   the loop-list (before the closing CTA). Keeps the generous top clearance
+   everywhere else the default 100px section padding still uses. */
+#run{padding:60px 0}
+#loop{padding:60px 0 50px}
+/* signed-proposals only — the extra "unique mechanism" section between hero
+   and run panel, same tightening logic as #run/#loop above */
+#mechanism{padding:70px 0}
+.ohero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
+#ohero h1{font-size:clamp(38px,5.6vw,72px);margin-bottom:20px;max-width:14ch}
+#ohero .promise{font-size:18px;color:rgb(var(--body));line-height:1.65;margin-bottom:22px;max-width:50ch}
+.mech{display:flex;gap:12px;align-items:flex-start;padding:16px 19px;border-radius:16px;
+  background:rgb(var(--s1)/.82);border:1px solid rgb(var(--line)/.7);margin-bottom:26px;
+  font-size:14.5px;color:rgb(var(--muted));line-height:1.6;max-width:50ch}
+.mech .tag{flex-shrink:0;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:rgb(var(--accent-br,var(--violet-br)));padding-top:2px}
+.mech b{color:rgb(var(--ink))}
+.ohero-cta{display:flex;gap:14px;flex-wrap:wrap}
+@media (max-width:980px){
+  .ohero-grid{grid-template-columns:1fr;gap:34px}
+}
+
+/* mechanism strip (proposal page — transcript → video+page → payment/e-sig) */
+.mechstrip{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:16px;align-items:center;max-width:980px;margin:0 auto}
+.mechstep{background:linear-gradient(160deg,rgb(var(--s3)/.9),rgb(var(--s2)/.85));border:1px solid rgb(var(--line-br)/.55);
+  border-radius:var(--r2);padding:26px 22px;text-align:center}
+.mechstep .m-ic{width:42px;height:42px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;
+  background:rgb(var(--accent)/.16);border:1px solid rgb(var(--accent)/.42);color:rgb(var(--accent))}
+.mechstep .m-ic svg{width:19px;height:19px}
+.mechstep h3{font-family:'Cabinet';font-weight:700;font-size:16px;margin-bottom:8px}
+.mechstep p{font-size:13px;color:rgb(var(--muted));line-height:1.55}
+.mecharrow{color:rgb(var(--faint))}
+.mecharrow svg{width:20px;height:20px}
+@media (max-width:820px){
+  .mechstrip{grid-template-columns:1fr;gap:14px}
+  .mecharrow{transform:rotate(90deg);margin:0 auto}
+}
+
+/* run panel — click-driven IN chip → OUT + payoff, crossfade, no scroll-pin */
+.run-panel{max-width:760px;margin:0 auto;border-radius:var(--r4);overflow:hidden;
+  border:1px solid rgb(var(--line-br)/.6);background:linear-gradient(168deg,rgb(var(--s2)/.9),rgb(var(--s1)/.96));
+  box-shadow:0 40px 100px rgb(0 0 0/.55),0 0 120px rgb(var(--accent)/.14)}
+.run-chips{display:flex;flex-wrap:wrap;gap:8px;padding:22px 26px;border-bottom:1px solid rgb(var(--line)/.7)}
+.run-chip{all:unset;cursor:pointer;box-sizing:border-box;display:inline-flex;align-items:center;
+  font-family:'Inter';font-weight:600;font-size:14px;color:rgb(var(--body));
+  padding:11px 20px;border-radius:999px;border:1px solid rgb(var(--line-br)/.55);background:rgb(var(--s1)/.6);
+  transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease)}
+.run-chip:hover{border-color:rgb(var(--accent)/.7);color:rgb(var(--ink))}
+.run-chip.active{background:rgb(var(--accent)/.18);border-color:rgb(var(--accent)/.8);color:rgb(var(--ink));
+  box-shadow:0 0 24px rgb(var(--accent)/.28)}
+.run-chip:focus-visible{outline:2px solid rgb(var(--accent));outline-offset:2px}
+.run-body{padding:28px 32px 32px;opacity:1;transition:opacity .28s var(--ease)}
+.run-body.swap-out{opacity:0}
+.run-io{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.run-io-line{display:flex;align-items:center;gap:12px;font-size:15.5px;line-height:1.5}
+.run-io-line .tag{flex-shrink:0;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:6px;align-self:flex-start;margin-top:3px}
+.run-io-line.in .tag{color:rgb(var(--accent-br,var(--teal-br)));background:rgb(var(--accent,var(--teal))/.16);border:1px solid rgb(var(--accent,var(--teal))/.4)}
+.run-io-line.out .tag{color:rgb(var(--emerald-br));background:rgb(var(--emerald)/.16);border:1px solid rgb(var(--emerald)/.4)}
+.run-io-line span.txt{color:rgb(var(--body))}
+/* small media thumbnail next to the OUT line — a produced-video output
+   deserves a visual, not just a sentence; echoes the .frame/.video-shell
+   language at a tiny scale so it reads as "this is the artefact", not a
+   decorative icon repeat of the payoff chip's own icon. */
+.run-thumb{flex-shrink:0;width:34px;height:22px;border-radius:6px;margin-left:auto;position:relative;overflow:hidden;
+  background:linear-gradient(150deg,rgb(var(--accent,var(--violet))/.7),rgb(var(--bg)) 85%);
+  border:1px solid rgb(255 255 255/.16)}
+.run-thumb:after{content:'';position:absolute;left:50%;top:50%;transform:translate(-40%,-50%);
+  border-left:8px solid rgb(255 255 255/.92);border-top:5px solid transparent;border-bottom:5px solid transparent}
+@media (max-width:480px){.run-thumb{display:none}}
+.run-payoff-chip{margin-top:0;max-width:none}
+/* :not([hidden]) so the UA's own [hidden]{display:none} rule isn't out-specificity'd
+   by this descendant+class selector — without it, barWrap.hidden=true in JS had no
+   visible effect and a dead empty grey slab rendered under the payoff sentence. */
+.run-payoff-chip [data-run-payoff-bar]:not([hidden]){display:block;margin-top:9px;width:min(200px,100%)}
+@media (max-width:600px){
+  .run-chips{padding:20px 20px}
+  .run-body{padding:26px 22px 30px}
+}
+
+/* loop-list board — "what the loop earns you" signature piece, time-driven not scroll-scrubbed */
+.loop-board{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.loop-row{display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:16px;
+  background:rgb(var(--s1)/.75);border:1px solid rgb(var(--line)/.7);order:99;
+  transition:background .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+.loop-row.tier-1{border-color:rgb(var(--teal)/.4)}
+.loop-row.tier-2{border-color:rgb(var(--amber)/.5);background:rgb(var(--s2)/.7)}
+.loop-row.tier-3{border-color:rgb(var(--emerald)/.6);background:linear-gradient(158deg,rgb(var(--emerald)/.12),rgb(var(--s2)/.75));
+  box-shadow:0 14px 40px rgb(0 0 0/.35),0 0 34px rgb(var(--emerald)/.18)}
+/* dark scrim layered under the teal→accent gradient — the raw gradient measured
+   2.54–3.57:1 for white initials at the brighter/violet end of the accent ramp
+   (--a5/--a6/--a7); a flat 35% black overlay pulls every accent in the spectrum
+   comfortably past 4.5:1 without needing a per-accent text-colour variant. */
+.loop-avatar{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Cabinet';font-weight:700;font-size:13.5px;color:rgb(var(--ink));
+  background:linear-gradient(rgb(0 0 0/.35),rgb(0 0 0/.35)),linear-gradient(135deg,rgb(var(--teal)),rgb(var(--accent)));
+  border:1px solid rgb(255 255 255/.14);position:relative;overflow:hidden}
+/* the picture sits OVER the initial rather than replacing it, so a 404 or a
+   slow load reveals the gradient-and-letter underneath instead of a hole */
+.loop-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.loop-name{min-width:176px}  /* sized to the LONGEST sub across all seven boards
+     (169px, the investor fund rows) so the icon column starts at the same x on
+     every row of every page. At 150px the fund names overflowed the box and
+     pushed their own icons right by up to 18px — a raggedness a reader reads as
+     rows being at different stages. Re-measure with .harness/w.cjs before
+     writing any sub-line longer than these. */
+.loop-name b{display:block;font-size:14.5px;font-weight:600}
+.loop-name span{display:block;font-size:12.5px;color:rgb(var(--muted))}
+.loop-icons{display:flex;gap:8px;flex:1}
+.loop-icon{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgb(var(--s2)/.8);border:1px solid rgb(var(--line-br)/.5);opacity:.3;
+  transition:opacity .4s var(--ease),background .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease)}
+.loop-icon svg{width:11px;height:11px;stroke:rgb(var(--muted))}
+.loop-icon.on{opacity:1;background:rgb(var(--emerald)/.18);border-color:rgb(var(--emerald)/.5);box-shadow:0 0 12px rgb(var(--emerald)/.3)}
+.loop-icon.on svg{stroke:rgb(var(--emerald-br))}
+.loop-status{flex-shrink:0;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 13px;border-radius:999px;color:rgb(var(--muted));background:rgb(var(--s2)/.7);border:1px solid rgb(var(--line-br)/.5);
+  /* Explicit properties, never `all`. And the word now cross-fades with the
+     colour rather than swapping instantly under a 400ms colour transition —
+     for those 400ms the pill genuinely said one thing and looked like another,
+     which a blind reader caught in a still and correctly called incoherent
+     ("two rows, same word, different colours"). The word was always right;
+     the colour was still in flight. Fading the pill out and back means no
+     frame ever shows a word in the previous tier's colour. */
+  /* ONLY opacity transitions. Not `all` (house rule), and deliberately not
+     colour either: a colour that morphs over 340ms is a colour that spends
+     340ms being neither tier, and the word above it has already changed. That
+     window is what a blind reader caught in a still and correctly called two
+     rows sharing a word in different colours.
+
+     So the pill crossfades instead. It fades to 0, the word and the tier class
+     change together while nothing is visible, and it fades back up already
+     correct. No frame can show a word in the previous tier's colour, because
+     no frame shows the previous tier's colour at all. */
+  transition:opacity .15s var(--ease);
+  min-width:96px;text-align:center}
+.loop-status.swapping{opacity:0}
+@media (prefers-reduced-motion:reduce){
+  /* no fade, but word and colour still change together, so it stays coherent */
+  .loop-status{transition:none}
+  .loop-status.swapping{opacity:1}
+}
+.loop-row.tier-1 .loop-status{color:rgb(var(--teal-br));background:rgb(var(--teal)/.14);border-color:rgb(var(--teal)/.4)}
+.loop-row.tier-2 .loop-status{color:rgb(var(--amber-br));background:rgb(var(--amber)/.18);border-color:rgb(var(--amber)/.45)}
+.loop-row.tier-3 .loop-status{color:rgb(var(--emerald-br));background:rgb(var(--emerald)/.2);border-color:rgb(var(--emerald)/.55)}
+.loop-note{text-align:center;font-size:13px;color:rgb(var(--muted));margin-top:26px}
+/* below 640px the milestone icons used to be dropped entirely (display:none) —
+   that deletes the whole point of the section on mobile (the row of milestones
+   lighting up IS the story). Instead: wrap the row onto two lines — identity +
+   status stay on line one, the milestone strip gets its own full-width line two
+   at a still-legible size, via explicit order + flex-basis:100% (order affects
+   flex wrap position, not just paint order, so this reliably pushes icons onto
+   their own line regardless of DOM order). */
+@media (max-width:640px){
+  .loop-row{flex-wrap:wrap;row-gap:10px}
+  .loop-avatar{order:1}
+  .loop-name{order:2;min-width:0;flex:1 1 auto}
+  .loop-status{order:3;min-width:80px;font-size:10px}
+  .loop-icons{order:4;flex:0 0 100%;justify-content:flex-start;gap:8px;padding-left:54px}
+  .loop-icon{width:22px;height:22px}
+}
+@media (max-width:400px){
+  .loop-icons{padding-left:0}
+}
+
+/* other-outcomes switcher */
+.switcher{padding:56px 0;border-top:1px solid rgb(var(--line)/.5)}
+.switcher-head{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:rgb(var(--muted));
+  text-align:center;margin-bottom:20px}
+.switcher-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:980px;margin:0 auto}
+.switcher-pill{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:14px;font-weight:600;
+  color:rgb(var(--body));border:1px solid rgb(var(--line-br)/.5);background:rgb(var(--s1)/.55);
+  border-radius:999px;padding:10px 18px;
+  /* named properties, not `all`: the hover state changes border-colour,
+     colour and transform, and `all` also animates padding and
+     border-radius, so the pill visibly resizes under the cursor */
+  transition:border-color .35s var(--ease),color .35s var(--ease),
+             background-color .35s var(--ease),transform .35s var(--ease)}
+.switcher-pill .dot{width:7px;height:7px;border-radius:50%;background:rgb(var(--muted))}
+.switcher-pill:hover{border-color:rgb(var(--violet-br)/.7);color:rgb(var(--ink));transform:translateY(-2px)}
+
+/* ══════════════════════════════════════════════════════════════
+   5.2 ADDITIONS — wedge line, collapse strip, pricing, proof
+   cards, showreel wall, how-it-works timeline
+   ══════════════════════════════════════════════════════════════ */
+
+/* founder wedge line — one first-person sentence tying an outcome
+   page back to the collapse/wedge story. Sits between the mech box
+   and the CTA row, an italic aside rather than another boxed chip
+   so it reads as a voice, not another UI component. Block, not flex —
+   this is a <p> of running prose (with an inline <i> for emphasis in
+   one instance); display:flex would wrap each text node either side
+   of the <i> into its own anonymous flex item and lay them out as
+   side-by-side columns, scrambling the reading order. */
+.wedge-line{display:block;font-size:15px;font-style:italic;
+  color:rgb(var(--body));line-height:1.62;max-width:48ch;margin:0 0 28px;
+  padding-left:17px;border-left:2px solid rgb(var(--accent,var(--violet))/.6)}
+/* These lines are all first person ("I built", "our own team") and were running
+   unattributed, so a cold visitor had no idea who was speaking. Same treatment
+   as .story-quote cite on proof.html. */
+.wedge-line cite{display:block;margin-top:10px;font-style:normal;font-size:12.5px;color:rgb(var(--muted))}
+
+/* ── THE COLLAPSE strip — dark, punchy, category-stat band ── */
+#collapse{padding:64px 0;background:linear-gradient(180deg,rgb(var(--bg)),rgb(3 5 11),rgb(var(--bg)));
+  border-top:1px solid rgb(var(--line)/.6);border-bottom:1px solid rgb(var(--line)/.6)}
+.collapse-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:52px;align-items:center}
+.collapse-stat{font-family:'Cabinet';font-weight:800;letter-spacing:-.03em;line-height:.9;
+  font-size:clamp(64px,9vw,128px);background:linear-gradient(100deg,rgb(255 130 130),rgb(255 176 120) 60%,rgb(var(--amber-br)));
+  -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:6px}
+.collapse-stat-label{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:rgb(var(--muted))}
+.collapse-cite{font-size:12px;color:rgb(var(--muted));margin-top:14px}
+.collapse-copy h2{font-size:clamp(26px,3.2vw,38px);max-width:16ch;margin-bottom:18px}
+.collapse-copy p{font-size:16.5px;color:rgb(var(--body));line-height:1.7;max-width:52ch;margin-bottom:14px}
+.collapse-copy p:last-child{margin-bottom:0}
+.collapse-copy b{color:rgb(var(--ink))}
+.collapse-villain{display:inline-flex;align-items:center;gap:9px;margin-top:8px;padding:10px 16px;border-radius:12px;
+  background:rgb(255 90 90/.08);border:1px solid rgb(255 120 120/.28);font-size:13.5px;color:rgb(255 176 176);line-height:1.5}
+.collapse-villain svg{flex-shrink:0;width:16px;height:16px;color:rgb(255 140 140)}
+@media (max-width:900px){
+  .collapse-grid{grid-template-columns:1fr;gap:30px;text-align:center}
+  .collapse-copy p{margin-left:auto;margin-right:auto}
+  .collapse-villain{margin-left:auto;margin-right:auto}
+}
+
+/* ── ENGINE STRIP — input chips / 3-card engine / loop line.
+   Used on index.html's "why this still gets watched" section and reused
+   on how-it-works.html's step visuals — shared here rather than kept as
+   page-local CSS since it now spans more than one page. ── */
+.estrip{max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:20px}
+.estrip-label{font-size:12px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:rgb(var(--body))}
+.estrip-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.e-chip{display:inline-flex;align-items:center;padding:12px 20px;border-radius:999px;background:rgb(var(--s2)/.75);
+  border:1px solid rgb(var(--line-br)/.55);font-size:14px;font-weight:600;color:rgb(var(--body))}
+.estrip-arrow{color:rgb(var(--muted))}
+.estrip-arrow svg{width:20px;height:20px;overflow:visible}
+/* "drawn" connector line — reuses the page's existing .rv/.in scroll-reveal
+   trigger (no new JS) rather than a scroll-scrubbed animation, matching the
+   loop-list's documented preference for time/state-driven motion over
+   scroll-scrub. pathLength="1" normalises the path to length 1 regardless of
+   its actual on-screen geometry, so a plain stroke-dasharray:1 always works. */
+.eflow-path{fill:none;stroke:rgb(var(--violet-br)/.75);stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1s var(--ease) .15s}
+.rv.in .eflow-path{stroke-dashoffset:0}
+.estrip-cards{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;width:100%}
+.e-card{background:linear-gradient(160deg,rgb(var(--s3)/.9),rgb(var(--s2)/.85));border:1px solid rgb(var(--line-br)/.55);
+  border-radius:var(--r2);padding:26px 22px;text-align:center}
+.e-ic{width:40px;height:40px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;
+  background:rgb(var(--violet)/.16);border:1px solid rgb(var(--violet)/.42);color:rgb(var(--violet-br));
+  box-shadow:0 0 20px rgb(var(--violet)/.35)}
+.e-ic svg{width:18px;height:18px}
+.e-card h4{font-family:'Cabinet';font-weight:700;font-size:16px;margin-bottom:8px;letter-spacing:-.01em}
+.e-card p{font-size:13px;color:rgb(var(--muted));line-height:1.55}
+/* left-hand progress rail, echoing concept 4's vertical "loop" indicator —
+   desktop-only decoration (there's no room for it once cards stack to 1
+   column on mobile), purely visual so it's aria-hidden. */
+.erail{position:absolute;left:-58px;top:6px;bottom:6px;width:14px;display:flex;flex-direction:column;
+  align-items:center;justify-content:space-between}
+.erail-line{position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);
+  background:linear-gradient(180deg,rgb(var(--teal)/.55),rgb(var(--violet)/.55))}
+.erail-dot{position:relative;z-index:1;width:8px;height:8px;border-radius:2px;transform:rotate(45deg);
+  background:rgb(var(--emerald-br));box-shadow:0 0 10px rgb(var(--emerald)/.7)}
+.erail-label{position:absolute;left:50%;bottom:-30px;transform:translateX(-50%) rotate(180deg);
+  writing-mode:vertical-rl;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgb(var(--muted))}
+@media (max-width:1080px){.erail{display:none}}
+.estrip-loop{display:inline-flex;align-items:center;gap:10px;font-size:14.5px;color:rgb(var(--body));
+  background:rgb(var(--s1)/.7);border:1px solid rgb(var(--line)/.7);border-radius:999px;padding:14px 24px;max-width:56ch;text-align:center}
+.live-dot{width:7px;height:7px;border-radius:50%;background:rgb(var(--emerald-br));box-shadow:0 0 10px rgb(var(--emerald)/.9);
+  flex-shrink:0;animation:blink 1.6s ease-in-out infinite}
+@media (max-width:700px){
+  .estrip-cards{grid-template-columns:1fr}
+}
+
+/* ── PROOF strip on index — 3 pull-quote case-study cards ── */
+/* ── the logo wall (PRD-03 §1) ───────────────────────────────────
+   STATIC while the cleared set is four marks: the 25 Aug blind
+   cold-reader round read the four-mark marquee as padding ("four,
+   styled to feel like fifteen"). The scrolling treatment — rows in
+   opposite directions, faded edges, transform-only, reduced-motion
+   stop, hover pause — is all below, gated on .is-marquee; switch it
+   on when the cleared Coda list delivers ≥15 marks per row. Marks
+   carry the cred-strip's one-ink treatment at a LARGER size (40px
+   row vs the cred row's 34). */
+.logo-wall{max-width:1060px;margin:0 auto;overflow:hidden}
+.logo-wall.is-marquee{
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.lw-row{overflow:hidden;padding:18px 0}
+.lw-track{display:flex;justify-content:center}
+.is-marquee .lw-track{justify-content:flex-start;width:max-content;
+  animation:lwScroll 36s linear infinite;will-change:transform}
+.is-marquee .lw-row-r .lw-track{animation-direction:reverse}
+.lw-set{display:flex;align-items:center;flex-shrink:0;flex-wrap:wrap;justify-content:center;row-gap:18px}
+.is-marquee .lw-set{flex-wrap:nowrap}
+.lw-set img{display:block;max-height:40px;max-width:190px;width:auto;margin:0 44px;
+  filter:brightness(0) invert(1);opacity:.8}
+/* optical sizing, same reasoning as the cred strip: the row is set for the
+   tallest lockup and each mark scaled to sit level, keyed off the asset */
+.lw-set img[src$="capium.png"]{max-height:26px}
+.lw-set img[src$="signs-express.svg"]{max-height:28px}
+.lw-set img[src$="knight-frank.svg"]{max-height:36px}
+@keyframes lwScroll{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+/* hover-pause removed 25 Aug (Andrew): the belt never stops. */
+@media (prefers-reduced-motion:reduce){
+  .is-marquee .lw-track{animation:none}
+}
+@media (max-width:600px){
+  .lw-set img{max-height:30px;margin:0 26px}
+  .lw-set img[src$="capium.png"]{max-height:20px}
+  .lw-set img[src$="signs-express.svg"]{max-height:22px}
+  .lw-set img[src$="knight-frank.svg"]{max-height:27px}
+  .lw-row{padding:12px 0}
+}
+/* The three homepage quote cards that sat here were replaced by the logo
+   wall above (PRD-03 §1); the case studies live in full on proof.html as
+   .story-card, quotes intact. Their .proofstrip-grid/.proof-pcard styles
+   are removed with them — no page uses either class any more. */
+
+/* ── PRICING section ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.ptier{position:relative;display:flex;flex-direction:column;padding:34px 30px;border-radius:var(--r3);
+  background:linear-gradient(158deg,rgb(var(--s2)/.85),rgb(var(--s1)/.92));border:1px solid rgb(var(--line-br)/.5)}
+.ptier.feat{border-color:rgb(var(--emerald)/.55);box-shadow:0 30px 70px rgb(0 0 0/.5),0 0 70px rgb(var(--emerald)/.14);
+  background:linear-gradient(158deg,rgb(var(--emerald)/.09),rgb(var(--s1)/.95))}
+.ptier-badge{position:absolute;top:-13px;left:30px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:rgb(3,32,26);background:linear-gradient(135deg,rgb(var(--emerald-br)),rgb(var(--emerald-strong)));
+  border-radius:999px;padding:6px 14px}
+.ptier-name{font-family:'Cabinet';font-weight:800;font-size:22px;letter-spacing:-.01em;margin-bottom:8px}
+.ptier-desc{font-size:14px;color:rgb(var(--muted));line-height:1.55;margin-bottom:22px;min-height:44px}
+.ptier-price{display:flex;align-items:baseline;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.ptier-price .amt{font-family:'Cabinet';font-weight:800;font-size:38px;letter-spacing:-.02em}
+.ptier-price .per{font-size:13px;color:rgb(var(--muted))}
+/* narrow cards (mobile) — a wide amount like "From £8,000" plus its baseline-
+   aligned period label doesn't reliably fit one flex row; stacking removes
+   the awkward mid-word wrap where "per month" floats disconnected above the
+   figure instead of trailing it. */
+@media (max-width:480px){
+  .ptier-price{flex-direction:column;align-items:flex-start;gap:2px}
+  .ptier-price .amt{font-size:32px}
+}
+.ptier-edit{font-size:11.5px;color:rgb(var(--muted));margin-bottom:26px}
+.ptier-list{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;flex:1}
+.ptier-list li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:rgb(var(--body));line-height:1.5;list-style:none}
+.ptier-list svg{flex-shrink:0;width:16px;height:16px;margin-top:2px;color:rgb(var(--emerald-br))}
+.ptier .btn{justify-content:center;width:100%}
+@media (max-width:980px){.pricing-grid{grid-template-columns:1fr;max-width:460px;margin:0 auto}}
+
+/* ── PROOF PAGE — case-study story cards ── */
+.story-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.story-card{display:flex;flex-direction:column;padding:34px 32px;border-radius:var(--r3);
+  background:linear-gradient(158deg,rgb(var(--s2)/.85),rgb(var(--s1)/.92));border:1px solid rgb(var(--line-br)/.5);
+  position:relative;overflow:hidden}
+.story-card:before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 90% 60% at 100% 0%,rgb(var(--accent,var(--violet))/.14),transparent 65%)}
+/* flex-wrap:wrap — a long .story-tag (e.g. "AI VIDEO OUTREACH · 12-MONTH
+   ENGAGEMENT") plus flex-shrink:0 on that tag was overflowing the card's
+   right edge on narrow viewports instead of dropping to its own line, since
+   justify-content:space-between never shrinks a flex-shrink:0 child. */
+.story-top{display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between;gap:10px 14px;margin-bottom:20px;position:relative}
+.story-client{font-family:'Cabinet';font-weight:800;font-size:21px;letter-spacing:-.01em}
+.story-industry{font-size:12.5px;color:rgb(var(--muted));margin-top:3px}
+/* flex-shrink:1 + max-width — a long tag ("AI VIDEO OUTREACH · 12-MONTH
+   ENGAGEMENT") still overflowed the card even after wrapping onto its own
+   row, because flex-shrink:0 held it to its full one-line content width
+   regardless. Letting it shrink lets the pill's own text wrap internally. */
+.story-tag{flex-shrink:1;max-width:100%;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:rgb(var(--accent-br,var(--violet-br)));background:rgb(var(--accent,var(--violet))/.16);
+  border:1px solid rgb(var(--accent,var(--violet))/.4);border-radius:16px;padding:6px 13px;text-align:center}
+.story-what{font-size:15px;color:rgb(var(--body));line-height:1.65;margin-bottom:22px;position:relative}
+.story-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px;margin-bottom:22px;
+  padding-top:20px;border-top:1px solid rgb(var(--line)/.6);position:relative}
+.story-metric b{display:block;font-family:'Cabinet';font-weight:800;font-size:26px;letter-spacing:-.02em;
+  color:rgb(var(--emerald-br));margin-bottom:4px}
+.story-metric span{display:block;font-size:12px;color:rgb(var(--muted));line-height:1.4}
+.story-quote{font-size:14.5px;font-style:italic;color:rgb(var(--body));line-height:1.6;position:relative;
+  padding-left:16px;border-left:2px solid rgb(var(--accent,var(--violet))/.55);margin-top:auto}
+.story-quote cite{display:block;margin-top:10px;font-style:normal;font-size:12.5px;color:rgb(var(--muted))}
+@media (max-width:900px){.story-grid{grid-template-columns:1fr}}
+
+/* Proof-page hero stat tiles — same card language as .story-card so the
+   numbers read as part of the system, not a stray table row */
+.pstat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pstat{position:relative;overflow:hidden;text-align:center;padding:32px 22px 28px;border-radius:var(--r3);
+  background:linear-gradient(158deg,rgb(var(--s2)/.85),rgb(var(--s1)/.92));border:1px solid rgb(var(--line-br)/.5)}
+.pstat:before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 110% 75% at 50% 0%,rgb(var(--accent,var(--violet))/.16),transparent 70%)}
+.pstat:after{content:'';position:absolute;top:0;left:20%;right:20%;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,rgb(var(--accent-br,var(--violet-br))/.75),transparent)}
+.pstat b{display:block;font-family:'Cabinet';font-weight:800;font-size:clamp(38px,4.4vw,52px);letter-spacing:-.02em;line-height:1;
+  color:rgb(var(--accent-br,var(--violet-br)))}
+.pstat span{display:block;font-size:13.5px;color:rgb(var(--muted));margin-top:10px;line-height:1.5}
+@media (max-width:760px){.pstat-grid{grid-template-columns:1fr;gap:14px}.pstat{padding:24px 20px 22px}}
+
+/* ── EXAMPLES PAGE — filterable showreel wall ── */
+.ex-filters{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:44px}
+.ex-chip{all:unset;cursor:pointer;box-sizing:border-box;display:inline-flex;align-items:center;gap:8px;
+  font-family:'Inter';font-weight:600;font-size:13.5px;color:rgb(var(--body));
+  padding:10px 18px;border-radius:999px;border:1px solid rgb(var(--line-br)/.55);background:rgb(var(--s1)/.6);
+  /* named properties, not `all`: `all` animates padding and border-radius too,
+     so a chip resizes on hover, and it is the house rule. */
+  transition:background-color .35s var(--ease),border-color .35s var(--ease),
+             color .35s var(--ease),box-shadow .35s var(--ease)}
+.ex-chip:hover{border-color:rgb(var(--violet-br)/.6);color:rgb(var(--ink))}
+.ex-chip.active{background:rgb(var(--violet)/.2);border-color:rgb(var(--violet)/.75);color:rgb(var(--ink));
+  box-shadow:0 0 20px rgb(var(--violet)/.25)}
+.ex-chip:focus-visible{outline:2px solid rgb(var(--violet-br));outline-offset:2px}
+.ex-wall{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ex-card{display:block;text-decoration:none;color:rgb(var(--ink));border-radius:var(--r2);overflow:hidden;
+  border:1px solid rgb(var(--line-br)/.5);background:rgb(var(--s1)/.7);
+  /* PRD-07 §2 mat, extended here 25 Aug after the author's audit flagged the
+     treatment as .video-shell-only while this wall is the densest thumbnail
+     page on the site. 8px ring (not 10): the grid gap is 22px, so opposing
+     rings must clear it. color-mix, NOT rgb(var(--accent)/a): these cards
+     set --accent as a HEX inline, which rgb() rejects — invalidating the
+     whole declaration at computed time. (That same trap had silently killed
+     this selector's original hover glow; rebuilt with color-mix below.) */
+  box-shadow:0 6px 18px rgb(0 0 0/.08),
+    0 0 0 8px color-mix(in srgb, var(--accent, #8b7bff) 10%, transparent);
+  transition:opacity .4s var(--ease),transform .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+.ex-card:hover{transform:translateY(-5px);border-color:color-mix(in srgb, var(--accent, #8b7bff) 60%, transparent);
+  box-shadow:0 6px 18px rgb(0 0 0/.08),
+    0 0 0 8px color-mix(in srgb, var(--accent, #8b7bff) 14%, transparent),
+    0 22px 50px rgb(0 0 0/.5),
+    0 0 44px color-mix(in srgb, var(--accent, #8b7bff) 18%, transparent)}
+.ex-card.hide{display:none}
+.ex-frame{position:relative;aspect-ratio:16/9;overflow:hidden;
+  background:linear-gradient(150deg,rgb(var(--accent,var(--violet))/.55),rgb(var(--bg)) 78%)}
+.ex-frame video{width:100%;height:100%;object-fit:cover;display:block;background:rgb(var(--s1))}
+.ex-frame:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgb(255 255 255/.08),transparent 40%,rgb(0 0 0/.28) 100%);pointer-events:none}
+.ex-frame .fplay{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;
+  background:rgb(255 255 255/.95);display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 0 32px rgb(255 255 255/.25)}
+.ex-frame .fplay:after{content:'';border-left:15px solid rgb(var(--bg));border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.ex-frame .fdur{position:absolute;top:13px;right:13px;z-index:3;font-size:10.5px;font-weight:700;letter-spacing:.05em;
+  color:#fff;background:rgb(0 0 0/.45);border:1px solid rgb(255 255 255/.22);padding:4px 10px;border-radius:999px}
+.ex-frame .freal{position:absolute;top:13px;left:13px;z-index:3;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:rgb(var(--emerald-br));background:rgb(var(--emerald)/.22);border:1px solid rgb(var(--emerald)/.5);padding:4px 10px;border-radius:999px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ex-body{padding:18px 20px 20px}
+/* ── examples wall: featured card, script line, example marker ─────────────
+   The wall leads with one film at double width rather than eight equal tiles:
+   eight peers gave the eye no entry point, and the flagship case (cold
+   outbound, the prospect's own brand) is the one that explains the rest. */
+/* .ex-card.feat sizing lives with the flex wall rules further down. */
+.ex-line{margin:11px 0 0;font-size:13.5px;line-height:1.55;color:rgb(var(--body));
+  border-left:2px solid rgb(var(--accent,var(--violet))/.55);padding-left:11px}
+/* Sits ON the frame, top-left: a marker placed under a tall card is met long
+   after the artefact it qualifies, and reads as orphaned. Above the thing. */
+.ex-mark{position:absolute;top:13px;left:13px;z-index:3;font-size:9.5px;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;color:rgb(255 255 255/.72);background:rgb(0 0 0/.34);
+  border:1px solid rgb(255 255 255/.14);padding:3px 9px;border-radius:999px;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ex-elsewhere{margin:30px auto 0;text-align:center;font-size:14px;color:rgb(var(--muted))}
+.ex-elsewhere a{color:rgb(var(--emerald-br));text-decoration:underline;text-underline-offset:3px}
+.ex-disclose{max-width:64ch;margin:0 auto 26px;text-align:center;font-size:14.5px;line-height:1.6;
+  color:rgb(var(--body))}
+
+.ex-cap{font-family:'Cabinet';font-weight:700;font-size:15.5px;letter-spacing:-.01em;margin-bottom:5px}
+.ex-meta{font-size:12.5px;color:rgb(var(--muted))}
+@media (max-width:980px){.ex-wall{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.ex-wall{grid-template-columns:1fr}}
+
+/* ── HOW IT WORKS — vertical timeline ── */
+.hiw-timeline{max-width:820px;margin:0 auto;position:relative}
+.hiw-timeline:before{content:'';position:absolute;left:27px;top:8px;bottom:8px;width:2px;
+  background:linear-gradient(180deg,rgb(var(--teal)/.7),rgb(var(--violet)/.6) 55%,rgb(var(--emerald)/.7));z-index:0}
+@media (max-width:640px){.hiw-timeline:before{left:19px}}
+.hiw-step{position:relative;display:flex;gap:26px;padding-bottom:56px;z-index:1}
+.hiw-step:last-child{padding-bottom:0}
+.hiw-num{flex-shrink:0;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Cabinet';font-weight:800;font-size:19px;background:rgb(var(--s2));border:2px solid rgb(var(--accent,var(--violet))/.7);
+  color:rgb(var(--ink));box-shadow:0 0 0 8px rgb(var(--bg)),0 0 24px rgb(var(--accent,var(--violet))/.35)}
+@media (max-width:640px){.hiw-num{width:40px;height:40px;font-size:15px}}
+.hiw-body{flex:1;min-width:0;padding-top:6px}
+.hiw-tag{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgb(var(--accent-br,var(--violet-br)));margin-bottom:8px}
+.hiw-body h3{font-size:clamp(21px,2.4vw,27px);letter-spacing:-.015em;margin-bottom:10px}
+.hiw-body p{font-size:15.5px;color:rgb(var(--body));line-height:1.65;max-width:56ch;margin-bottom:16px}
+.hiw-visual{margin-top:16px}
+
+@media (max-width:920px){
+  section{padding:84px 0}
+  #hero{padding:150px 0 60px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .rv{opacity:1;visibility:visible;transform:none}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PROCESS COMPONENTS — ported from the live wave explainer
+   (videos.use60.com/p/wave-explainer), which is the approved
+   description of how the product actually runs. Additive only:
+   every class name below is new, no existing rule is touched.
+
+   Used by how-it-works.html (the full 11-step spine) and by
+   index.html's "three green lights" assurance band.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── hero step pills (Record once → We build → You approve) ──── */
+.hero-steps{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.hs{display:inline-flex;align-items:center;gap:11px;padding:12px 22px;border-radius:999px;
+  border:1px solid rgb(var(--line-br)/.55);background:rgb(var(--s1)/.55);
+  font-size:15px;font-weight:600;color:rgb(var(--body));
+  transition:border-color .45s var(--ease),box-shadow .45s var(--ease),transform .45s var(--ease)}
+.hs-n{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+  font-family:'Cabinet';font-weight:800;font-size:12px;flex-shrink:0;
+  background:rgb(var(--violet)/.2);color:rgb(var(--violet-br));border:1px solid rgb(var(--violet)/.4)}
+/* the last pill is the approval step — emerald, matching the green-light language */
+.hs:last-of-type .hs-n{background:rgb(var(--emerald)/.16);color:rgb(var(--emerald-br));border-color:rgb(var(--emerald)/.45)}
+.hs-arrow{width:22px;height:1px;background:rgb(var(--line-br)/.8);position:relative;flex-shrink:0}
+.hs-arrow:after{content:'';position:absolute;right:0;top:-3px;width:6px;height:6px;
+  border-top:1px solid rgb(var(--line-br));border-right:1px solid rgb(var(--line-br));transform:rotate(45deg)}
+@media (hover:hover) and (pointer:fine){
+  .hs:hover{transform:translateY(-3px);border-color:rgb(var(--violet-br)/.7);box-shadow:0 0 40px rgb(var(--violet)/.25)}
+}
+@media (max-width:620px){
+  .hs-arrow{display:none}
+  .hs{font-size:14px;padding:10px 18px}
+}
+
+/* ── green-light pills (the three approval gates) ────────────── */
+.gl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pill{background:linear-gradient(158deg,rgb(var(--s2)/.9),rgb(var(--s1)/.94));
+  border:1px solid rgb(var(--line-br)/.55);border-radius:var(--r3);padding:34px 30px;
+  transition:transform .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+.pill .n{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Cabinet';font-weight:800;font-size:17px;margin-bottom:20px;
+  background:rgb(var(--emerald)/.14);color:rgb(var(--emerald-br));border:1px solid rgb(var(--emerald)/.4);
+  transition:box-shadow .5s var(--ease)}
+.pill h3{font-size:23px;margin-bottom:10px}
+.pill p{font-size:16px;color:rgb(var(--muted));line-height:1.6}
+@media (hover:hover) and (pointer:fine){
+  .pill:hover{transform:translateY(-8px);border-color:rgb(var(--emerald)/.6);
+    box-shadow:0 24px 60px rgb(0 0 0/.5),0 0 70px rgb(var(--emerald)/.22)}
+  .pill:hover .n{box-shadow:0 0 0 8px rgb(var(--emerald)/.1),0 0 34px rgb(var(--emerald)/.6)}
+}
+@media (max-width:900px){.gl-grid{grid-template-columns:1fr;gap:18px}.pill{padding:28px 24px}}
+
+/* ── counter stats ───────────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.stat{padding:30px 28px;border-radius:var(--r3);border:1px solid rgb(var(--line-br)/.5);
+  background:linear-gradient(158deg,rgb(var(--s2)/.6),rgb(var(--s1)/.7));
+  transition:transform .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+.stat-n{font-family:'Cabinet';font-weight:800;font-size:clamp(40px,5vw,68px);line-height:1;
+  background:linear-gradient(96deg,rgb(var(--teal-br)),rgb(var(--violet-br)) 70%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.stat p{font-size:15px;color:rgb(var(--muted));margin-top:10px;line-height:1.55}
+@media (hover:hover) and (pointer:fine){
+  .stat:hover{transform:translateY(-6px);border-color:rgb(var(--violet-br)/.55);
+    box-shadow:0 20px 50px rgb(0 0 0/.45),0 0 60px rgb(var(--violet)/.2)}
+}
+@media (max-width:900px){.stats{grid-template-columns:1fr;gap:16px}.stat{padding:24px 22px}}
+
+/* ── the 11-step timeline (accordion + scroll-filled spine) ────
+   Structure differs deliberately from the live wave explainer:
+   there, .card-body sits INSIDE the <button>, so a screen reader
+   reads the whole paragraph as part of the button's accessible
+   name. Here the button is the header row only, the body is its
+   sibling, and the pair share a .card-shell that carries the card
+   surface and hover. This is the W3C APG disclosure pattern
+   (h3 > button + controlled region) and validates cleanly. */
+/* --rail is .timeline's left padding, --spine-x the spine's offset inside it,
+   --dot the dot diameter. The dot's own offset is derived from all three so it
+   always lands dead centre on the spine. It was hand-set to -72px and sat 9px
+   left of the line. */
+.timeline{position:relative;--rail:88px;--spine-x:31px;--dot:15px;padding-left:var(--rail)}
+.spine{position:absolute;left:var(--spine-x);top:8px;bottom:8px;width:3px;border-radius:2px;background:rgb(var(--line))}
+.spine-fill{position:absolute;left:0;top:0;width:100%;height:0%;border-radius:2px;
+  background:linear-gradient(180deg,rgb(var(--teal-br)),rgb(var(--violet-br)) 60%,rgb(var(--violet-end)));
+  box-shadow:0 0 26px rgb(var(--violet)/.7)}
+.step{position:relative;margin-bottom:16px}
+/* the node sitting on the spine, aligned to the header row's centre */
+.step .dot{position:absolute;top:34px;width:var(--dot);height:var(--dot);border-radius:50%;
+  left:calc(var(--spine-x) + 1.5px - var(--rail) - (var(--dot) / 2));
+  background:rgb(var(--s3));border:2px solid rgb(var(--line-br));z-index:2;
+  transition:background .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+.step.lit .dot{background:rgb(var(--violet-br));border-color:rgb(var(--violet-br));box-shadow:0 0 18px rgb(var(--violet)/.8)}
+.step.green .dot{background:rgb(var(--s3));border-color:rgb(var(--emerald)/.5)}
+.step.green.lit .dot{background:rgb(var(--emerald-br));border-color:rgb(var(--emerald-br));box-shadow:0 0 18px rgb(var(--emerald)/.8)}
+
+.card-shell{border:1px solid rgb(var(--line-br)/.5);border-radius:var(--r3);
+  background:linear-gradient(158deg,rgb(var(--s2)/.72),rgb(var(--s1)/.82));
+  transition:transform .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+/* the heading is a real h3 wrapping the control — APG accordion */
+.card-h{margin:0;font:inherit;letter-spacing:normal;line-height:inherit}
+.card{width:100%;text-align:left;cursor:pointer;border:0;background:transparent;
+  padding:26px var(--card-pad);color:inherit;font:inherit;display:block;border-radius:var(--r3)}
+.card:focus-visible{outline:2px solid rgb(var(--violet-br));outline-offset:-3px}
+.step.green .card:focus-visible{outline-color:rgb(var(--emerald-br))}
+.card-top{display:flex;align-items:center;gap:16px}
+.card-idx{font-family:'Inter';font-weight:600;font-size:13px;letter-spacing:.2em;color:rgb(var(--faint));min-width:26px;flex-shrink:0}
+.card-title{font-family:'Cabinet';font-weight:800;letter-spacing:-.03em;line-height:1.15;
+  font-size:25px;flex:1;min-width:0;color:rgb(var(--ink))}
+/* body copy hangs under the TITLE, not under the step number: the indent is
+   card padding + .card-idx min-width + .card-top gap, kept in one token so the
+   two can never drift apart at a breakpoint. */
+.step{--card-pad:30px;--card-indent:72px}
+.card-body{max-height:0;overflow:hidden;opacity:0;padding:0 var(--card-pad) 0 var(--card-indent);
+  transition:max-height .6s var(--ease),opacity .5s var(--ease),padding .6s var(--ease)}
+.step.open .card-body{max-height:340px;opacity:1;padding:0 var(--card-pad) 28px var(--card-indent)}
+.card-body p{font-size:17px;line-height:1.7;color:rgb(var(--body));max-width:62ch}
+.card-body .detail{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.detail .tag{font-size:12.5px;font-weight:600;color:rgb(var(--muted));
+  background:rgb(var(--s3)/.7);border:1px solid rgb(var(--line-br)/.5);border-radius:999px;padding:6px 14px}
+.gl-tag{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;padding:6px 12px;border-radius:999px;
+  background:rgb(var(--emerald)/.16);color:rgb(var(--emerald-br));border:1px solid rgb(var(--emerald)/.42);white-space:nowrap}
+.chev{width:30px;height:30px;border-radius:50%;border:1px solid rgb(var(--line-br)/.7);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:transform .5s var(--ease),border-color .5s var(--ease),background .5s var(--ease)}
+.chev:after{content:'';width:7px;height:7px;border-right:2px solid rgb(var(--muted));border-bottom:2px solid rgb(var(--muted));
+  transform:rotate(45deg) translate(-1px,-1px)}
+.step.open .chev{transform:rotate(180deg);background:rgb(var(--violet)/.2);border-color:rgb(var(--violet-br)/.7)}
+.step.green.open .chev{background:rgb(var(--emerald)/.2);border-color:rgb(var(--emerald)/.7)}
+@media (hover:hover) and (pointer:fine){
+  .step:hover .card-shell{transform:translateX(8px);border-color:rgb(var(--violet-br)/.6);
+    box-shadow:0 20px 50px rgb(0 0 0/.45),0 0 60px rgb(var(--violet)/.2)}
+  .step.green:hover .card-shell{border-color:rgb(var(--emerald)/.6);box-shadow:0 20px 50px rgb(0 0 0/.45),0 0 60px rgb(var(--emerald)/.22)}
+}
+@media (max-width:760px){
+  .timeline{--rail:44px;--spine-x:15px;--dot:13px}
+  .step .dot{top:28px}
+  /* start the rail at the first dot and stop it at the last: the free ends
+     above dot 1 / below the final dot read as broken stubs on a phone */
+  .spine{top:34px;bottom:54px}
+  .step{--card-pad:22px;--card-indent:64px}
+  .card-shell{border-radius:var(--r2)}
+  .card-title{font-size:20px}
+  .step.open .card-body{max-height:420px}
+  .card-body p{font-size:16px}
+}
+/* was 520px: between 521 and 760 the pill and chevron still shared the
+   title's row and crushed it into a four-line sliver (Andrew, 28 Aug) */
+@media (max-width:760px){
+  .step{--card-indent:53px}
+  /* the green-light badge is too wide to share a line with the title at this
+     size: it squeezed the title into a 4-line column and the chevron rode over
+     it. Title + chevron keep row one, the badge takes a full row of its own,
+     indented to sit under the title rather than under the step number. */
+  .card-top{gap:11px;flex-wrap:wrap;row-gap:13px}
+  .card-idx{order:1;font-size:12px;min-width:20px;letter-spacing:.14em}
+  .card-title{order:2;flex:1 1 0;font-size:18px}
+  .chev{order:3;flex-shrink:0}
+  /* full-width would read as a button; hug the text so it stays a label.
+     flex-basis:100% was stretching the pill to the whole row (basis beats
+     width on a flex item) - auto basis still wraps to its own line because
+     the title row above always fills the line. */
+  /* the break is forced by a zero-height 100%-basis runner, not by the pill
+     itself: a 100% basis on the pill stretched it into a bar, and an auto
+     basis let the flexible title shrink to share its row instead of wrapping */
+  .card-top:has(.gl-tag)::after{content:"";order:4;flex-basis:100%;height:0}
+  .gl-tag{order:5;flex:0 0 auto;width:fit-content;margin-left:31px;
+    font-size:10px;letter-spacing:.14em;padding:6px 12px}
+}
+
+/* reduced motion — keep the state changes, drop the travel */
+@media (prefers-reduced-motion:reduce){
+  .step:hover .card-shell,.pill:hover,.stat:hover,.hs:hover{transform:none}
+}
+
+/* ── fit qualifier (right fit / not a fit) ───────────────────── */
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:940px;margin:0 auto}
+.fit-col{border-radius:var(--r3);padding:30px 30px 32px;border:1px solid rgb(var(--line-br)/.5);
+  background:linear-gradient(158deg,rgb(var(--s2)/.6),rgb(var(--s1)/.7))}
+.fit-col.yes{border-color:rgb(var(--emerald)/.34)}
+.fit-head{display:flex;align-items:center;gap:11px;margin-bottom:20px;
+  font-family:'Cabinet';font-weight:800;font-size:19px;letter-spacing:-.02em;color:rgb(var(--ink))}
+.fit-head i{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.fit-col.yes .fit-head i{background:rgb(var(--emerald)/.16);border:1px solid rgb(var(--emerald)/.42);color:rgb(var(--emerald-br))}
+.fit-col.no .fit-head i{background:rgb(var(--s3)/.8);border:1px solid rgb(var(--line-br)/.7);color:rgb(var(--muted))}
+.fit-head i svg{width:13px;height:13px}
+.fit-col ul{list-style:none}
+.fit-col li{font-size:16px;line-height:1.6;color:rgb(var(--body));padding:13px 0;
+  border-bottom:1px solid rgb(var(--line)/.6)}
+.fit-col li:last-child{border-bottom:0;padding-bottom:0}
+.fit-col.no li{color:rgb(var(--muted))}
+@media (max-width:820px){.fit-grid{grid-template-columns:1fr;gap:16px}.fit-col{padding:26px 24px}}
+
+/* ── keyboard focus for the remaining interactive elements ─────
+   .btn, .run-chip, .ex-chip and the timeline .card already define
+   :focus-visible rings. Nav, drawer and footer links and the menu
+   toggle were falling back to the UA default, which is the only
+   inconsistent focus treatment left on the site. */
+.navlinks a:focus-visible,
+.nav-drawer a:focus-visible,
+.foot-links a:focus-visible{outline:2px solid rgb(var(--violet-br));outline-offset:3px;border-radius:6px}
+.nav-toggle:focus-visible{outline:2px solid rgb(var(--violet-br));outline-offset:2px}
+
+/* ── compact control strip (outcome / ad landing pages) ────────
+   The seven outcome pages are where paid traffic lands, and none
+   of them answered the objection the whole proposition invites:
+   "you are cloning a face, what stops it sending without me?"
+   The homepage answers it with the full three-pill band; these
+   pages get a compact one-line version instead, so an ad page
+   does not grow a second hero. Wording avoids "wave", which is
+   only defined on how-it-works. */
+.ctrl-strip{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+  max-width:760px;margin:0 auto;padding:22px 28px;border-radius:var(--r2);
+  background:rgb(var(--s1)/.6);border:1px solid rgb(var(--emerald)/.28)}
+.ctrl-strip .cs-ic{width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:rgb(var(--emerald)/.14);border:1px solid rgb(var(--emerald)/.42);color:rgb(var(--emerald-br))}
+.ctrl-strip .cs-ic svg{width:16px;height:16px}
+/* flex-basis must be a real width, not 0: the trailing link is white-space:nowrap
+   and will not shrink, so a `flex:1;min-width:0` paragraph collapses to ~30px and
+   the row never overflows, which means flex-wrap never fires. Giving the copy a
+   320px basis makes the line overflow and wrap properly instead. */
+.ctrl-strip p{font-size:15.5px;line-height:1.6;color:rgb(var(--body));text-align:left;flex:1 1 320px}
+.ctrl-strip p b{color:rgb(var(--ink));font-weight:600}
+.ctrl-strip a{color:rgb(var(--emerald-br));text-decoration:none;font-weight:600;white-space:nowrap}
+.ctrl-strip a:hover{text-decoration:underline}
+.ctrl-strip a:focus-visible{outline:2px solid rgb(var(--emerald-br));outline-offset:3px;border-radius:4px}
+@media (max-width:620px){
+  /* stack rather than squeeze: icon, then copy, then the link */
+  .ctrl-strip{padding:20px 22px;gap:13px;flex-direction:column;align-items:flex-start}
+  .ctrl-strip p{font-size:15px;flex:0 1 auto}
+}
+
+/* ── gate flow variant (homepage control band) ─────────────────
+   On index.html the control band sits between the outcome chooser
+   (7 cards) and the proof strip (3 cards). As a third card grid it
+   made that whole stretch read as one monotonous run of tiles, and
+   reassurance should feel calmer than a "pick me" grid anyway.
+   This variant drops the card surface and reads as a sequence:
+   numbered steps on a connecting rule. how-it-works keeps the
+   original .pill cards, where the band stands alone. */
+.gl-grid.gl-flow{gap:0;position:relative}
+.gl-grid.gl-flow .pill{background:none;border:0;padding:0 26px;text-align:center;position:relative}
+.gl-grid.gl-flow .pill:hover{transform:none;box-shadow:none}
+.gl-grid.gl-flow .pill .n{margin:0 auto 18px;position:relative;z-index:2;
+  background:linear-gradient(rgb(var(--emerald)/.14),rgb(var(--emerald)/.14)),rgb(var(--bg))}
+.gl-grid.gl-flow .pill h3{font-size:19px;margin-bottom:9px}
+.gl-grid.gl-flow .pill p{font-size:14.5px;max-width:30ch;margin:0 auto}
+/* the rule runs behind the numbers, stopping short at each end */
+/* starts and ends at the outer discs' edges (a third of the row is 16.667%,
+   the disc radius is 21px) so it never runs underneath a number. */
+.gl-grid.gl-flow:before{content:'';position:absolute;top:20.5px;height:1px;z-index:0;
+  left:calc(16.667% + 21px);right:calc(16.667% + 21px);border-radius:1px;
+  background:linear-gradient(90deg,rgb(var(--emerald)/.18),rgb(var(--emerald)/.42) 18%,rgb(var(--emerald)/.42) 82%,rgb(var(--emerald)/.18))}
+@media (hover:hover) and (pointer:fine){
+  .gl-grid.gl-flow .pill:hover .n{box-shadow:0 0 0 7px rgb(var(--emerald)/.09),0 0 26px rgb(var(--emerald)/.5)}
+}
+/* scroll-lit sequence (Andrew, 27 Aug): the three gates light 1 -> 2 -> 3 as
+   the band scrolls in. Gated on a JS-added class so no-JS renders read at
+   full strength; reduced motion lights all three at once (index.js). */
+.gl-grid.gl-flow.js-seq .pill{opacity:.35;transition:opacity .6s var(--ease)}
+.gl-grid.gl-flow.js-seq .pill.lit{opacity:1}
+.gl-grid.gl-flow.js-seq .pill.lit .n{box-shadow:0 0 0 7px rgb(var(--emerald)/.09),0 0 26px rgb(var(--emerald)/.5)}
+@media (max-width:900px){
+  .gl-grid.gl-flow{gap:30px}
+  .gl-grid.gl-flow:before{display:none}
+  .gl-grid.gl-flow .pill{padding:0}
+}
+
+/* ── client credibility strip (hero foot) ──────────────────────
+   Both reference sites put third-party credibility inside the
+   first viewport: opslabs.ai a "make Certified Partner" badge,
+   perspective.co star ratings and community size. This site had
+   four real named clients with real numbers and showed none of
+   them until roughly 6,000px down. Every number below is one
+   already published on proof.html.
+
+   Andrew asked for logos here (21 Aug). No client logo files exist
+   anywhere in the repo, so the strip carries wordmarks in a logo
+   SLOT: drop an <img class="cred-logo"> into .cred-mark and the
+   wordmark hides itself, with no other change. The figures stay
+   either way — logos say we worked with them, the figures say
+   what happened, and only the second is unique to this page. */
+/* the divider was a hard 1px rule across the full .wrap, which is wider
+   than the demo shell above it and narrower than the section behind it, so
+   it lined up with nothing and read as a stray mark. It is now a hairline
+   that fades out at both ends and matches the shell's own width, so it
+   belongs to the block above rather than cutting across the background. */
+/* ── rating row ────────────────────────────────────────────────
+   Broad trust (a public star rating anyone can go and check) sits above the
+   named-client proof, which is the deep version of the same argument. */
+/* one line always (Andrew, 27 Aug): counts came off the badges, so the three
+   marks + scores fit a single row down to phone widths */
+.trust-row{display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap;row-gap:8px;margin:26px auto 0}
+.trust-badge{display:inline-flex;align-items:center;gap:10px}
+.trust-mark{width:18px;height:18px;display:block;flex-shrink:0}
+/* the Trustpilot mark is a wordmark, not a square glyph, so it needs width
+   rather than height; supplied white, which suits the dark strip */
+.trust-mark-tp{width:auto;height:15px;opacity:.92}
+.stars{position:relative;display:inline-block;font-size:15px;line-height:1;letter-spacing:2px;
+  white-space:nowrap;height:1em}
+.stars-off{color:rgb(var(--line-br))}
+.stars-on{position:absolute;inset:0;overflow:hidden;width:var(--fill,100%);color:rgb(255 186 74);z-index:1}
+.trust-row b{font-family:'Cabinet';font-weight:800;font-size:16px;color:rgb(var(--ink));letter-spacing:-.01em}
+.trust-src{font-size:13px;color:rgb(var(--muted))}
+/* real-client proof line under the outcome hero CTAs; figures are the ones
+   already published on proof.html */
+.ohero-proofline{font-size:13.5px;color:rgb(var(--muted));line-height:1.6;margin:16px 0 0;max-width:56ch}
+.ohero-proofline a{color:rgb(var(--emerald-br));text-decoration:underline;text-underline-offset:3px}
+@media (max-width:600px){ .trust-src{font-size:11.5px} }
+/* one line still holds at phone widths: the row was 452px of badges in a
+   311px column, clipping the G mark on the left and the 5.0 on the right.
+   Everything scales down together so the three badges fit without wrapping. */
+/* Condensed on phones (Andrew, 27 Aug, after two rounds of star clipping on
+   iOS): drop the star glyphs entirely and show mark + "4.8 rating", the
+   perspective.co pattern. The stars' aria-labels leave the a11y tree with
+   them; the score text still reads. */
+@media (max-width:700px){
+  .trust-row{gap:18px}
+  .trust-badge{gap:7px}
+  .stars{display:none}
+  .trust-row b{font-size:14px}
+  .trust-row b:after{content:" rating";font-family:'Inter';font-weight:500;
+    font-size:13px;color:rgb(var(--body));letter-spacing:0}
+  .trust-mark{width:16px;height:16px}
+  .trust-mark-tp{width:auto;height:13px}
+  /* "4.8 rating" is one unit - without this the :after word wrapped under
+     the score and the row broke into two lines per badge */
+  .trust-badge,.trust-row b{white-space:nowrap}
+}
+
+/* No mac window chrome anywhere (Andrew, 27 Aug): the three grey dots are
+   the most generic signal on the web. Bars keep their URL/labels; only the
+   dots go. .eng-stagedots (stage indicators, not chrome) stay. */
+.comp-bar i,.escr-chrome i,.ocx-win-bar i,.vp-bar i,.eng-chrome .eng-dot{display:none}
+
+/* Cold-reader sims, 21 Aug: all four readers said the client proof was the
+   only thing on the page they believed, and it was sitting one full scroll
+   BELOW the email box — measured at 974px, under the fold on 720/800/900px
+   laptops. One reader would have closed the tab at 10-15 seconds, before
+   ever seeing it. So it moves above the ask: evidence first, then the ask.
+   .cred-strip-hero is the compact form that buys the vertical room. */
+.cred-strip{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;
+  position:relative;margin-top:40px;padding-top:34px}
+.cred-strip-hero{margin:22px auto 0;padding-top:0;max-width:900px}
+.cred-strip-hero:before{display:none}
+.cred-strip-hero .cred-lede{margin-bottom:13px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.cred-strip-hero .cred-mark{height:26px}
+.cred-strip-hero .cred-logo{max-height:26px}
+.cred-strip-hero .cred-logo[src$="capium.png"]{max-height:17px}
+.cred-strip-hero .cred-logo[src$="signs-express.svg"]{max-height:18px}
+.cred-strip-hero .cred-logo[src$="clarion.png"]{max-height:26px}
+.cred-strip-hero .cred-logo[src$="knight-frank.svg"]{max-height:23px}
+.cred-strip-hero .cred-item{padding:0 18px;gap:4px}
+.cred-strip-hero .cred-fig{font-size:20px}
+.cred-strip-hero .cred-what{font-size:11.5px}
+/* the figures were disbelieved as "marketing numbers with no anchor" — every
+   one now carries the period it was measured over, verbatim from the case
+   study it links to, and the link is finally visible as a link */
+.cred-when{display:block;font-weight:500;font-size:11px;letter-spacing:0;text-transform:none;
+  color:rgb(var(--faint));margin-top:4px}
+/* was a 132x15 tap target on a phone. The underline stays on the text, the
+   touch area does not have to. */
+.cred-all{display:inline-flex;align-items:center;min-height:44px;padding:0 2px;
+  font-size:11px;letter-spacing:.04em;text-transform:none;font-weight:600;
+  color:rgb(var(--violet-br));text-decoration:none}
+.cred-all span{border-bottom:1px solid rgb(var(--violet-br)/.45)}
+.cred-all:focus-visible{outline:2px solid rgb(var(--violet-br));outline-offset:3px;border-radius:6px}
+@media (hover:hover) and (pointer:fine){ .cred-all:hover span{border-bottom-color:rgb(var(--violet-br))} }
+.cred-strip:before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:min(900px,100%);height:1px;
+  background:linear-gradient(90deg,transparent,rgb(var(--line-br)/.55) 22%,rgb(var(--line-br)/.55) 78%,transparent)}
+.cred-lede{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  color:rgb(var(--faint));width:100%;text-align:center;margin-bottom:16px}
+/* Lockup, not a list: the mark sits on its own line above the figure it
+   earned, so the strip reads as four pieces of proof rather than one run-on
+   sentence. .cred-mark is the logo slot — it holds the wordmark today and
+   takes an <img class="cred-logo"> the moment real files exist, without the
+   layout moving. Any supplied mark is flattened to one ink (see .cred-logo)
+   so four different brand palettes cannot fight each other on a dark strip. */
+.cred-item{display:inline-flex;flex-direction:column;align-items:center;gap:5px;padding:0 22px;text-decoration:none;
+  border-left:1px solid rgb(var(--line)/.7);transition:opacity .3s var(--ease)}
+.cred-item:first-of-type{border-left:0}
+/* 34px, not 22: two of the four marks (Clarion, Knight Frank) are stacked
+   lockups rather than wordmarks, and at 22px they collapsed to an
+   unreadable blob while the two wide wordmarks looked fine. The row is
+   sized for the tallest shape and each mark is then scaled OPTICALLY —
+   matching cap height and visual weight, not bounding boxes, which is the
+   only way four unrelated logos sit level with each other. */
+.cred-mark{display:flex;align-items:center;justify-content:center;height:34px}
+.cred-item b{font-family:'Cabinet';font-weight:800;font-size:16px;color:rgb(var(--ink));letter-spacing:.01em;line-height:1}
+.cred-logo{max-height:34px;max-width:150px;width:auto;display:block;
+  /* one ink: kill the source colour, then bring it back up to the strip's
+     own foreground rather than pure white, which would out-shout the copy */
+  filter:brightness(0) invert(1);opacity:.82;transition:opacity .3s var(--ease)}
+.cred-logo + b{display:none}
+/* per-mark optical sizing, keyed off the filename so it travels with the
+   asset. Wide wordmarks read heavier at the same height than a stacked
+   lockup does, so they get less of it. */
+/* fine-stroke marks recede against the heavy ones at the same opacity */
+.cred-logo[src$="capium.png"]{max-height:21px;opacity:.95}
+.cred-logo[src$="clarion.png"]{opacity:.9}
+.cred-logo[src$="signs-express.svg"]{max-height:23px}
+.cred-logo[src$="clarion.png"]{max-height:34px}
+.cred-logo[src$="knight-frank.svg"]{max-height:30px}
+/* one shape for all four: the number leads, what it is sits under it, and the
+   period is a qualifier rather than a second statistic competing with it.
+   Set as uppercase bold stats they all read as metrics, which is why a bare
+   "2025" looked like a number that meant nothing. */
+.cred-item span{font-size:12.5px;color:rgb(var(--muted));line-height:1.3;text-align:center}
+.cred-fig{display:block;font-family:'Cabinet';font-weight:800;font-size:22px;line-height:1;
+  color:rgb(var(--ink));letter-spacing:-.01em;margin-top:2px}
+.cred-what{display:block;font-size:12px;color:rgb(var(--body));line-height:1.35;margin-top:5px}
+.cred-item:focus-visible{outline:2px solid rgb(var(--violet-br));outline-offset:3px;border-radius:6px}
+@media (hover:hover) and (pointer:fine){
+  .cred-item:hover span{color:rgb(var(--ink))}
+  .cred-item:hover .cred-logo{opacity:1}
+}
+@media (max-width:820px){
+  .cred-strip{gap:16px 0}
+  .cred-item{border-left:0;padding:0 14px}
+  .cred-item span{font-size:12px}
+  /* two up, not four stacked: the hero strip existed to put proof in front
+     of the ask, and four full-width rows pushed the ask a screen further
+     away on exactly the device with the least patience */
+  .cred-strip-hero{display:grid;grid-template-columns:1fr 1fr;gap:18px 8px}
+  .cred-strip-hero .cred-lede{grid-column:1 / -1;margin-bottom:2px}
+  .cred-strip-hero .cred-item{padding:0 6px}
+  .cred-strip-hero .cred-item span{font-size:11px}
+  .cred-strip-hero .cred-when{font-size:10.5px}
+}
+
+/* ── button press + touch hover ────────────────────────────────
+   Flagged in the feedback doc: "Buttons don't press down, and
+   hover effects stick on touchscreens." .btn:hover was declared
+   unguarded, so on a touch device the lifted/glowing state latches
+   after a tap and stays. Gate the hover, and give every button a
+   real press. Overrides the earlier unguarded rules by order. */
+@media (hover: none), (pointer: coarse){
+  .btn:hover,.btn.ghost:hover{transform:none;box-shadow:0 8px 26px rgb(var(--emerald)/.32)}
+  .btn.ghost:hover{box-shadow:none;border-color:rgb(var(--line-br)/.8)}
+  .cred-item:hover span,.foot-links a:hover,.navlinks a:hover{color:inherit;background:none}
+}
+.btn:active{transform:scale(.97);transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+.btn.ghost:active{transform:scale(.97)}
+.cred-item:active,.card:active{transform:scale(.99)}
+@media (prefers-reduced-motion:reduce){
+  .btn:active,.btn.ghost:active,.cred-item:active,.card:active{transform:none}
+}
+
+/* ── the showcase video ──────────────────────────────────────────────── */
+.showcase-video{position:relative;border-radius:var(--r4);overflow:hidden;max-width:900px;margin:0 auto;
+  border:1px solid rgb(var(--line-br)/.6);
+  /* PRD-07 §2 mat, same audit extension as .ex-card */
+  box-shadow:0 6px 18px rgb(0 0 0/.08),0 0 0 10px rgb(var(--accent,var(--violet))/.10),
+    0 50px 120px rgb(0 0 0/.7),0 0 160px rgb(var(--violet)/.22);
+  transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.showcase-video video{width:100%;display:block;background:rgb(var(--s1));aspect-ratio:16/9;object-fit:cover}
+@media (hover:hover) and (pointer:fine){
+  .showcase-video:hover{transform:translateY(-6px);box-shadow:0 60px 150px rgb(0 0 0/.75),0 0 200px rgb(var(--violet)/.34)}
+}
+
+/* ── the wave wall ─────────────────────────────────────────────
+   Four designs and three rounds of blind readers got this here.
+
+   V1: a static 3x3 of eight plates. Nine countable plates argue
+   badly for scale, and nothing carried the page URL.
+   V2: three rails drifting in alternating directions. Killed — the
+   same name appeared twice on any screen wider than 1788px, under a
+   headline reading "one page each"; opposing rows sheared at 39px/s;
+   1129px tall, 4.7x the real proof strip below it.
+   V3: one rail of eighteen. Killed — the edge mask left THREE
+   legible plates at 1440 (V1 showed nine), a lap took 268s, and the
+   reduced-motion branch came out at 5175px on a phone.
+   V4: one static wall of eight. Legible everywhere, but every reader
+   still read it as one template with the first name swapped:
+   "same photo, same layout, same everything except a swapped first
+   name and URL slug". The sequential teal-to-violet ramp made it
+   worse, because the hue tracked POSITION, so the one genuinely
+   personal signal on the plate read as a generator tell.
+
+   V5, here: the section states what changes instead of hoping it is
+   inferred. One plate at size with the three variables named beside
+   it (name, colours, address — the three the product actually takes
+   and returns, per index.html: "name and company, nothing else" in,
+   "their name, their colours, your face" out), then four more to
+   show it repeating. Brand colours are now per-brand and out of
+   sequence, and each plate carries a brand chip so the colour reads
+   as a brand token rather than decoration. */
+/* ── the annotated plate ───────────────────────────────────────
+   This started as a plate with three explained points beside it,
+   105 words of prose. Cold read: "very wordy and I don't understand
+   it". The words were not the problem, the FORMAT was: prose next
+   to a picture makes the reader hold a sentence in their head and
+   then go looking for the thing it describes. So the labels are now
+   ON the thing they name, two to four words each, and the section
+   went from 105 words to 12. Below 1000px the leader lines cannot
+   land accurately, so the labels drop into a legend under the
+   plate, each keeping the dot that ties it to its part. */
+/* ── the plate, in the message it arrives in ───────────────────
+   Three cold readers in a row failed the same way. The plate carries
+   four things: the sender's brand, the sender's face, the prospect's
+   name and the prospect's company. Two are "you" and two are "them",
+   nothing separated them, and every reader guessed the small photo
+   was the woman whose name is the biggest word on the card.
+
+   Annotating the parts did not fix it. The third reader named why:
+   "if the annotations are load-bearing, the card has failed" — four
+   grey labels asked the reader to untangle the card instead of
+   presenting it untangled. So the plate now sits in the thing it
+   actually arrives in, with a from and a to. Everyone can read a
+   message header, and it does the separating before the eye reaches
+   the card. Four labels, twelve words, gone. */
+.wmsg{width:min(470px,100%);margin:0 auto 26px}
+.wmsg-head{display:flex;align-items:center;gap:12px;margin-bottom:15px}
+.wmsg-av{width:40px;height:40px;border-radius:50%;overflow:hidden;flex:0 0 auto;
+  border:2px solid rgb(var(--pt));box-shadow:0 0 0 3px rgb(var(--pt)/.18)}
+.wmsg-av img{width:100%;height:100%;object-fit:cover;object-position:52% 50%;display:block;
+  transform:scale(1.75) translateY(17%);transform-origin:center}
+.wmsg-party b{display:block;font-size:14px;font-weight:700;color:rgb(var(--ink));line-height:1.3}
+.wmsg-party span{font-size:12px;color:rgb(var(--muted))}
+.wmsg-to{margin-left:auto;text-align:right}
+.wmsg-arrow{color:rgb(var(--muted)/.55);flex:0 0 auto;margin-left:auto}
+@media (max-width:420px){
+  .wmsg-head{gap:9px}
+  .wmsg-party b{font-size:13px}
+  .wmsg-party span{font-size:11px}
+}
+.wave-wall{display:grid;grid-template-columns:repeat(4,1fr);gap:18px 16px;max-width:1080px;margin:0 auto}
+/* the address is the proof, so it is not set in the smallest type
+   available. The host is constant across a wave (one sender) and the
+   name is the part that changes, so only the name is emphasised. It
+   wraps at the slash rather than truncating: hiding the domain on a
+   phone left the caption reading "/sarah", which is not a link. */
+.wtile-url{margin-top:10px;font-size:13px;line-height:1.45;letter-spacing:.01em;color:rgb(var(--muted))}
+.wtile-url b{color:rgb(var(--ink)/.95);font-weight:700}
+/* brand chip: the client's mark, the same on every plate in the
+   wave. Setting the kicker itself in --pt fails contrast at 9px on
+   the darker brand hues, so the colour arrives as a chip and the
+   name stays white. */
+.wave-anno .pt-co,.wave-wall .pt-co{display:flex;align-items:center;gap:7px}
+.wave-anno .pt-co:before,.wave-wall .pt-co:before{content:'';width:7px;height:7px;border-radius:2px;
+  background:rgb(var(--pt));flex:0 0 auto}
+/* the plates are not links, so they get no lift and no disc scale:
+   V3 served a hover affordance on eighteen tiles and honoured none.
+   The PiP's idle float is a component default that reads well on the
+   home page's single hero plate; five of them bobbing in sync on a
+   static wall is the restlessness this design exists to remove. */
+.wave-anno .pthumb .pt-pip,.wave-wall .pthumb .pt-pip{animation:none}
+.wave-anno .pthumb:hover,.wave-wall .pthumb:hover{transform:none;box-shadow:none;border-color:rgb(255 255 255/.14)}
+.wave-anno .pthumb:hover .pt-play,.wave-wall .pthumb:hover .pt-play{transform:translate(-50%,-50%)}
+/* legible, not a faded corner note: a cold reader "nearly missed it"
+   and briefly took the invented brands for real clients, which is the
+   one thing it exists to prevent, with four real client logos one
+   screen below */
+/* this is a caption on the grid above it, not the first line of the
+   closing stack: tight to the plates, generous space below, so the
+   eye groups it upward and the payoff line reads as the payoff */
+.wave-tag{max-width:1080px;margin:10px auto 0;text-align:center;font-size:12px;color:rgb(var(--muted)/.85)}
+.wave-foot{text-align:center;font-size:16px;color:rgb(var(--ink)/.8);margin:38px auto 0;max-width:560px}
+.wave-cta{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:22px}
+.wave-cta span{font-size:13.5px;color:rgb(var(--muted))}
+@media (max-width:720px){
+  .wave-wall{grid-template-columns:repeat(2,1fr);gap:14px 12px}
+  .wtile-url{font-size:12px}
+  .wtile-url .wu-host{display:block;font-size:10.5px;white-space:nowrap}
+  /* .wave-wall prefix, not bare .pt-stack: the pt-stack rules live
+     further down the file, so an equal-specificity override here
+     would lose to them */
+  .wave-wall .pthumb.pt-stack .pt-name{font-size:clamp(19px,16cqi,110px);padding:0 23% 15%}
+}
+
+/* ── personalised thumbnail ────────────────────────────────────
+   What the product actually generates per prospect: their brand,
+   their name large and centred, the play disc over the name (never
+   beside or below it), and the presenter's cloned avatar as a
+   circular corner PiP with a brand-colour ring, never full frame.
+   An earlier cut used a full-frame still of the presenter, which is
+   not what lands in a prospect's inbox. */
+.pthumb{position:relative;aspect-ratio:16/10;border-radius:14px;overflow:hidden;container-type:inline-size;
+  /* Was three stacked gradients plus a white overlay plus a grid — a wash of
+     brand colour that the white name had to fight through, and nothing like
+     what the product actually renders. The real thumbnails are near-black
+     with the brand arriving as a single accent, so this is one soft glow on
+     a dark base. Flatter, and the name lands on it properly. */
+  background:
+    radial-gradient(85% 65% at 80% -8%,rgb(var(--pt,var(--violet))/.32),transparent 60%),
+    linear-gradient(160deg,rgb(var(--pt,var(--violet))/.12),rgb(var(--bg)) 58%);
+  border:1px solid rgb(255 255 255/.14);display:block;
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease)}
+.pthumb:before{content:'';position:absolute;inset:0;pointer-events:none;
+  /* stacking (Andrew, 25 Aug): play disc FRONT (z7) > this veil (z6) >
+     everything else — name, brand, PiP, duration all sit UNDER the dark
+     layer, dimmed like content in a real paused player */
+  z-index:6;
+  /* the "opacitated black layer" (Andrew, 24 Aug call; strengthened
+     25 Aug r2 — "not good enough"): a REAL video veil. The whole plate
+     sits behind a dark wash like a paused player frame — flat dark over
+     everything, heavier at the foot, vignetted edges — so the name and
+     chrome read as overlays ON footage, not print on a brand wash. */
+  background:
+    linear-gradient(180deg,rgb(0 0 0/.30) 0%,rgb(0 0 0/.36) 55%,rgb(0 0 0/.62) 100%),
+    radial-gradient(130% 100% at 50% 38%,rgb(0 0 0/0) 34%,rgb(0 0 0/.42) 100%),
+    linear-gradient(180deg,rgb(255 255 255/.04),transparent 40%),
+    linear-gradient(rgb(255 255 255/.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgb(255 255 255/.022) 1px,transparent 1px);
+  background-size:auto,auto,auto,34px 34px,34px 34px}
+.pthumb .pt-co{position:absolute;left:4.5%;top:4.5%;z-index:3;font-size:clamp(9px,2.9cqi,18px);font-weight:800;
+  letter-spacing:.18em;text-transform:uppercase;color:rgb(255 255 255/.85);
+  max-width:62%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pthumb .pt-name{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;
+  font-family:'Cabinet';font-weight:800;letter-spacing:-.03em;line-height:1;
+  /* cqi, not vw: these cards range from a 190px strip tile to a 900px
+     hero plate, and a viewport-sized name meant the same card looked
+     right at one width and wrong at every other */
+  font-size:clamp(26px,25cqi,150px);color:#fff;text-align:center;padding:0 8px;
+  text-shadow:0 3px 20px rgb(0 0 0/.55)}
+/* the disc sits ON the name — never below or beside it.
+
+   It is sized in cqi for the same reason. A fixed 30px disc over a name
+   set at 15cqi reads as a smudge on the letters rather than a layer over
+   them — on a wide card it looked like a typo ("P-disc-ya"). At ~19cqi
+   the disc is unmistakably a control sitting in front of the name, which
+   is exactly what the rendered thumbnails do. */
+.pthumb .pt-play{position:absolute;left:50%;top:50%;width:clamp(28px,14cqi,58px);height:clamp(28px,14cqi,58px);
+  transform:translate(-50%,-50%);margin:0;z-index:7;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  /* the disc has to sit ON the name (house standard) without MERGING into
+     it. A white disc butted straight against white letters read to a cold
+     buyer as "the name render glitched… looks like a rendering bug" — the
+     worst possible impression on the one element demonstrating the product.
+     So the disc carries its own dark separation ring: the letters pass
+     visibly BEHIND a control instead of dissolving into it.
+     That still costs a letter on a short first name: centred on "Sarah"
+     it lands on the r. Where the name is the whole point of the plate,
+     use .pt-stack below, which lifts the disc clear of the letters
+     rather than layering it over them. */
+  /* 25 Aug (Andrew): the white disc merged with white letters and the
+     glass variant smeared them through its backdrop blur. Both become the
+     real-player chip: solid near-black, thin white ring, white triangle —
+     the letters pass CLEANLY behind an obvious control, nothing blurs. */
+  background:rgb(8 10 16/.88);
+  box-shadow:inset 0 0 0 2px rgb(255 255 255/.92),0 6px 22px rgb(0 0 0/.6);
+  transition:transform .45s var(--ease)}
+.pthumb .pt-play:after{content:'';border-left:clamp(9px,4.6cqi,19px) solid #fff;
+  border-top:clamp(6px,3cqi,12px) solid transparent;
+  border-bottom:clamp(6px,3cqi,12px) solid transparent;margin-left:12%}
+/* presenter as a corner PiP, ring in the prospect's brand colour */
+.pthumb .pt-pip{position:absolute;right:4.5%;bottom:4.5%;width:clamp(40px,15cqi,104px);height:clamp(40px,15cqi,104px);
+  border-radius:50%;z-index:5;
+  overflow:hidden;border:2px solid rgb(var(--pt,var(--violet)));
+  box-shadow:0 4px 16px rgb(0 0 0/.55),0 0 0 3px rgb(var(--pt,var(--violet))/.22)}
+.pthumb .pt-pip img{width:100%;height:100%;object-fit:cover;object-position:52% 50%;display:block;
+  transform:scale(1.75) translateY(17%);transform-origin:center}
+.pthumb .pt-dur{position:absolute;left:4.5%;bottom:5%;z-index:3;font-size:clamp(10px,2.9cqi,17px);font-weight:700;
+  color:#fff;background:rgb(0 0 0/.42);border:1px solid rgb(255 255 255/.2);padding:3px 8px;border-radius:999px}
+@media (hover:hover) and (pointer:fine){
+  .pthumb:hover{transform:translateY(-4px);border-color:rgb(255 255 255/.3);box-shadow:0 18px 44px rgb(0 0 0/.55)}
+  .pthumb:hover .pt-play{transform:translate(-50%,-50%) scale(1.1)}
+}
+
+/* ── .pt-stack: the name-first plate ───────────────────────────
+   Three rounds tried to make a centred play disc coexist with a
+   centred first name and all three failed the same way: at tile
+   size the disc lands on the middle letter, so Sarah renders as
+   "Sa-disc-ah" and a cold reader reads it as a broken render — on
+   the one element whose entire job is to prove the name is real.
+   Here the disc goes above the name on the same centre line, as a
+   dark glass control with a white rim, and the name gets the lower
+   half to itself, clear of the duration chip and the presenter PiP.
+   Nothing is occluded and it still reads as a video. */
+.pthumb.pt-stack .pt-play{top:31%;width:clamp(26px,11cqi,46px);height:clamp(26px,11cqi,46px);
+  background:rgb(8 10 16/.88);
+  box-shadow:inset 0 0 0 max(2px,.6cqi) rgb(255 255 255/.92),0 6px 20px rgb(0 0 0/.5)}
+.pthumb.pt-stack .pt-play:after{border-left:clamp(7px,3.1cqi,13px) solid #fff;
+  border-top:clamp(5px,2cqi,9px) solid transparent;border-bottom:clamp(5px,2cqi,9px) solid transparent}
+.pthumb.pt-stack .pt-name{align-items:flex-end;padding:0 19% 12%;font-size:clamp(20px,19cqi,110px)}
+/* the prospect's own company, under their name. Both are on the real
+   thumbnail, so both are on the plate: the name is what the eye takes
+   at thumbnail size, the company is what proves it is not a first-name
+   merge. The sender's brand stays top-left, so one plate carries two
+   companies and the copy beside it says which is which. */
+/* NOT padding-bottom: a percentage padding resolves against the
+   container's WIDTH, so on the 16/9 anatomy plate a 24% bottom pad
+   was 113px of a 264px-tall plate and shoved the name up into the
+   disc. Positioned from the bottom edge instead, where a percentage
+   resolves against height and behaves the same at every aspect. */
+/* the name is centred and the disc sits ON it: house standard, chosen
+   by Andrew 24 Aug with the "Sa(disc)ah" render in front of him. The
+   job here is to lose as little of the letter as possible, so the disc
+   is a rim and a veil rather than a fill, and it is sized down. */
+.pthumb.pt-stack.pt-two .pt-name{inset:0;display:flex;align-items:center;justify-content:center;
+  height:auto;padding:0 16% 9%}
+/* and the disc rises with it: at 31% it landed back on the middle
+   letter, which is the exact defect pt-stack exists to avoid */
+.pthumb.pt-stack.pt-two .pt-play{top:46%;transform:translate(-50%,-50%);
+  width:clamp(27px,11cqi,48px);height:clamp(27px,11cqi,48px);
+  /* 25 Aug, Andrew: the veil-and-blur read as "bad blur" — superseded.
+     Solid player chip like the other variants: the disc is obviously
+     chrome, so the covered letter reads as a control on a title, not a
+     typo, and nothing smears. The scrim on the plate carries the
+     video-frame look. */
+  background:rgb(8 10 16/.88);
+  box-shadow:inset 0 0 0 max(2px,.62cqi) rgb(255 255 255/.92),0 4px 18px rgb(0 0 0/.55)}
+.pthumb.pt-stack.pt-two:hover .pt-play{transform:translate(-50%,-50%)}
+.pthumb.pt-stack.pt-two .pt-play:after{border-left-color:#fff;filter:drop-shadow(0 1px 4px rgb(0 0 0/.75))}
+.pthumb.pt-stack.pt-two:hover .pt-play{transform:translate(-50%,-50%)}
+.pthumb.pt-stack .pt-for{position:absolute;left:12%;right:12%;bottom:10%;z-index:3;text-align:center;
+  font-size:clamp(8px,3.4cqi,16px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:rgb(255 255 255/.72);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-shadow:0 2px 10px rgb(0 0 0/.7)}
+/* the PiP is a corner marker here, not a subject: at 15cqi it touched the
+   last letter of longer names once the tile dropped to grid width */
+.pthumb.pt-stack .pt-pip{width:clamp(32px,12.5cqi,88px);height:clamp(32px,12.5cqi,88px)}
+/* smaller on the repeat plates: the same face five times at the same
+   size reads as one asset stamped five times. It IS the same face (one
+   recording, one sender) but on these it is a corner marker, not the
+   subject. */
+.wave-wall .pthumb.pt-stack .pt-pip{width:clamp(26px,10cqi,64px);height:clamp(26px,10cqi,64px)}
+/* the disc has to be proportionally BIGGER on the small plates, not
+   smaller: this file already learned that a disc too small for the
+   name reads as a smudge on the letters rather than a layer over
+   them. 11cqi suits the 470px plate; these need ~15. */
+.wave-wall .pthumb.pt-stack.pt-two .pt-play{width:clamp(30px,15cqi,52px);height:clamp(30px,15cqi,52px)}
+/* the PiP stays bottom-right, where the product actually renders it.
+   The company line clears it with SYMMETRIC insets, not by shunting
+   left: an asymmetric box centres the text on the box rather than on
+   the plate, so the company read as misaligned under a name that is
+   dead centre. 18% each side ends at 82%, and the PiP starts at 83%. */
+.pthumb.pt-stack.pt-two .pt-for{left:18%;right:18%}
+@media (hover:hover) and (pointer:fine){
+  .pthumb.pt-stack:hover .pt-play{transform:translate(-50%,-50%) scale(1.12)}
+}
+
+
+
+/* ── proof + showreel layout ───────────────────────────────────
+   Two things made these read as untidy grids.
+
+   On proof, nothing inside the cards lined up. Signs Express has a
+   long industry line, which pushed its tag onto a second row and
+   made its header 81px against 45px for the other three, so its
+   body copy started 36px lower and the four metric rows began at
+   four different heights (221/245/221/282). The header now has a
+   floor so all four match, and the metrics are pinned to the
+   bottom of the card alongside the quote, so they align across a
+   row regardless of how long the paragraph above them runs. */
+/* the tags now fit one line each, so the pill can hold its place at the top
+   right instead of dropping below and stretching that one card's header. */
+.story-top{align-items:flex-start;min-height:62px;flex-wrap:nowrap}
+.story-tag{flex-shrink:0;white-space:nowrap}
+.story-top > div:first-child{min-width:0}
+.story-metrics{margin-top:auto}
+.story-quote{margin-top:22px}
+/* stacked single-column, so the tag is better dropping onto its own row than
+   squeezing a long industry line into a narrow column beside it. */
+@media (max-width:600px){.story-top{min-height:0;flex-wrap:wrap}}
+
+/* On the showreel, eight cards in a fixed three-column grid left an
+   orphan row hanging to the left, and filtering to one or two cards
+   made it worse. Flex with a centred last row handles both. */
+.ex-wall{display:flex;flex-wrap:wrap;justify-content:center;gap:22px}
+.ex-card{flex:0 1 calc(33.333% - 14.7px);max-width:calc(33.333% - 14.7px)}
+/* The featured card spans two of the three columns: eight equal tiles gave the
+   eye no entry point, and the cold-outbound case is the one that explains the
+   rest. Frame keeps 16/9 so the designed poster is never cropped; the body
+   centres beside it. */
+@media (min-width:981px){
+  .ex-card.feat{flex:0 1 calc(66.666% - 7.4px);max-width:calc(66.666% - 7.4px);
+    display:grid;grid-template-columns:minmax(0,1.34fr) minmax(0,1fr);align-items:center}
+  .ex-card.feat .ex-frame{aspect-ratio:16/9}
+  .ex-card.feat .ex-body{padding:24px 26px}
+  .ex-card.feat .ex-cap{font-size:19px;line-height:1.28}
+  .ex-card.feat .ex-line{font-size:14px}
+}
+@media (max-width:980px){
+  .ex-card.feat{flex-basis:100%;max-width:100%}
+}
+/* At 320 the marker and the duration pill meet in the middle of the frame.
+   Both shrink rather than either being dropped: the marker is the page's
+   heaviest credibility work and the duration is a product spec. */
+@media (max-width:400px){
+  .ex-mark{font-size:9px;letter-spacing:.05em;padding:3px 7px;top:11px;left:11px}
+  .ex-frame .fdur{font-size:9.5px;padding:3px 7px;top:11px;right:11px}
+}
+/* A phone reader spent most of an eight-second budget scrolling an empty
+   screen: 126px of section padding sat between the subhead and the disclosure,
+   and the filter wrapped to four lines, pushing the first film below the fold. */
+#wall{padding-top:34px}
+@media (max-width:700px){
+  /* one scrollable line instead of four wrapped rows. The row is wrapped so a
+     fade on the right edge can show there is more than the two visible chips --
+     a phone reader read the hard clip as "there are only three options". */
+  .ex-filter-scroll{position:relative}
+  .ex-filter-scroll:after{content:'';position:absolute;right:-2px;top:0;bottom:6px;width:34px;
+    pointer-events:none;border-radius:999px;
+    box-shadow:inset -26px 0 18px -18px rgb(0 0 0/.75)}
+  .ex-filters{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;
+    scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;
+    padding-bottom:6px;margin-left:-4px;padding-left:4px}
+  .ex-filters::-webkit-scrollbar{display:none}
+  .ex-filters{scrollbar-width:none}
+  .ex-chip{flex:0 0 auto;scroll-snap-align:start}
+  .ex-disclose{margin-bottom:18px}
+}
+@media (max-width:980px){
+  .ex-wall{grid-template-columns:none}
+  .ex-card{flex-basis:calc(50% - 11px);max-width:calc(50% - 11px)}
+}
+@media (max-width:600px){
+  .ex-card{flex-basis:100%;max-width:100%}
+}
+
+/* ── showreel cards: real players, not links ───────────────────
+   The cards used to be anchors wrapping a muted, control-less
+   video with a decorative disc over it, so a click navigated away
+   and nothing ever played. The video is now a real player and only
+   the caption links out. Two consequences to handle: the card must
+   not lift on hover (it would slide away from under the cursor as
+   you reach for the scrubber), and the caption needs link styling
+   now that it is the anchor. */
+.ex-card:hover{transform:none}
+.ex-frame video{width:100%;display:block;background:rgb(var(--s1));aspect-ratio:16/10;object-fit:cover}
+a.ex-cap{display:block;text-decoration:none;color:rgb(var(--ink));transition:color .3s var(--ease)}
+a.ex-cap:focus-visible{outline:2px solid rgb(var(--violet-br));outline-offset:3px;border-radius:5px}
+@media (hover:hover) and (pointer:fine){
+  a.ex-cap:hover{color:rgb(var(--emerald-br))}
+  .ex-card:hover{border-color:rgb(var(--accent,var(--violet-br))/.5)}
+}
+
+/* ── showreel: animated play affordance + hover preview ────────
+   The native player sat cold on a poster with nothing inviting a
+   click. Now: a real button with a slow pulse ring, a silent
+   looping preview while the pointer is over the card, and full
+   playback with sound once you actually click. Controls only
+   appear at that point, so the resting state stays clean. */
+.ex-frame,.v-card{position:relative}
+.v-play{position:absolute;left:50%;top:50%;width:62px;height:62px;margin:-31px 0 0 -31px;z-index:3;
+  border:0;padding:0;cursor:pointer;border-radius:50%;
+  background:rgb(255 255 255/.95);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 34px rgb(0 0 0/.5);
+  transition:transform .45s var(--ease),opacity .35s var(--ease),background .35s var(--ease)}
+.v-play:after{content:'';border-left:19px solid rgb(var(--bg));border-top:12px solid transparent;
+  border-bottom:12px solid transparent;margin-left:5px}
+/* the pulse sits behind the disc and never moves the disc itself */
+.v-play:before{content:'';position:absolute;inset:-1px;border-radius:50%;z-index:-1;
+  border:2px solid rgb(255 255 255/.55);animation:exPulse 2.6s var(--ease) infinite}
+@keyframes exPulse{
+  0%{transform:scale(1);opacity:.75}
+  70%{transform:scale(1.65);opacity:0}
+  100%{transform:scale(1.65);opacity:0}
+}
+.v-play:focus-visible{outline:3px solid rgb(var(--emerald-br));outline-offset:4px}
+/* while previewing, the button steps back so the motion reads */
+/* while the clip is rolling the button steps back so the motion reads,
+   then comes forward on hover to say it can be played properly. */
+.v-card.ambient .v-play{opacity:.34;transform:scale(.88)}
+.v-card.playing .v-play{opacity:0;pointer-events:none}
+.v-card video{transition:opacity .4s var(--ease)}
+/* a quiet "hover to preview" hint, desktop only */
+.v-hint{position:absolute;left:12px;bottom:12px;z-index:3;font-size:10.5px;font-weight:700;pointer-events:none;
+  letter-spacing:.1em;text-transform:uppercase;color:rgb(255 255 255/.82);
+  background:rgb(0 0 0/.42);border:1px solid rgb(255 255 255/.2);padding:4px 10px;border-radius:999px;
+  opacity:0;transition:opacity .35s var(--ease)}
+.v-card.playing .v-hint{display:none}
+@media (hover:hover) and (pointer:fine){
+  .v-card:hover .v-play{transform:scale(1.08);background:#fff}
+  .v-card:hover .v-hint{opacity:1}
+  .v-card.ambient:hover .v-play{opacity:1;transform:scale(1.05)}
+}
+@media (hover:none),(pointer:coarse){
+  .v-hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .v-play:before{animation:none;opacity:.4}
+  .v-play,.ex-card:hover .v-play{transition:none;transform:none}
+}
+
+/* ── engine stage dots ─────────────────────────────────────────
+   Were three large pills carrying number + label; the 24 Aug review
+   (PRD-05 §1) moved the number into each card's corner and the title
+   above each card's content, so the indicator shrank to what it has
+   left to say: where you are. Still REAL tabs — focusable, arrow-key
+   navigable (index.js), the stage name in a visually-hidden label so
+   a screen reader hears "Earn the click", never "1". The reclaimed
+   vertical space goes to the stage panel. */
+.eng-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:16px}
+.eng-tab{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+  background:none;border:0;padding:8px;border-radius:999px}
+.eng-dot{display:block;width:9px;height:9px;border-radius:50%;flex-shrink:0;
+  background:rgb(var(--line-br)/.7);
+  transition:background .35s var(--ease),box-shadow .35s var(--ease),transform .35s var(--ease)}
+.eng-tab-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.eng-tab.is-on .eng-dot{background:rgb(var(--violet-br));transform:scale(1.25);
+  box-shadow:0 0 14px rgb(var(--violet)/.7)}
+.eng-tab:focus-visible{outline:2px solid rgb(var(--violet-br));outline-offset:3px}
+.eng-tab:active .eng-dot{transform:scale(.9);transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+@media (hover:hover) and (pointer:fine){
+  .eng-tab:hover .eng-dot{background:rgb(var(--muted))}
+}
+/* the number in the card's top-left, the title above the content
+   (PRD-05 §§2-3) */
+.escr-head{display:flex;align-items:center;gap:10px;padding:0 0 12px}
+.escr-n{width:24px;height:24px;border-radius:50%;flex-shrink:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:'Cabinet';font-weight:800;font-size:12px;
+  background:rgb(var(--line-br)/.5);color:rgb(var(--muted));
+  transition:background .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease)}
+.escr.is-on .escr-n{background:rgb(var(--violet-br));color:rgb(var(--bg));
+  box-shadow:0 0 14px rgb(var(--violet)/.55)}
+.escr-title{font-family:'Inter';font-weight:600;font-size:13.5px;color:rgb(var(--muted));
+  transition:color .35s var(--ease)}
+.escr.is-on .escr-title{color:rgb(var(--ink))}
+/* the pinned timeline only runs at 980px and up; below that the stacked
+   #eng-log fallback tells the same story, so tabs would be inert. */
+@media (max-width:979px){.eng-tabs{display:none}}
+@media (prefers-reduced-motion:reduce){.eng-tab:active{transform:none}}
+
+/* ── the showcase video's play affordance ──────────────────────
+   Andrew: "the play button has to be moving and bigger to be more
+   enticing... otherwise I just don't click." The shared 62px disc
+   is right on a 380px showreel card and lost on a 900px video, so
+   the showcase gets its own scale: a much larger disc, two offset
+   pulse rings so something is always expanding, and a label that
+   says what pressing it gets you. */
+.showcase-video .v-play{width:104px;height:104px;margin:-52px 0 0 -52px}
+.showcase-video .v-play:after{border-left-width:32px;border-top-width:20px;border-bottom-width:20px;margin-left:8px}
+.showcase-video .v-play:before{border-width:3px;animation-duration:3s}
+/* second ring, offset half a cycle, so the motion never fully stops */
+.showcase-video .v-play .ring2{position:absolute;inset:-1px;border-radius:50%;
+  border:3px solid rgb(255 255 255/.4);animation:exPulse 3s var(--ease) infinite 1.5s;pointer-events:none}
+.showcase-video .v-label{position:absolute;left:50%;top:calc(50% + 72px);transform:translateX(-50%);z-index:4;
+  font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
+  color:#fff;text-shadow:0 2px 12px rgb(0 0 0/.85);pointer-events:none;
+  transition:opacity .35s var(--ease)}
+.showcase-video.playing .v-label,.showcase-video.playing .v-play{opacity:0;pointer-events:none}
+/* the poster dims a touch so the white disc reads harder against it */
+.showcase-video:before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse 55% 55% at 50% 50%,rgb(0 0 0/.34),transparent 78%);
+  transition:opacity .4s var(--ease)}
+.showcase-video.playing:before,.showcase-video.ambient:before{opacity:0}
+@media (hover:hover) and (pointer:fine){
+  .showcase-video:hover .v-play{transform:scale(1.07)}
+}
+@media (max-width:760px){
+  .showcase-video .v-play{width:74px;height:74px;margin:-37px 0 0 -37px}
+  .showcase-video .v-play:after{border-left-width:23px;border-top-width:15px;border-bottom-width:15px}
+  .showcase-video .v-label{top:calc(50% + 54px);font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){
+  .showcase-video .v-play:before,.showcase-video .v-play .ring2{animation:none}
+}
+
+
+/* ── pthumb additions: fill variant + ambient life ──────────────
+   .pt-fill lets the same component fill a host frame (the comparator's
+   .comp-realframe and the engine's .eng-vid on index.html) instead of
+   being its own aspect-ratio card. Ambient motion is transform/opacity
+   only and dies under reduced motion. */
+.pthumb.pt-fill{position:absolute;inset:0;aspect-ratio:auto;border-radius:0;border:0}
+.pthumb.pt-fill:hover{transform:none;box-shadow:none}
+.comp-realframe .pt-pip{bottom:46px}
+@media (prefers-reduced-motion: no-preference){
+  .pthumb .pt-pip{animation:ptFloat 5.4s ease-in-out infinite}
+  @keyframes ptFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .pthumb .pt-play{position:absolute}
+  .pthumb .pt-play:before{content:'';position:absolute;inset:-5px;border-radius:50%;
+    border:1.5px solid rgb(255 255 255/.55);animation:ptPulse 2.8s cubic-bezier(0.23,1,0.32,1) infinite}
+  @keyframes ptPulse{0%{transform:scale(.9);opacity:.8}70%,100%{transform:scale(1.55);opacity:0}}
+}
+
+/* ── pv-live: a personalised page mid-watch ─────────────────────
+   The frame IS the product: the real render rolling muted inside the
+   page chrome, the prospect's brand top-left, their name on the video.
+   Replaces the abstract name-plate mock that read as nothing. Playback
+   is IO-gated in shared.js; reduced motion keeps the poster still. */
+.pv-live{position:absolute;inset:0;overflow:hidden;background:#0a1524}
+.pv-live video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.pv-live:after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgb(0 0 0/.42),transparent 30% 62%,rgb(0 0 0/.5))}
+.pv-co{position:absolute;right:5.5%;top:8.5%;z-index:2;font-size:clamp(8px,3cqi,11px);font-weight:800;
+  letter-spacing:.24em;text-transform:uppercase;color:rgb(255 255 255/.9);text-shadow:0 2px 12px rgb(0 0 0/.6)}
+.pv-cap{position:absolute;left:5.5%;bottom:9%;z-index:2;font-family:'Cabinet';font-weight:800;
+  font-size:clamp(15px,5.4cqi,26px);line-height:1.1;color:#fff;letter-spacing:-.01em;
+  text-shadow:0 3px 18px rgb(0 0 0/.65)}
+.pv-cap b{color:rgb(96 199 250)}
+.pv-live{container-type:inline-size}
+/* the comparator frame overlays its scrubber row along the bottom */
+.comp-realframe .pv-cap{bottom:52px}
+
+/* ── v-ctl: the custom player bar ───────────────────────────────
+   Native <video controls> fought the overlay stack (badges, hints,
+   play disc) and made seeking unreliable, so committed cards get this
+   instead: play/pause, a draggable scrub track, time and mute, in the
+   house style. Hidden until the card commits. */
+.v-ctl{position:absolute;left:0;right:0;bottom:0;z-index:4;display:none;align-items:center;gap:10px;
+  padding:26px 14px 12px;background:linear-gradient(0deg,rgb(0 0 0/.78),rgb(0 0 0/.34) 62%,transparent)}
+.v-card.playing .v-ctl{display:flex}
+.v-ctl button{flex-shrink:0;border:0;padding:0;cursor:pointer;background:none;position:relative;
+  width:28px;height:28px;border-radius:8px;transition:transform 160ms cubic-bezier(0.23,1,0.32,1)}
+.v-ctl button:active{transform:scale(.92)}
+/* play / pause glyphs in pure CSS */
+.v-ctl-pp:before,.v-ctl-pp:after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.v-ctl-pp:before{width:4px;height:14px;border-left:4px solid #fff;border-right:4px solid #fff}
+.v-ctl-pp.is-paused:before{width:0;height:0;border:0;
+  border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:2px}
+.v-ctl-track{position:relative;flex:1;height:22px;cursor:pointer;touch-action:none}
+.v-ctl-track:before{content:'';position:absolute;left:0;right:0;top:50%;height:5px;transform:translateY(-50%);
+  border-radius:99px;background:rgb(255 255 255/.24)}
+.v-ctl-fill{position:absolute;left:0;top:50%;height:5px;transform:translateY(-50%);border-radius:99px;width:0%;
+  background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)))}
+.v-ctl-knob{position:absolute;top:50%;left:0%;width:13px;height:13px;transform:translate(-50%,-50%);
+  border-radius:50%;background:#fff;box-shadow:0 2px 8px rgb(0 0 0/.5);pointer-events:none}
+.v-ctl-track:focus-visible{outline:2px solid rgb(var(--emerald-br));outline-offset:2px;border-radius:8px}
+.v-ctl-time{flex-shrink:0;font-size:11px;font-weight:700;color:rgb(255 255 255/.85);
+  font-variant-numeric:tabular-nums;letter-spacing:.03em}
+/* speaker glyph: square + cone; muted gets a strike */
+.v-ctl-mute:before{content:'';position:absolute;top:50%;left:50%;transform:translate(-60%,-50%);
+  width:6px;height:8px;background:#fff;border-radius:1px;
+  box-shadow:5px -3px 0 -1px #fff,5px 3px 0 -1px #fff,6px 0 0 -1px #fff}
+.v-ctl-mute.is-muted:after{content:'';position:absolute;top:50%;left:50%;width:18px;height:2px;
+  background:rgb(255 99 99/.95);transform:translate(-50%,-50%) rotate(-40deg);border-radius:2px}
+@media (hover:hover) and (pointer:fine){
+  .v-ctl button:hover{background:rgb(255 255 255/.14)}
+}
+
+/* comparator left layer: plain blast template pieces */
+.comp-link{font-size:12.5px;color:rgb(120 160 220);text-decoration:underline;word-break:break-all}
+.comp-spacer{flex:1}
+.comp-foot{font-size:10.5px;color:rgb(var(--muted)/.8);margin:0;padding-top:8px;border-top:1px solid rgb(255 255 255/.08)}
+
+/* ── eng screen strip: four stripped mock screens, focus glides ── */
+/* The strip now shows at every width (Andrew, 27 Aug: phones get the real
+   stage panels, not the one-line build log). Under 980px the three panels
+   stack, every panel presents at full strength, and the desktop glide/tab
+   machinery stays off. #engLog is retired at all widths but kept in the
+   markup as the copy source of record. */
+.eng-stripwrap{display:block}
+#engLog{display:none!important}
+@media (max-width:979px){
+  .eng-strip{flex-direction:column;gap:14px;margin-top:18px}
+  /* .eng-strip prefix outranks the base .escr / .escr.is-on rules below,
+     which otherwise win on source order and keep the desktop dim/scale */
+  .eng-strip .escr{opacity:1;transform:none;cursor:default}
+  .eng-strip .escr.is-on{transform:none;box-shadow:none;border-color:rgb(255 255 255/.14)}
+  .eng-strip .escr .escr-title{color:rgb(var(--ink))}
+  .eng-strip .escr .escr-note{color:rgb(var(--body))}
+  .eng-strip .escr .escr-n{background:rgb(var(--violet-br));color:rgb(var(--bg))}
+  .eng-strip .escr .escr-watch i{width:87%}
+  .eng-strip .escr .escr-body{min-height:150px}
+  /* stacked panels have no shared row height to inherit, so the page mock's
+     video strip collapsed to a sliver; give it real room */
+  .eng-strip .escr .escr-thumb{min-height:150px}
+}
+.eng-strip{display:flex;gap:18px;align-items:stretch;margin-top:26px}
+.escr{flex:1;min-width:0;display:flex;flex-direction:column;border-radius:18px;padding:16px;
+  background:rgb(255 255 255/.035);border:1px solid rgb(255 255 255/.09);
+  opacity:.68;transform:scale(.97);
+  transition:transform 500ms cubic-bezier(0.23,1,0.32,1),opacity 500ms cubic-bezier(0.23,1,0.32,1),
+    border-color 500ms cubic-bezier(0.23,1,0.32,1);cursor:pointer}
+/* scale up from 1.02: with the pill row gone (PRD-05 §1) the freed room
+   goes to the stage panel — the part carrying the information */
+.escr.is-on{opacity:1;transform:scale(1.05) translateY(-6px);border-color:rgb(var(--emerald-br)/.45);
+  box-shadow:0 24px 60px rgb(0 0 0/.4)}
+.escr-vid{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/10}
+.escr-vid .pv-cap{font-size:14px;left:7%;bottom:8%}
+.escr-body{position:relative;border-radius:12px;overflow:hidden;flex:1;min-height:0;
+  background:rgb(10 18 30);display:flex;flex-direction:column}
+.escr-pad{padding:14px;gap:10px}
+.escr-note{font-size:13px;color:rgb(var(--muted));line-height:1.5;margin:12px 0 0}
+.escr.is-on .escr-note{color:rgb(var(--body))}
+.escr-pad{gap:8px;padding:12px}
+.escr-retarget{padding:7px 10px}
+/* screen 2: the page mock */
+.escr-chrome{display:flex;align-items:center;gap:5px;padding:7px 10px;background:rgb(255 255 255/.05);
+  border-bottom:1px solid rgb(255 255 255/.07)}
+.escr-chrome i{width:6px;height:6px;border-radius:50%;background:rgb(255 255 255/.22)}
+.escr-chrome span{font-size:9.5px;color:rgb(96 199 250);margin-left:5px;letter-spacing:.02em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* was four stacked items — brand, headline, video, button — which reads as a
+   wireframe rather than as a page someone would actually land on. It now
+   carries the furniture a real one does: a brand row with the private-link
+   marker that makes one-page-per-person legible, the recipient's name set as
+   the page's own headline, and a CTA that looks like a control with the
+   promise sitting next to it. */
+.escr-page{flex:1;display:flex;flex-direction:column;align-items:stretch;gap:9px;padding:13px 14px 14px;
+  border-top:2px solid rgb(var(--pt,96 199 250)/.85)}
+.escr-pagetop{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.escr-private{font-size:8px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:rgb(96 199 250);background:rgb(96 199 250/.13);border:1px solid rgb(96 199 250/.35);
+  border-radius:99px;padding:3px 7px;white-space:nowrap}
+.escr-pagefoot{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.escr-ctanote{font-size:9.5px;color:rgb(var(--muted))}
+.escr-h b{color:rgb(96 199 250);font-weight:800}
+.escr-brand{font-size:9px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:rgb(255 255 255/.82)}
+.escr-h{font-family:'Cabinet';font-weight:800;font-size:16px;line-height:1.15;color:#fff;letter-spacing:-.015em}
+.escr-thumb{position:relative;width:100%;flex:1;min-height:0;border-radius:8px;
+  background:linear-gradient(135deg,rgb(96 199 250/.25),rgb(10 18 30));display:flex;align-items:center;justify-content:center}
+.escr-disc{width:26px;height:26px;border-radius:50%;background:#fff;position:relative}
+.escr-disc:after{content:'';position:absolute;top:50%;left:50%;transform:translate(-42%,-50%);
+  border-left:8px solid #0a1524;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.escr-cta{font-size:10.5px;font-weight:700;color:#06251c;background:rgb(var(--emerald-br));
+  padding:5px 12px;border-radius:999px}
+/* screen 3: watch data */
+.escr-watchrow{display:flex;justify-content:space-between;align-items:baseline;font-size:10.5px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgb(var(--muted))}
+/* 24 Aug review (ADDENDUM-01 A6): "the stats... it's just not big
+   enough" — the watch-through number is the stage's payload, so it
+   reads at stat size, not label size */
+.escr-watchrow b{font-size:26px;font-weight:800;color:rgb(var(--emerald-br));letter-spacing:0;line-height:1}
+.escr-watch{height:6px;border-radius:99px;background:rgb(255 255 255/.1);overflow:hidden}
+.escr-watch i{display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)));
+  transition:width 1200ms cubic-bezier(0.23,1,0.32,1)}
+.escr.is-on .escr-watch i{width:87%}
+.escr-viewer-cold{opacity:.5}
+.escr-viewer-cold .escr-avatar{background:rgb(255 255 255/.12)}
+.escr-viewer{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:10px;
+  background:rgb(255 255 255/.05)}
+.escr-avatar{width:26px;height:26px;border-radius:50%;background:rgb(96 199 250/.3);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.escr-viewer b{display:block;font-size:11.5px;color:rgb(var(--ink))}
+.escr-viewer span{font-size:10.5px;color:rgb(var(--muted))}
+.escr-views{font-size:11px;font-weight:700;color:rgb(var(--muted))}
+/* screen 4: alerts */
+.escr-slack,.escr-crm{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;
+  background:rgb(255 255 255/.05)}
+.escr-hash{width:24px;height:24px;border-radius:7px;background:rgb(126 106 255/.35);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
+.escr-slack b,.escr-crm b{display:block;font-size:11.5px;color:rgb(var(--ink))}
+.escr-slack span:not(.escr-hash),.escr-crm > div > span{font-size:10.5px;color:rgb(var(--muted))}
+.escr-dot{width:9px;height:9px;border-radius:50%;background:rgb(var(--muted));flex-shrink:0;
+  transition:background 400ms}
+.escr.is-on .escr-dot{background:rgb(var(--emerald-br));box-shadow:0 0 10px rgb(var(--emerald-br)/.6)}
+.st-warm{display:none;color:rgb(var(--emerald-br))}
+.escr.is-on .st-cold{display:none}
+.escr.is-on .st-warm{display:inline}
+.escr-retarget{display:flex;align-items:baseline;gap:8px;padding:9px 10px;border-radius:10px;
+  background:rgb(255 255 255/.05)}
+.escr-retarget b{font-family:'Cabinet';font-size:19px;color:rgb(var(--ink))}
+.escr-retarget span{font-size:10.5px;color:rgb(var(--muted));line-height:1.4}
+@media (prefers-reduced-motion:reduce){
+  .escr{opacity:1;transform:none;transition:none}
+  .escr .escr-watch i{width:87%}
+}
+
+/* eng strip screen 0: the DM card (pattern lifted from the Big Happy pitch page) */
+.escr-dmfrom{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgb(var(--muted))}
+.escr-dmtext{font-size:12px;color:rgb(var(--ink));line-height:1.5;margin:0;padding:8px 10px;
+  border-radius:10px 10px 10px 3px;background:rgb(255 255 255/.07)}
+.escr-dmthumb{position:relative;width:100%;flex:1;min-height:64px;border-radius:10px}
+/* who-watched chips: plain-English engagement states */
+.escr-chips{display:flex;flex-wrap:wrap;gap:6px}
+.escr-chips span{font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 9px;border-radius:999px;border:1px solid rgb(255 255 255/.14);color:rgb(var(--muted));
+  transition:color 400ms,border-color 400ms,background 400ms}
+.escr.is-on .escr-chips span{color:rgb(var(--emerald-br));border-color:rgb(var(--emerald-br)/.5);
+  background:rgb(var(--emerald-br)/.08)}
+.escr.is-on .escr-chips span:nth-child(1){transition-delay:150ms}
+.escr.is-on .escr-chips span:nth-child(2){transition-delay:450ms}
+.escr.is-on .escr-chips span:nth-child(3){transition-delay:750ms}
+
+/* ── chooser micro-mocks: show the outcome happening, not shapes ── */
+.ov-chat2{display:flex;flex-direction:column;gap:6px}
+.ov-chat2 .dm{font-size:10.5px;line-height:1.4;padding:6px 9px;border-radius:9px;max-width:88%}
+.ov-chat2 .them{align-self:flex-start;background:rgb(255 255 255/.08);color:rgb(var(--muted));border-bottom-left-radius:3px}
+.ov-chat2 .reply{align-self:flex-end;background:rgb(var(--accent)/.22);color:rgb(var(--ink));border-bottom-right-radius:3px}
+.ov-cal2{display:flex;flex-direction:column;gap:5px}
+.ov-cal2 .slot{font-size:10px;font-weight:700;padding:5px 9px;border-radius:8px;color:rgb(var(--muted));
+  background:rgb(255 255 255/.05);border:1px solid rgb(255 255 255/.08)}
+.ov-cal2 .slot.on{color:rgb(var(--ink));background:rgb(var(--accent)/.2);border-color:rgb(var(--accent-br,var(--accent))/.5)}
+.ov-prop{display:flex;flex-direction:column;gap:5px}
+.ov-prop .prow{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;font-weight:700;
+  color:rgb(var(--muted));padding:6px 9px;border-radius:8px;background:rgb(255 255 255/.05)}
+.ov-prop .prow b{color:rgb(var(--accent-br,var(--accent)))}
+.ov-prop .sign{color:rgb(var(--ink))}
+.ov-prop .sign svg{width:13px;height:13px;color:rgb(var(--emerald-br))}
+/* the seat-dot grid encoded nothing (no denominator, no scale, no owner) and
+   the fundraising sparkline was a line that only went up with no axis, unit or
+   timeframe. Both are now the thing the video actually is. */
+.ov-invite,.ov-raise{display:flex;flex-direction:column;gap:5px;justify-content:center}
+.ov-invite .irow,.ov-raise .rrow{font-size:10.5px;line-height:1.35;font-weight:600;color:rgb(var(--muted));
+  padding:5px 9px;border-radius:8px;border:1px solid rgb(var(--line));background:rgb(255 255 255/.03)}
+.ov-invite .irow.on,.ov-raise .rrow.on{color:rgb(var(--ink));background:rgb(var(--accent)/.2);
+  border-color:rgb(var(--accent)/.55)}
+.ov-invite .irow b{float:right;font-weight:800;color:rgb(var(--accent-br,var(--accent)))}
+.ov-mods{display:flex;flex-direction:column;gap:5px}
+.ov-mods .mod{display:flex;justify-content:space-between;font-size:10px;font-weight:700;padding:5px 9px;
+  border-radius:8px;background:rgb(255 255 255/.05);color:rgb(var(--muted))}
+.ov-mods .mod.on{color:rgb(var(--ink))}
+.ov-mods .mod i{font-style:normal;color:rgb(var(--emerald-br));font-size:10px;letter-spacing:0;text-transform:none}
+.ov-seats{position:relative;padding-bottom:16px}
+.seatcap{position:absolute;left:0;bottom:0;font-size:9px;letter-spacing:.06em;text-transform:uppercase;
+  font-weight:700;color:rgb(var(--muted))}
+
+/* the DM thumbnail at card scale: name smaller so the disc reads as a play button */
+
+.escr-dmthumb .pt-play{box-shadow:0 4px 16px rgb(0 0 0/.55)}
+/* comparator dead pane: skeleton lines so the empty run reads designed */
+.comp-skel{display:block;height:9px;border-radius:99px;background:rgb(255 255 255/.06);margin-top:6px}
+/* the old card used to run three lines, two stub bars and then roughly
+   500px of nothing before its unsubscribe footer, which read as an
+   unfinished panel rather than as a real bulk send. It now carries a full
+   body and a signature, so the dead space is gone and the point lands
+   harder: the send is impersonal about the SENDER too. */
+.comp-sig{display:flex;align-items:center;gap:10px;flex-shrink:0;padding-top:4px}
+.comp-sigav{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:rgb(255 255 255/.07);
+  border:1px solid rgb(255 255 255/.1)}
+.comp-sig b{display:inline-block;margin-bottom:4px}
+.comp-sig > div > span{display:block;font-size:11px;color:rgb(var(--muted)/.85)}
+
+/* ── 20 Aug review: less wash, more grid ────────────────────────
+   "compared to our usual designs it's a bit gradient... washy. Our grid
+   design with a bit of gradient looks really smart." Orbs pulled back
+   ~40%, the grid texture strengthened and extended further down page. */
+.sec-orb{opacity:.6}
+.grid-tex{background-image:linear-gradient(rgb(var(--line)/.5) 1px,transparent 1px),
+                   linear-gradient(90deg,rgb(var(--line)/.5) 1px,transparent 1px);
+  -webkit-mask-image:radial-gradient(ellipse 85% 75% at 50% 38%,#000 14%,transparent 94%);
+          mask-image:radial-gradient(ellipse 85% 75% at 50% 38%,#000 14%,transparent 94%)}
+
+/* ── hero demo affordance: it is a control, not an image ───────
+   "do they know to type in there? it's too nicely designed, it's like
+   an image." A live caret ticks in the empty input, the field shows a
+   text cursor, and the button gives one soft pulse between ghost passes. */
+#dEmail{cursor:text;caret-color:rgb(var(--emerald-br))}
+#dEmail:not(:focus){background-image:linear-gradient(rgb(var(--emerald-br)),rgb(var(--emerald-br)));
+  background-repeat:no-repeat;background-size:2px 18px;background-position:19px 50%;
+  animation:demo-caret 1.15s steps(1) infinite}
+#dEmail.ghosting:not(:focus){background-position:-10px 50%}
+@keyframes demo-caret{0%,49%{background-size:2px 18px}50%,100%{background-size:0 18px}}
+/* was one nudge every 9.5s inside a 0.3s window, which nobody ever caught
+   the page at — "does it pulse consistently?" answers itself. Now a steady
+   ring every 2.6s.
+
+   The ring is a pseudo-element and the button itself is never animated: the
+   old keyframes animated `transform`, and a running animation outranks
+   .btn:hover{transform:...}, so the hover lift on this one button had been
+   dead the whole time. It pulses to say "this is live, press it" and stops
+   the moment you engage — a button that keeps pulsing while you type is
+   nagging, not inviting. */
+#buildBtn{position:relative}
+#buildBtn:after{content:'';position:absolute;inset:-2px;border-radius:999px;pointer-events:none;
+  border:2px solid rgb(var(--emerald-br)/.8);
+  animation:btn-ring 2.6s cubic-bezier(0.23,1,0.32,1) infinite}
+@keyframes btn-ring{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(1.26);opacity:0}}
+#demoForm:focus-within #buildBtn:after,#buildBtn:disabled:after{animation:none;opacity:0}
+/* under 820px the button is full-width, and scaling a 600px-wide ring by
+   1.26 pushes it ~80px sideways while barely moving vertically — it reads
+   as the green fill breaking out of a second, misaligned pill. On small
+   screens the ring stays put and pulses opacity only. */
+@media (max-width:820px){
+  #buildBtn:after{animation-name:btn-ring-soft;transform:none}
+}
+@keyframes btn-ring-soft{0%{opacity:.7}70%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  #dEmail:not(:focus){animation:none;background-size:0 18px}
+  #buildBtn:after{animation:none;opacity:0}
+}
+
+/* ── use-case journey rail + stage tags on the outcome tiles ──── */
+.oc-rail{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 30px}
+.oc-rail span{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:rgb(var(--muted));padding:7px 14px;border-radius:999px;border:1px solid rgb(var(--line-br)/.6);
+  background:rgb(255 255 255/.03)}
+.oc-rail i{width:14px;height:2px;background:rgb(var(--line-br));flex-shrink:0}
+.oc-stage{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:rgb(var(--accent-br,var(--accent)));background:rgb(var(--accent)/.12);
+  padding:4px 10px;border-radius:999px;margin-bottom:12px}
+
+/* rail stops are now real tabs driving the live view */
+.oc-stop{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;
+  color:rgb(var(--body));padding:7px 14px;border-radius:999px;border:1px solid rgb(var(--line-br));
+  background:rgb(255 255 255/.05);
+  transition:color 160ms var(--ease),border-color 160ms var(--ease),background-color 160ms var(--ease),transform 160ms var(--ease)}
+.oc-stop:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){
+  .oc-stop:hover{color:rgb(var(--ink));border-color:rgb(var(--line-br));background:rgb(255 255 255/.09)}
+}
+.oc-stop.is-on{color:rgb(var(--emerald-br));border-color:rgb(var(--emerald-br)/.7);background:rgb(var(--emerald)/.16)}
+@media (hover:hover) and (pointer:fine){.oc-stop:hover{color:rgb(var(--ink))}}
+.oc-live{max-width:720px;margin:0 auto 40px}
+.oc-live-vid{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#0a1524;
+  border:1px solid rgb(var(--line-br)/.6);box-shadow:0 30px 80px rgb(0 0 0/.45)}
+.oc-live-vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.oc-live-cap{text-align:center;font-size:13px;color:rgb(var(--muted));margin-top:12px}
+
+/* ══════════════════════════════════════════════════════════════
+   5.3 — OUTCOME CHOOSER: ANIMATED USE-CASE EXPLAINERS
+   The rail used to swap one 16:9 render per stage. A cold reader
+   who will not press play learned nothing from a paused plate, so
+   each stage now runs a four-beat animated explainer of the actual
+   mechanism (list → build → send → what comes back), with the real
+   render one click away behind the toggle.
+   All motion is transform/opacity only, one shared cycle per scene,
+   and inactive scenes are display:none so nothing animates off-view.
+   ══════════════════════════════════════════════════════════════ */
+.ocx-frame{
+  position:relative;border-radius:16px;overflow:hidden;aspect-ratio:1.44/1;
+  border:1px solid rgb(var(--line));
+  background:radial-gradient(120% 100% at 70% 0%,rgb(var(--s2)/.9),rgb(var(--bg)) 70%);
+  container-type:inline-size;
+}
+.ocx-frame:before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:
+    linear-gradient(90deg,rgb(var(--line)/.5) 1px,transparent 1px) 0 0/56px 56px,
+    linear-gradient(rgb(var(--line)/.5) 1px,transparent 1px) 0 0/56px 56px;
+  -webkit-mask-image:radial-gradient(80% 70% at 50% 45%,#000,transparent 100%);
+  mask-image:radial-gradient(80% 70% at 50% 45%,#000,transparent 100%);
+  opacity:.5;
+}
+.ocx-stage{position:absolute;inset:0;z-index:1}
+
+.ocx-scene{position:absolute;inset:0;display:none;font-size:2.5cqw;--dur:14s}
+.ocx-scene.is-on{display:block}
+/* align-items:center, not flex-start. The frame is a fixed box sized for its
+   TALLEST beat, so a short beat pinned to the top leaves a hole under it —
+   a founder reading the frames cold called beat 4 "a small box at the top,
+   then roughly 450px of nothing" and read it as a loading failure.
+
+   This reasoning was already written down, under `@container (max-width:520px)`
+   where it says "the phone frame is sized for its tallest beat, so short beats
+   sit in the middle of the space rather than leaving a hole under them". It is
+   just as true of the 720px desktop frame, and was scoped to phones for no
+   reason anyone recorded.
+
+   Safe by construction: a beat whose art already fills the box cannot move, so
+   this cannot push art into the caption. Only short beats move, and only into
+   space that was empty. */
+.ocx-beat{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:5.4em 0 4.4em;
+  opacity:0;will-change:transform,opacity;
+  animation:ocxBeat var(--dur) var(--ease) infinite;
+  animation-delay:calc(var(--i) * var(--dur) / 4);
+}
+@keyframes ocxBeat{
+  0%{opacity:0;transform:translateY(.6em) scale(.985)}
+  4%{opacity:1;transform:none}
+  22%{opacity:1;transform:none}
+  26%{opacity:0;transform:translateY(-.35em) scale(.99)}
+  100%{opacity:0;transform:translateY(.6em) scale(.985)}
+}
+/* inner accents — same cycle, offset a beat-relative amount so the
+   art assembles itself rather than arriving whole */
+.ocx-in{
+  opacity:0;
+  animation:ocxIn var(--dur) var(--ease) infinite;
+  animation-delay:calc(var(--i) * var(--dur) / 4 + var(--d,.4s));
+}
+@keyframes ocxIn{
+  0%{opacity:0;transform:translateY(.5em) scale(.96)}
+  6%{opacity:1;transform:none}
+  22%{opacity:1;transform:none}
+  26%{opacity:0}
+  100%{opacity:0}
+}
+.ocx-fill{
+  transform:scaleX(0);transform-origin:left;
+  animation:ocxFill var(--dur) cubic-bezier(.23,1,.32,1) infinite;
+  animation-delay:calc(var(--i) * var(--dur) / 4 + var(--d,.5s));
+}
+@keyframes ocxFill{0%{transform:scaleX(0)}14%{transform:scaleX(1)}24%{transform:scaleX(1)}100%{transform:scaleX(1)}}
+
+/* progress rule + beat ticks */
+.ocx-prog{
+  position:absolute;left:.9em;right:.9em;top:.7em;z-index:4;pointer-events:none;
+  display:flex;gap:5px;height:3px;
+}
+.ocx-prog i{
+  position:relative;flex:1;border-radius:99px;background:rgb(var(--line-br)/.55);overflow:hidden;
+}
+.ocx-prog i:after{
+  content:'';position:absolute;inset:0;border-radius:99px;transform-origin:left;transform:scaleX(0);
+  background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)));
+  animation:ocxSeg0 14s linear infinite;
+}
+/* Phase lives IN the keyframes, one set per segment, not in animation-delay:
+   a delayed infinite animation restarts at t = delay + 14k, so on every loop
+   after the first the later segments stayed filled into the next cycle —
+   "highlighted sections before and after it when they go around again"
+   (Andrew, 27 Aug). With no delay all four reset together at the wrap. */
+.ocx-prog i:nth-child(2):after{animation-name:ocxSeg1}
+.ocx-prog i:nth-child(3):after{animation-name:ocxSeg2}
+.ocx-prog i:nth-child(4):after{animation-name:ocxSeg3}
+@keyframes ocxSeg0{0%{transform:scaleX(0)}25%{transform:scaleX(1)}100%{transform:scaleX(1)}}
+@keyframes ocxSeg1{0%,25%{transform:scaleX(0)}50%{transform:scaleX(1)}100%{transform:scaleX(1)}}
+@keyframes ocxSeg2{0%,50%{transform:scaleX(0)}75%{transform:scaleX(1)}100%{transform:scaleX(1)}}
+@keyframes ocxSeg3{0%,75%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+
+/* ── shared scene furniture ───────────────────────────────── */
+.ocx-art{position:relative;width:76%;display:flex;flex-direction:column;align-items:center;gap:1.7em}
+/* the short cards (the payoff beats) were floating in a tall dark field;
+   a floor on the card height makes them read as composed, not finished */
+.ocx-card{
+  min-height:7.5em;display:flex;flex-direction:column;justify-content:center;
+  width:fit-content;min-width:56%;max-width:100%;background:rgb(var(--s1)/.92);border:1px solid rgb(var(--line-br));border-radius:.9em;
+  padding:1.15em 1.25em;box-shadow:0 1.4em 3em -1.6em rgb(0 0 0/.85);
+}
+.ocx-lbl{font-size:.62em;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:rgb(var(--muted))}
+.ocx-row{display:flex;align-items:center;gap:.6em;padding:.5em 0}
+.ocx-row+.ocx-row{border-top:1px solid rgb(var(--line)/.8)}
+.ocx-av{width:1.6em;height:1.6em;border-radius:50%;background:rgb(var(--s3));flex-shrink:0;
+  display:grid;place-items:center;font-size:.68em;font-weight:700;color:rgb(var(--muted))}
+.ocx-bar{height:.4em;border-radius:99px;background:rgb(var(--line-br))}
+.ocx-row.is-hit .ocx-av{background:rgb(var(--teal)/.35);color:rgb(var(--teal-br));box-shadow:0 0 0 .16em rgb(var(--teal-br)/.35)}
+.ocx-row.is-hit .ocx-bar{background:rgb(var(--teal-br)/.7)}
+.ocx-name{font-size:.78em;font-weight:600;color:rgb(var(--body))}
+.ocx-note{font-size:.7em;color:rgb(var(--muted))}
+
+/* the render plate — the thing the machine actually builds */
+.ocx-plate{
+  position:relative;width:64%;aspect-ratio:16/9;border-radius:.7em;overflow:hidden;
+  background:linear-gradient(150deg,#0d1a2e,#060d18);border:1px solid rgb(var(--line-br));
+  padding:.85em .95em 3.1em;display:flex;flex-direction:column;justify-content:center;
+  box-shadow:0 1.6em 3.4em -1.8em rgb(0 0 0/.9);
+}
+.ocx-plate .brand{position:absolute;top:.7em;left:.9em;display:flex;align-items:center;gap:.65em;
+  font-family:'Cabinet';font-weight:800;font-size:.6em;letter-spacing:.18em;color:var(--pl,#4da3ff)}
+.ocx-plate .brand i{
+  font-style:normal;font-family:'Inter',sans-serif;font-weight:700;font-size:.82em;letter-spacing:.1em;
+  text-transform:uppercase;color:rgb(var(--muted));border:1px solid rgb(255 255 255/.16);
+  border-radius:99px;padding:.24em .6em;
+}
+
+.ocx-plate h4{font-family:'Cabinet';font-weight:800;font-size:1.55em;line-height:1;color:#fff;margin:0}
+.ocx-plate .rule{width:2.6em;height:.16em;background:var(--pl,#4da3ff);border-radius:99px;margin:.5em 0 .45em}
+.ocx-plate .sub{font-size:.68em;font-weight:700;color:#cfe0f4}
+/* the presenter. Four blind readers in a row asked "who is in the video"
+   and read the old empty grey disc as something being hidden, so it is
+   now the actual PiP frame lifted out of the Priya render, named. */
+.ocx-pip{
+  position:absolute;right:1em;bottom:1.6em;width:3.1em;height:3.1em;border-radius:50%;
+  background:#1d2836 url('../media/examples/presenter-andrew-pip.jpg') center/cover;
+  box-shadow:0 0 0 .14em var(--pl,#4da3ff),0 0 1.4em var(--plg,rgb(77 163 255/.5));
+}
+.ocx-pip b{
+  position:absolute;top:calc(100% + .28em);right:0;white-space:nowrap;text-align:right;
+  font-size:.54em;font-weight:700;letter-spacing:.02em;color:#cfe0f4;
+}
+/* the play mark — without it the plate reads as a static title card */
+.ocx-play{
+  position:absolute;left:.9em;bottom:.9em;height:2em;
+  display:flex;align-items:center;gap:.5em;
+  border-radius:99px;background:rgb(255 255 255/.9);
+  padding-right:.75em;
+}
+.ocx-play b{font-size:.62em;font-weight:700;color:#0b1220;letter-spacing:.02em}
+.ocx-play:before{
+  content:'';flex:0 0 auto;margin-left:.72em;
+  border-left:.6em solid #0b1220;border-top:.38em solid transparent;border-bottom:.38em solid transparent;
+}
+.ocx-plate-sm .ocx-play{height:1.7em;width:1.7em;padding-right:0;justify-content:center}
+.ocx-plate-sm .ocx-play b{display:none}
+.ocx-plate-sm .ocx-play:before{margin-left:.18em}
+.ocx-plate-sm .ocx-pip{bottom:1.4em;width:2.5em;height:2.5em}
+.ocx-plate-sm .ocx-pip b{display:none}
+/* the sub must clear the PiP or it runs under the face and clips */
+.ocx-plate .sub{padding-right:4.2em}
+/* whose recording this is — the other half of the same question */
+.ocx-src{
+  display:block;width:78%;margin:.15em 0 0;text-align:center;
+  font-size:.76em;line-height:1.6;color:rgb(var(--body));
+}
+
+/* chat bubbles */
+.ocx-bub{
+  display:block;max-width:78%;font-size:.78em;line-height:1.45;padding:.6em .85em;border-radius:.85em;
+  background:rgb(var(--s2));border:1px solid rgb(var(--line-br));color:rgb(var(--body));
+}
+.ocx-bub.me{margin-left:auto;background:rgb(var(--violet)/.16);border-color:rgb(var(--violet)/.4)}
+.ocx-bub.re{background:rgb(var(--emerald)/.13);border-color:rgb(var(--emerald)/.42);color:rgb(var(--ink))}
+.ocx-thumb{display:flex;gap:.6em;align-items:center;margin-bottom:.45em}
+.ocx-thumb .mini{
+  width:4.4em;aspect-ratio:16/9;border-radius:.35em;flex-shrink:0;
+  background:linear-gradient(150deg,#0d1a2e,#060d18);border:1px solid rgb(var(--line-br));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cabinet';font-weight:800;font-size:.62em;color:#fff;
+}
+
+/* silence chips, slots, meters, modules, seats */
+.ocx-chips{display:flex;gap:.45em;justify-content:flex-end}
+.ocx-chip{font-size:.62em;font-weight:700;letter-spacing:.06em;color:rgb(var(--faint));border:1px dashed rgb(var(--line-br));border-radius:99px;padding:.24em .7em}
+.ocx-slot{display:flex;align-items:center;justify-content:space-between;font-size:.76em;font-weight:600;color:rgb(var(--muted));border:1px solid rgb(var(--line));border-radius:.55em;padding:.45em .75em}
+.ocx-slot.on{color:rgb(var(--emerald-br));border-color:rgb(var(--emerald)/.55);background:rgb(var(--emerald)/.1)}
+.ocx-meter{display:flex;align-items:center;gap:.7em;font-size:.72em;color:rgb(var(--muted))}
+.ocx-track{flex:1;height:.42em;border-radius:99px;background:rgb(var(--line));overflow:hidden}
+.ocx-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)))}
+.ocx-meter b{color:rgb(var(--ink));font-family:'Cabinet';font-size:1.15em}
+.ocx-mod{display:flex;align-items:center;justify-content:space-between;font-size:.74em;color:rgb(var(--muted));padding:.4em 0}
+.ocx-mod+.ocx-mod{border-top:1px solid rgb(var(--line)/.8)}
+.ocx-mod.on{color:rgb(var(--body))}
+.ocx-mod.on i{font-style:normal;font-size:.85em;font-weight:700;color:rgb(var(--emerald-br))}
+.ocx-seats{display:grid;grid-template-columns:repeat(8,1fr);gap:.34em}
+.ocx-seats span{aspect-ratio:1;border-radius:.22em;background:rgb(var(--line))}
+.ocx-seats span.on{background:rgb(var(--a4)/.85)}
+.ocx-sign{display:flex;align-items:center;gap:.5em;margin-top:.55em;font-size:.8em;font-weight:700;color:rgb(var(--emerald-br))}
+.ocx-sign svg{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.ocx-doc{display:flex;flex-direction:column;gap:.4em}
+.ocx-doc i{display:block;height:.34em;border-radius:99px;background:rgb(var(--line-br));opacity:.75}
+.ocx-price{display:flex;justify-content:space-between;align-items:baseline;font-size:.78em;color:rgb(var(--muted));border-top:1px solid rgb(var(--line));padding-top:.5em;margin-top:.2em}
+.ocx-price b{font-family:'Cabinet';font-size:1.25em;color:rgb(var(--ink))}
+
+/* lower third caption, one per beat */
+.ocx-cap{
+  position:absolute;left:1.4em;right:1.4em;bottom:1.15em;
+  display:flex;align-items:flex-start;gap:.65em;
+  font-size:.8em;line-height:1.5;color:rgb(var(--body));
+  /* the art leads, the caption follows it — the beat container fades in with
+     no delay, so without this the line at the bottom arrived first */
+  opacity:0;animation:ocxIn var(--dur) var(--ease) infinite;
+  animation-delay:calc(var(--i) * var(--dur) / 4 + .85s);
+}
+.ocx-cap b,.ocx-cap em{margin-top:.12em}
+.ocx-cap b{
+  flex-shrink:0;width:1.6em;height:1.6em;border-radius:50%;display:grid;place-items:center;
+  font-size:.72em;background:rgb(var(--emerald)/.15);color:rgb(var(--emerald-br));
+  border:1px solid rgb(var(--emerald)/.45);
+}
+
+/* written steps — screen-reader copy of the film, promoted to visible
+   under reduced motion */
+.ocx-steps{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+@container (max-width:520px){
+  .ocx-scene{font-size:12.5px}
+  .ocx-art{width:92%}
+  .ocx-beat{padding:8em 0 4.4em}
+  .ocx-head{right:5.4em;top:1.2em}
+  .ocx-out{font-size:.88em}
+  .ocx-step{font-size:.78em;right:1em}
+  .ocx-cap{left:.9em;right:.9em;bottom:1em;font-size:.95em;align-items:flex-start}
+  .ocx-plate-sm{width:80%;font-size:.62em}
+  .ocx-src-sm{font-size:.74em;width:90%}
+  .ocx-win{width:96%}
+  .ocx-win-body{padding:.85em .7em;gap:.7em}
+  .ocx-src{width:90%}
+  /* the label and the role column were the least readable text on the
+     phone and they are the two that explain the panel */
+  .ocx-lbl{font-size:.72em;letter-spacing:.1em;color:rgb(var(--body))}
+  .ocx-note{font-size:.78em;color:rgb(var(--body))}
+  .ocx-row{padding:.42em 0}
+  .ocx-row .ocx-note{margin-left:auto;padding-left:.6em}
+}
+@media (prefers-reduced-motion:reduce){
+  /* freeze the film, show the written mechanism instead */
+  .ocx-beat,.ocx-in,.ocx-fill,.ocx-prog i:after{animation:none}
+  /* the film is frozen on beat one, so only its segment is filled */
+  .ocx-prog i:after{transform:scaleX(0)}
+  .ocx-prog i:first-child:after{transform:scaleX(1)}
+  .ocx-beat{opacity:0}
+  .ocx-beat[style*="--i:0"]{opacity:1}
+  .ocx-in{opacity:1}
+  .ocx-fill{transform:scaleX(1)}
+
+  .ocx-steps{
+    position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal;
+    display:grid;gap:8px;margin:16px auto 0;max-width:52ch;list-style:none;
+    font-size:13.5px;line-height:1.55;color:rgb(var(--body));
+  }
+  .ocx-steps li{display:flex;gap:10px}
+  .ocx-steps li:before{content:counter(list-item) '.';color:rgb(var(--emerald-br));font-weight:800}
+}
+
+/* ── explainer sub-components: the site's own artefacts, reused ──
+   Slack line, CRM stage pair, input picker, page-contents stack.
+   Copy in these mirrors the outcome pages verbatim rather than
+   inventing fresh numbers (MEDIA-BRIEF: no invented stats). */
+.ocx-slack{display:flex;flex-direction:column;gap:.5em;margin-top:.55em;border-left:.18em solid rgb(var(--emerald)/.6);padding-left:.7em}
+.ocx-slack-ch{font-size:.62em;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgb(var(--muted))}
+.ocx-slack-msg{font-size:.78em;color:rgb(var(--ink))}
+.ocx-stagepair{display:flex;align-items:center;gap:.6em;font-size:.8em;color:rgb(var(--muted));margin-top:.8em}
+.ocx-stagepair b{color:rgb(var(--emerald-br))}
+.ocx-arrow{width:1.1em;height:1.1em;stroke:rgb(var(--line-br));fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ocx-pick{display:flex;flex-wrap:wrap;gap:.55em;margin-top:.85em}
+.ocx-opt{font-size:.72em;font-weight:600;color:rgb(var(--muted));border:1px solid rgb(var(--line-br));border-radius:99px;padding:.34em .8em}
+.ocx-opt.on{color:rgb(var(--teal-br));border-color:rgb(var(--teal)/.6);background:rgb(var(--teal)/.12)}
+.ocx-stack{display:grid;gap:.7em;margin-top:.8em}
+.ocx-line{display:flex;align-items:center;gap:.55em;font-size:.76em;color:rgb(var(--body))}
+.ocx-line i{width:.42em;height:.42em;border-radius:50%;background:rgb(var(--emerald-br));flex-shrink:0}
+.ocx-cap em{
+  font-style:normal;font-size:.72em;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:rgb(var(--emerald-br));flex-shrink:0;
+}
+.ocx-row .ocx-note{margin-left:auto}
+
+/* browser frame for the "page of her own" beat — same furniture as
+   the engine strip's .eng-frame, sized for the explainer stage */
+.ocx-win{width:88%;border-radius:.7em;overflow:hidden;border:1px solid rgb(var(--line-br));background:rgb(var(--s1)/.94);box-shadow:0 1.6em 3.4em -1.8em rgb(0 0 0/.9)}
+.ocx-win-bar{display:flex;align-items:center;gap:.35em;padding:.5em .7em;background:rgb(var(--s2)/.85);border-bottom:1px solid rgb(var(--line))}
+.ocx-win-bar i{width:.42em;height:.42em;border-radius:50%;background:rgb(var(--line-br))}
+.ocx-win-bar span{margin-left:.6em;font-size:.62em;color:rgb(var(--muted));letter-spacing:.02em}
+.ocx-win-body{padding:1em .9em;display:flex;flex-direction:column;align-items:center;gap:.85em}
+/* the plate-in-a-page is a smaller rendering of the same object, so it
+   scales its own type rather than overflowing at the same size */
+.ocx-plate-sm{width:56%;font-size:.62em}
+.ocx-win-body .ocx-bub{max-width:82%;align-self:flex-start;margin-left:9%}
+.ocx-pills{display:flex;gap:.5em;width:74%}
+.ocx-pill{font-size:.68em;font-weight:700;padding:.42em .9em;border-radius:99px;border:1px solid rgb(var(--line-br));color:rgb(var(--body))}
+.ocx-pill.sign{border-color:rgb(var(--emerald)/.6);background:rgb(var(--emerald)/.14);color:rgb(var(--emerald-br))}
+
+/* the plate wears whichever brand the stage is about: Northbank's sky
+   blue for the cold send, the site's own ramp where it is your brand */
+.ocx-scene[data-scene="1"]{--pl:rgb(var(--a2-br));--plg:rgb(var(--a2)/.5)}
+.ocx-scene[data-scene="2"]{--pl:rgb(var(--a4-br));--plg:rgb(var(--a4)/.5)}
+.ocx-scene[data-scene="3"]{--pl:rgb(var(--a6-br));--plg:rgb(var(--a6)/.5)}
+
+/* narrow screens: the explainer needs height the 16:9 letterbox does not
+   have, so the frame goes 4:3 for it and snaps back for the real render */
+/* below 620px a fixed ratio cannot hold the header, the tallest beat and a
+   two-line caption at every phone width, so the frame takes a height instead
+   — measured against the tallest beat at 320px */
+/* 444px was a constant standing in for a height that is not constant. The
+   beats are position:absolute/inset:0, so they cannot size their parent — the
+   frame has to be told how tall the tallest beat will be, and that beat's art
+   scales with container width. Measured across the band with
+   .harness/band.cjs: the tallest beat (stage 1, beat 3) needs 448px at 430,
+   469 at 480, 484 at 560 and 493 at 580, against a frame fixed at 444. At 580
+   and 620 the art overran the caption outright; everywhere else in the band it
+   merely ate the gap, which is why only 620 tripped fit.js and the rest sat
+   there looking slightly cramped and passing.
+
+   500px clears the measured worst case with room. If any beat's art grows,
+   re-run band.cjs rather than guessing — it prints, per width, what the
+   tallest beat actually needs and by how much the frame is short. */
+@media (max-width:620px){.ocx-frame{aspect-ratio:auto;min-height:500px}}
+
+/* ── the frame says what it is, and where you are in it ──────────
+   Blind readers took the mocked Slack lines and percentages for
+   screenshots of real results, and could not tell the panel was
+   mid-sequence. One marker and one counter answer both. */
+/* the outcome sits inside the frame, on every beat, because it is the only
+   thing a skimmer who catches one beat needs to read */
+.ocx-head{position:absolute;left:1.2em;top:1.35em;right:7em;z-index:3;display:grid;gap:.25em}
+.ocx-out{font-size:.95em;font-weight:700;line-height:1.35;color:rgb(var(--ink))}
+.ocx-tag{
+  font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:rgb(var(--faint));
+}
+.ocx-step{
+  position:absolute;right:1.2em;top:1.5em;
+  font-family:'Cabinet';font-weight:800;font-size:.86em;letter-spacing:.02em;color:rgb(var(--ink));
+}
+.ocx-step i{font-style:normal;font-weight:700;font-size:.78em;color:rgb(var(--muted))}
+/* a quoted reply, deliberately not dressed as a screenshot of one */
+.ocx-reply{display:flex;flex-direction:column;gap:.3em;margin-top:1em;padding-left:.7em;border-left:2px solid rgb(var(--line-br))}
+.ocx-reply-who{font-size:.62em;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgb(var(--muted))}
+.ocx-reply-txt{font-size:.8em;font-style:italic;color:rgb(var(--body))}
+.ocx-slots{display:grid;gap:.35em;width:76%}
+/* the trust line under the panel: who actually does the work */
+.ocx-foot{
+  text-align:center;font-size:13px;line-height:1.6;color:rgb(var(--muted));
+  max-width:52ch;margin:8px auto 0;
+}
+/* four visible segments, so the bar reads as "one of four", not decoration */
+
+
+/* phone: the rail wrapped to three ragged rows with one orphan pill,
+   which read as stray text rather than a set of choices */
+@media (max-width:620px){
+  .oc-rail{flex-wrap:wrap;justify-content:center;gap:8px;row-gap:8px}
+  .oc-stop{flex:0 0 auto;font-size:10.5px;letter-spacing:.08em;padding:7px 11px}
+}
+
+/* what the video actually says. Three readers could describe the pipeline
+   and still not know whether the personalisation was more than a merge
+   field, so the plate carries one line of the script. */
+.ocx-said{
+  display:block;width:78%;margin:.1em 0 0;text-align:center;
+  font-size:.72em;line-height:1.6;font-style:italic;color:#a9c0da;
+}
+.ocx-said i{
+  width:.85em;height:.85em;flex-shrink:0;border-radius:.14em;
+  background:rgb(255 255 255/.72);
+}
+.ocx-plate-sm .ocx-said{display:none}
+/* at thumbnail size the name IS the thumbnail — it is what she sees before
+   she clicks, so it grows against the furniture instead of shrinking with it */
+.ocx-plate-sm h4{font-size:3.3em;line-height:.92;max-width:74%}
+.ocx-plate-sm .rule{width:2.4em;height:.16em;margin:.5em 0 .42em}
+/* a thumbnail is the name and little else; the sub-line is on the full
+   plate a beat earlier and in the message that carries the link */
+.ocx-plate-sm .sub{display:none}
+.ocx-plate-sm .brand{font-size:.5em;gap:.5em}
+
+.ocx-docblock{display:grid;gap:.45em}
+.ocx-docblock .ocx-doc{gap:.34em}
+/* page contents sit at the same scale as the plate they sit under */
+.ocx-win-body .ocx-slot,.ocx-win-body .ocx-line,.ocx-win-body .ocx-pill,.ocx-win-body .ocx-note{font-size:.68em}
+
+/* The offer, no longer welded to the end of a disclaimer. "You watch the first
+   video and say yes before we build the rest" was the strongest sentence in the
+   section and it was set as fine print, sharing a paragraph with the
+   illustration note — so the commercial term and the caveat read as one caveat.
+   Separated, and given the weight of a statement. */
+.ocx-offer{
+  max-width:46ch;margin:18px auto 0;text-align:center;
+  font-size:15.5px;line-height:1.55;font-weight:600;color:rgb(var(--ink));
+}
+@media (max-width:520px){.ocx-offer{font-size:14.5px}}
+
+/* the short disclosure that rides the page beat, where the frame looks most
+   like a shipped product and carried none */
+.ocx-src-sm{width:78%;margin:0;font-size:.7em;color:rgb(var(--muted))}
+
+.ocx-pagecta{
+  justify-self:start;align-self:start;width:max-content;margin-top:.5em;
+  font-size:.68em;font-weight:700;color:rgb(var(--bg));
+  background:rgb(var(--emerald-br));border-radius:99px;padding:.45em 1em;
+}
+
+@media (max-width:620px){
+  .oc-stop.is-on{background:rgb(var(--emerald)/.22);border-color:rgb(var(--emerald-br))}
+  .oc-rail{margin-bottom:22px}
+}
+
+/* narrow phones: the outcome line wraps to three, so it needs the room */
+@media (max-width:380px){
+  .ocx-beat{padding-top:9.6em;align-items:flex-start}
+  .ocx-head{right:4.6em}
+  .ocx-out{font-size:.84em}
+}
+
+.ocx-quiet{
+  margin-left:.7em;flex-shrink:0;font-size:.6em;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:rgb(var(--faint));border:1px solid rgb(var(--line));border-radius:99px;padding:.22em .6em;
+}
+
+/* the line that answers "do I have to do all this myself" */
+.ocx-rule{
+  display:block;margin-top:1em;padding-top:.8em;border-top:1px solid rgb(var(--line));
+  font-size:.76em;font-weight:600;color:rgb(var(--body));
+}
+/* the send itself, so the page beat is not the video beat in a browser */
+.ocx-msg{
+  width:100%;display:grid;gap:.4em;padding:.75em .9em;border-radius:.6em;
+  background:rgb(var(--violet)/.12);border:1px solid rgb(var(--violet)/.35);
+}
+.ocx-msg-from{font-size:.6em;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgb(var(--violet-br))}
+.ocx-msg-txt{font-size:.74em;color:rgb(var(--body))}
+@media (max-width:620px){
+  .ocx-prog{height:4px;gap:4px}
+}
+
+/* between the panel and the cards: the pill row is four, the grid is seven,
+   and readers kept assuming the other three were unbuilt */
+.grid-lead{
+  display:flex;align-items:center;gap:16px;max-width:680px;margin:38px auto 26px;
+  font-size:13.5px;color:rgb(var(--body));text-align:center;
+}
+.grid-lead-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgb(var(--line-br)),transparent)}
+@media (max-width:620px){.grid-lead{gap:10px;font-size:12px;margin-bottom:20px}}
+
+/* the phone thumbnail is half the height of the desktop one, so the same
+   multiplier ran the two-line names over the brand chip and the play mark */
+@media (max-width:620px){
+  /* a wider thumbnail is a taller 16:9 box, which is what the two-line
+     names need before the type can shrink any further */
+  .ocx-plate-sm{width:92%}
+  .ocx-plate-sm h4{font-size:2.1em;max-width:76%}
+  .ocx-plate-sm .rule{margin:.34em 0 .3em}
+}
+@media (max-width:380px){
+  /* on the smallest thumbnail the URL bar above it already carries the brand */
+  .ocx-plate-sm .brand{display:none}
+  .ocx-plate-sm h4{font-size:1.95em}
+}
+
+/* ── outcome pages: the same honesty the chooser panel holds ──────
+   Five of the seven showed a synthetic presenter with no disclosure
+   anywhere on the page, and every mocked notification carried a precise
+   number dressed as live data. */
+/* This paragraph used to end "The person it is addressed to is illustrative,
+   not a client." It was cut from all seven pages. Three independent blind
+   readers — a phone skimmer, a hostile sceptic and a plain-English editor —
+   converged on the same reading of it: the marker on the chip 133-167px below
+   says the same thing, and a second disclaimer inside one column stops reading
+   as honesty and starts reading as a company getting ahead of a doubt. The
+   editor's line was that saying it too often reads as anxiety about the
+   examples rather than candour about them.
+
+   It was also simply wrong on two of the seven pages. A job candidate is not
+   a client, and neither is your own new starter.
+
+   The rule that replaced it: one marker per fabricated object, and never two
+   within one scroll of each other. Four per page survive, each against a
+   different mock; a fifth is burned into the film itself so it survives a
+   screenshot leaving the page. Measure with .harness/verify3.cjs — and note
+   that innerText CANNOT see ::before/::after markers, so a count taken that
+   way reports half the real number. That mistake made me tell two readers
+   they were wrong when they were right. */
+.v-source{
+  max-width:380px;margin:14px 0 0;
+  font-size:12.5px;line-height:1.55;color:rgb(var(--muted));
+}
+/* .chip.is-example 'Invented example' badge removed 25 Aug (Andrew) — homepage sweep; the reasoning it carried is in git history */
+
+/* 25 Aug: the permanence argument as its own short line under the
+   comparator, after the sub was cut to one sentence */
+.comp-note{text-align:center;font-size:13.5px;color:rgb(var(--muted));max-width:56ch;margin:18px auto 4px;padding:0 20px;line-height:1.6}
+
+/* ── nav Learn dropdown (25 Aug, matches the live-site pattern) ──
+   Pure CSS: opens on hover behind the fine-pointer gate and on
+   :focus-within for keyboard. The drawer keeps flat Blog/Guides links. */
+.nav-drop{position:relative}
+.nav-drop > a,.nav-drop > .nd-toggle{display:inline-flex;align-items:center;gap:5px;background:none;border:0;cursor:pointer;font-family:inherit;padding:0}
+.nav-drop.is-open .nav-dropmenu{opacity:1;visibility:visible;transform:translateY(0);transition-delay:0s}
+.nav-drop.is-open .nd-caret{transform:rotate(180deg)}
+.nd-caret{transition:transform 160ms cubic-bezier(0.23,1,0.32,1)}
+.nav-dropmenu{position:absolute;top:100%;left:-14px;min-width:150px;padding:10px 0;margin:6px 0 0;
+  list-style:none;background:rgb(var(--s1)/.98);border:1px solid rgb(var(--line)/.8);border-radius:var(--r2);
+  box-shadow:0 18px 44px rgb(0 0 0/.45);opacity:0;visibility:hidden;transform:translateY(-4px);
+  transition:opacity 160ms cubic-bezier(0.23,1,0.32,1),transform 160ms cubic-bezier(0.23,1,0.32,1),visibility 0s 160ms}
+.nav-drop:focus-within .nav-dropmenu{opacity:1;visibility:visible;transform:translateY(0);transition-delay:0s}
+@media (hover:hover) and (pointer:fine){
+  .nav-drop:hover .nav-dropmenu{opacity:1;visibility:visible;transform:translateY(0);transition-delay:0s}
+  .nav-drop:hover .nd-caret{transform:rotate(180deg)}
+}
+.nav-dropmenu li a{display:block;padding:9px 18px;font-size:14px;color:rgb(var(--body));text-decoration:none}
+.nav-dropmenu li a:hover,.nav-dropmenu li a:focus-visible{color:rgb(var(--ink));background:rgb(255 255 255/.05)}
+@media (prefers-reduced-motion:reduce){ .nav-dropmenu,.nd-caret{transition:none} }
+
+/* how-it-works FAQ accordion (25 Aug) */
+.faq{border:1px solid rgb(var(--line)/.7);border-radius:var(--r1);background:rgb(var(--s1)/.55);margin-bottom:14px;overflow:hidden;
+  transition:border-color 200ms cubic-bezier(0.23,1,0.32,1),background 200ms cubic-bezier(0.23,1,0.32,1)}
+.faq:hover{border-color:rgb(var(--line-br)/.9)}
+.faq[open]{border-color:rgb(var(--violet-br)/.55);background:rgb(var(--s1)/.8)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:18px;
+  padding:20px 24px;font-family:'Cabinet';font-weight:700;font-size:18px;letter-spacing:-.01em;color:rgb(var(--ink))}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:'';flex-shrink:0;width:26px;height:26px;border-radius:50%;
+  border:1px solid rgb(var(--line-br)/.8);
+  background:
+    linear-gradient(rgb(var(--muted)) 0 0) center/10px 1.5px no-repeat,
+    linear-gradient(rgb(var(--muted)) 0 0) center/1.5px 10px no-repeat;
+  transition:transform 200ms cubic-bezier(0.23,1,0.32,1),background 200ms cubic-bezier(0.23,1,0.32,1)}
+.faq[open] summary:after{transform:rotate(45deg);border-color:rgb(var(--violet-br)/.8)}
+.faq summary:hover:after{border-color:rgb(var(--violet-br)/.8)}
+.faq p{padding:0 24px 20px;margin:0;font-size:15px;color:rgb(var(--body));line-height:1.7;max-width:60ch}
+@media (prefers-reduced-motion:reduce){ .faq,.faq summary:after{transition:none} }
+/* the page's hero video sits on a brand-tinted mat, same treatment as .video-shell */
+.hiw-matted{border-radius:var(--r2);box-shadow:0 6px 18px rgb(0 0 0/.08),0 0 0 10px rgb(var(--violet-br)/.10)}
+
+/* review counts beside the badge scores (launch reader: a 4.4 next to a
+   5.0 with no counts invites the question; the counts were already true
+   in the aria-labels — now visible, discreetly) */
+.trust-n{font-size:11px;color:rgb(var(--muted));margin-left:3px}
+
+.skip-link{position:absolute;left:-9999px;top:0;z-index:200;background:#37bd7e;color:#fff;padding:10px 16px;border-radius:0 0 10px 0;font-weight:600}
+.skip-link:focus{left:0}
+.foot-legal a{color:inherit;text-decoration:underline}
+#ssCookie{position:fixed;bottom:16px;right:16px;left:16px;z-index:210;max-width:400px;margin-left:auto;background:rgba(13,16,28,.96);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px 20px;backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(0,0,0,.5)}
+#ssCookie p{margin:0 0 12px;font-size:13.5px;line-height:1.55;color:rgb(var(--body))}
+#ssCookie a{color:inherit;text-decoration:underline}
+#ssCookie .ssc-btns{display:flex;gap:8px}
+#ssCookie button{flex:1;padding:9px 14px;border-radius:10px;font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.14);transition:transform 160ms cubic-bezier(0.23,1,0.32,1),background-color 160ms cubic-bezier(0.23,1,0.32,1)}
+#ssCookie button:active{transform:scale(0.97)}
+#ssCookie .ssc-accept{background:#37bd7e;border-color:#37bd7e;color:#fff}
+#ssCookie .ssc-accept:hover{background:#2ea86d}
+#ssCookie .ssc-reject{background:transparent;color:#fff}
+@media (hover:hover) and (pointer:fine){#ssCookie .ssc-reject:hover{background:rgba(255,255,255,.07)}}

@@ -1,0 +1,870 @@
+{
+ "replies-cold": [
+  {
+   "k": "hero",
+   "t": [
+    [
+     "Priya."
+    ]
+   ],
+   "a": "this is not a list"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Built for you, "
+    ],
+    [
+     "not a list.",
+     "1"
+    ]
+   ],
+   "a": "I made this one for you"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Three new clients "
+    ],
+    [
+     "this quarter.",
+     "1"
+    ]
+   ],
+   "a": "Your ops team has taken on three new clients"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Still doing "
+    ],
+    [
+     "the talking.",
+     "1"
+    ]
+   ],
+   "a": "the handover docs are still doing the talking",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "One short video, "
+    ],
+    [
+     "per client.",
+     "1"
+    ]
+   ],
+   "a": "One short video, in your brand"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Your brand. "
+    ],
+    [
+     "Their name on it.",
+     "1"
+    ]
+   ],
+   "a": "with the client's name on it",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Faster. "
+    ],
+    [
+     "And answered.",
+     "1"
+    ]
+   ],
+   "a": "gets there faster and it gets answered"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "It's all on "
+    ],
+    [
+     "the page below.",
+     "1"
+    ]
+   ],
+   "a": "is on the page below",
+   "p": 1
+  },
+  {
+   "k": "cta",
+   "t": [
+    [
+     "Fifteen minutes?"
+    ]
+   ],
+   "a": "Fifteen minutes this week",
+   "sub": "The link below books it."
+  }
+ ],
+ "replies-enterprise": [
+  {
+   "k": "hero",
+   "t": [
+    [
+     "Marcus."
+    ]
+   ],
+   "a": "an enterprise account"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Not a clever "
+    ],
+    [
+     "email.",
+     "1"
+    ]
+   ],
+   "a": "doesn't move because somebody sent a clever email"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "So I'm not "
+    ],
+    [
+     "sending one.",
+     "1"
+    ]
+   ],
+   "a": "So I'm not sending you one"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "A page built for "
+    ],
+    [
+     "Calder & Vine.",
+     "1"
+    ]
+   ],
+   "a": "on a page built for",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Every name on "
+    ],
+    [
+     "your list.",
+     "1"
+    ]
+   ],
+   "a": "every person on your target list"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Their name. "
+    ],
+    [
+     "Your brand.",
+     "1"
+    ]
+   ],
+   "a": "Their name, your brand"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Who's behind it, "
+    ],
+    [
+     "and what it costs.",
+     "1"
+    ]
+   ],
+   "a": "Who's behind it, and what it costs",
+   "p": 1
+  },
+  {
+   "k": "cta",
+   "t": [
+    [
+     "Worth a conversation?"
+    ]
+   ],
+   "a": "If it's worth",
+   "sub": "My calendar is under that."
+  }
+ ],
+ "booked-calls": [
+  {
+   "k": "hero",
+   "t": [
+    [
+     "Elena."
+    ]
+   ],
+   "a": "thanks for the demo on Tuesday"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Not notes you'll "
+    ],
+    [
+     "never open.",
+     "1"
+    ]
+   ],
+   "a": "Rather than send you notes"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "The two minutes "
+    ],
+    [
+     "that matter.",
+     "1"
+    ]
+   ],
+   "a": "here are the two minutes that matter"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Rollout across "
+    ],
+    [
+     "three sites.",
+     "1"
+    ]
+   ],
+   "a": "the rollout across your three sites",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "What your clinicians "
+    ],
+    [
+     "see on day one.",
+     "1"
+    ]
+   ],
+   "a": "what your clinicians see on day one",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "And the number "
+    ],
+    [
+     "your board asked about.",
+     "1"
+    ]
+   ],
+   "a": "the one number your board asked about",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Written out "
+    ],
+    [
+     "below this video.",
+     "1"
+    ]
+   ],
+   "a": "It's all written out below this video",
+   "p": 1
+  },
+  {
+   "k": "cta",
+   "t": [
+    [
+     "The next call?"
+    ]
+   ],
+   "a": "If you want the next call",
+   "sub": "The calendar is underneath."
+  }
+ ],
+ "signed-proposals": [
+  {
+   "k": "hero",
+   "t": [
+    [
+     "Sarah."
+    ]
+   ],
+   "a": "thanks for Tuesday's call"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Not a forty-page "
+    ],
+    [
+     "PDF.",
+     "1"
+    ]
+   ],
+   "a": "Rather than send you a forty-page PDF"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "I'll talk you "
+    ],
+    [
+     "through it.",
+     "1"
+    ]
+   ],
+   "a": "I thought I'd talk you through the proposal"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "The full scope, "
+    ],
+    [
+     "below.",
+     "1"
+    ]
+   ],
+   "a": "Below this video you'll find the full scope",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Three regional "
+    ],
+    [
+     "teams.",
+     "1"
+    ]
+   ],
+   "a": "the rollout across your three regional teams",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Onboarding in the "
+    ],
+    [
+     "first fortnight.",
+     "1"
+    ]
+   ],
+   "a": "onboarding in the first fortnight",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "The numbers, "
+    ],
+    [
+     "as discussed.",
+     "1"
+    ]
+   ],
+   "a": "the numbers exactly as we discussed them",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "One decision left. "
+    ],
+    [
+     "The start date.",
+     "1"
+    ]
+   ],
+   "a": "The only decision left is the start date"
+  },
+  {
+   "k": "cta",
+   "t": [
+    [
+     "Sign and start."
+    ]
+   ],
+   "a": "the agreement and the payment link",
+   "sub": "Both are just underneath."
+  }
+ ],
+ "event-showups": [
+  {
+   "k": "hero",
+   "t": [
+    [
+     "James."
+    ]
+   ],
+   "a": "a quick one before Thursday"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Cold lists into "
+    ],
+    [
+     "booked meetings.",
+     "1"
+    ]
+   ],
+   "a": "turning cold lists into booked meetings"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "A person, "
+    ],
+    [
+     "not a calendar invite.",
+     "1"
+    ]
+   ],
+   "a": "instead of leaving it to another calendar invite"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "The whole "
+    ],
+    [
+     "playbook.",
+     "1"
+    ]
+   ],
+   "a": "We're covering the whole playbook"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Thirty minutes. "
+    ],
+    [
+     "Live. No waffle.",
+     "1"
+    ]
+   ],
+   "a": "in thirty minutes, live, no waffle",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Your seat is "
+    ],
+    [
+     "confirmed.",
+     "1"
+    ]
+   ],
+   "a": "Your seat is confirmed",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Can't make it? "
+    ],
+    [
+     "Grab the recording.",
+     "1"
+    ]
+   ],
+   "a": "there's a link to grab the recording"
+  },
+  {
+   "k": "cta",
+   "t": [
+    [
+     "Thursday, then."
+    ]
+   ],
+   "a": "good to have you with us",
+   "sub": "The joining link is below."
+  }
+ ],
+ "ramped-reps": [
+  {
+   "k": "hero",
+   "t": [
+    [
+     "Tom."
+    ]
+   ],
+   "a": "welcome to module one"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "First day to "
+    ],
+    [
+     "first demo.",
+     "1"
+    ]
+   ],
+   "a": "this takes you from first day to first demo"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "One short video "
+    ],
+    [
+     "at a time.",
+     "1"
+    ]
+   ],
+   "a": "one short video at a time"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "How we position it. "
+    ],
+    [
+     "Who we sell to.",
+     "1"
+    ]
+   ],
+   "a": "how we position the product, who we sell to",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Three questions "
+    ],
+    [
+     "that open a call.",
+     "1"
+    ]
+   ],
+   "a": "the three questions every good discovery call",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Each module ends with "
+    ],
+    [
+     "one thing to do.",
+     "1"
+    ]
+   ],
+   "a": "Each module ends with one thing to go and do"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Pitching by "
+    ],
+    [
+     "Friday week.",
+     "1"
+    ]
+   ],
+   "a": "you'll be pitching by Friday week"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "No chasing. "
+    ],
+    [
+     "No guesswork.",
+     "1"
+    ]
+   ],
+   "a": "so there's no chasing and no guesswork"
+  },
+  {
+   "k": "cta",
+   "t": [
+    [
+     "Module one."
+    ]
+   ],
+   "a": "Right, module one",
+   "sub": "It starts below."
+  }
+ ],
+ "accepted-offers": [
+  {
+   "k": "hero",
+   "t": [
+    [
+     "Maya."
+    ]
+   ],
+   "a": "I'll keep this short"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "We'd love you "
+    ],
+    [
+     "to join us.",
+     "1"
+    ]
+   ],
+   "a": "We would love you to join us"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "The whole panel "
+    ],
+    [
+     "said the same thing.",
+     "1"
+    ]
+   ],
+   "a": "The whole panel came out of your final interview"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "\u201cThat's "
+    ],
+    [
+     "the person.\u201d",
+     "1"
+    ]
+   ],
+   "a": "that's the person"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Salary. Options. "
+    ],
+    [
+     "Start date.",
+     "1"
+    ]
+   ],
+   "a": "salary, options, start date",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Honest words from "
+    ],
+    [
+     "the team.",
+     "1"
+    ]
+   ],
+   "a": "a few honest words from the team you'd be joining",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Take the time "
+    ],
+    [
+     "you need.",
+     "1"
+    ]
+   ],
+   "a": "Take the time you need"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Sent to "
+    ],
+    [
+     "nobody else.",
+     "1"
+    ]
+   ],
+   "a": "we're not sending this video to anyone else",
+   "p": 1
+  },
+  {
+   "k": "cta",
+   "t": [
+    [
+     "We hope it's a yes."
+    ]
+   ],
+   "a": "We really hope you say yes",
+   "sub": "Your offer is underneath."
+  }
+ ],
+ "investor-meetings": [
+  {
+   "k": "hero",
+   "t": [
+    [
+     "Daniel."
+    ]
+   ],
+   "a": "you asked for the short version"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Raising "
+    ],
+    [
+     "two million.",
+     "1"
+    ]
+   ],
+   "a": "We're raising two million"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Eighteen months "
+    ],
+    [
+     "of growth.",
+     "1"
+    ]
+   ],
+   "a": "Revenue up every month for eighteen straight"
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Meetings booked "
+    ],
+    [
+     "ahead of plan.",
+     "1"
+    ]
+   ],
+   "a": "books meetings at three times what we budgeted",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "A third already "
+    ],
+    [
+     "committed.",
+     "1"
+    ]
+   ],
+   "a": "a third of the round already committed",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "The deck, and "
+    ],
+    [
+     "the numbers.",
+     "1"
+    ]
+   ],
+   "a": "The full deck and the numbers behind it are below this video",
+   "p": 1
+  },
+  {
+   "k": "s",
+   "t": [
+    [
+     "Every number "
+    ],
+    [
+     "stands up.",
+     "1"
+    ]
+   ],
+   "a": "stands up to questioning",
+   "p": 1
+  },
+  {
+   "k": "cta",
+   "t": [
+    [
+     "Fifteen minutes?"
+    ]
+   ],
+   "a": "my calendar is underneath",
+   "sub": "It shows you exactly where it's going."
+  }
+ ]
+}

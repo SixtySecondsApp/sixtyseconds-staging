@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case study layout candidates - internal</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="shared.css?v=1792700033">
+<noscript><style>.rv{opacity:1!important;visibility:visible!important;transform:none!important}</style></noscript>
+<style>
+/* internal mockup page only - never ships */
+.lab-divider{max-width:var(--maxw);margin:90px auto 40px;padding:0 32px}
+.lab-divider h2{font-family:'Cabinet';font-weight:800;font-size:28px;margin:0 0 8px}
+.lab-divider p{font-size:14.5px;color:rgb(var(--muted));margin:0;max-width:70ch;line-height:1.6}
+.lab-badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgb(var(--emerald-br));border:1px solid rgb(var(--emerald)/.4);border-radius:99px;padding:4px 12px;margin-bottom:12px}
+
+/* ── Option A: featured story + supporting grid ─────────── */
+.feat-card{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;padding:44px 46px;border-radius:var(--r3);
+  background:linear-gradient(158deg,rgb(var(--s2)/.85),rgb(var(--s1)/.92));border:1px solid rgb(var(--line-br)/.5);
+  position:relative;overflow:hidden}
+.feat-card:before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 80% 70% at 100% 0%,rgb(var(--accent,var(--violet))/.16),transparent 65%)}
+.feat-stat{font-family:'Cabinet';font-weight:800;font-size:clamp(54px,6.5vw,84px);letter-spacing:-.03em;line-height:1;
+  background:linear-gradient(96deg,rgb(var(--teal-br)),rgb(var(--violet-br)));-webkit-background-clip:text;background-clip:text;color:transparent}
+.feat-statlabel{font-size:14px;color:rgb(var(--muted));margin-top:8px}
+.feat-side{display:flex;flex-direction:column;justify-content:center;border-left:1px solid rgb(var(--line)/.6);padding-left:44px}
+.feat-substats{display:flex;gap:34px;margin-top:26px}
+.feat-substats b{display:block;font-family:'Cabinet';font-weight:800;font-size:24px;color:rgb(var(--accent-br,var(--violet-br)))}
+.feat-substats span{display:block;font-size:12px;color:rgb(var(--muted));margin-top:3px;max-width:14ch;line-height:1.4}
+@media (max-width:860px){.feat-card{grid-template-columns:1fr;gap:28px}.feat-side{border-left:0;padding-left:0;border-top:1px solid rgb(var(--line)/.6);padding-top:28px}}
+
+/* ── Option B: editorial rows, stat rail ────────────────── */
+.row-story{display:grid;grid-template-columns:220px 1fr;gap:44px;padding:44px 0;border-top:1px solid rgb(var(--line)/.6)}
+.row-story:last-child{border-bottom:1px solid rgb(var(--line)/.6)}
+.row-rail b{display:block;font-family:'Cabinet';font-weight:800;font-size:clamp(34px,3.6vw,44px);letter-spacing:-.02em;line-height:1.05;
+  color:rgb(var(--accent-br,var(--violet-br)))}
+.row-rail span{display:block;font-size:12.5px;color:rgb(var(--muted));margin-top:6px;line-height:1.5}
+.row-rail .row-client{font-family:'Cabinet';font-weight:800;font-size:19px;color:rgb(var(--head));margin-bottom:2px}
+.row-rail .row-ind{font-size:12px;color:rgb(var(--muted));margin-bottom:20px}
+.row-body p{font-size:15.5px;color:rgb(var(--body));line-height:1.7;margin:0 0 18px;max-width:62ch}
+.row-quote{font-size:14.5px;font-style:italic;color:rgb(var(--body));line-height:1.6;padding-left:16px;
+  border-left:2px solid rgb(var(--accent,var(--violet))/.55);max-width:58ch}
+.row-quote cite{display:block;margin-top:8px;font-style:normal;font-size:12.5px;color:rgb(var(--muted))}
+.row-minis{display:flex;gap:30px;margin-top:20px}
+.row-minis b{display:block;font-family:'Cabinet';font-weight:800;font-size:21px;color:rgb(var(--accent-br,var(--violet-br)))}
+.row-minis span{display:block;font-size:11.5px;color:rgb(var(--muted));margin-top:2px;max-width:15ch;line-height:1.4}
+@media (max-width:760px){.row-story{grid-template-columns:1fr;gap:22px}}
+
+/* ── Option C: stat-first tiles that open ───────────────── */
+.tile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.tile{position:relative;overflow:hidden;padding:34px 32px;border-radius:var(--r3);cursor:pointer;
+  background:linear-gradient(158deg,rgb(var(--s2)/.85),rgb(var(--s1)/.92));border:1px solid rgb(var(--line-br)/.5);
+  transition:border-color 220ms cubic-bezier(0.23,1,0.32,1),transform 220ms cubic-bezier(0.23,1,0.32,1)}
+@media (hover:hover) and (pointer:fine){.tile:hover{border-color:rgb(var(--accent-br,var(--violet-br))/.6);transform:translateY(-2px)}}
+.tile:before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 90% 60% at 0% 0%,rgb(var(--accent,var(--violet))/.15),transparent 65%)}
+.tile-head b{font-family:'Cabinet';font-weight:800;font-size:clamp(40px,4.4vw,56px);letter-spacing:-.03em;line-height:1;
+  color:rgb(var(--accent-br,var(--violet-br)))}
+.tile-head span{display:block;font-size:14px;color:rgb(var(--body));margin-top:8px;max-width:30ch;line-height:1.5}
+.tile-client{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:13px;color:rgb(var(--muted))}
+.tile-client b{font-family:'Cabinet';font-weight:800;font-size:15px;color:rgb(var(--head))}
+.tile-more{margin-top:18px;font-size:12.5px;font-weight:700;color:rgb(var(--accent-br,var(--violet-br)));letter-spacing:.02em}
+@media (max-width:760px){.tile-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="field"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+<div class="grid-tex"></div>
+<main style="padding-top:90px">
+
+  <!-- ═════════ OPTION A ═════════ -->
+  <div class="lab-divider">
+    <span class="lab-badge">Option A</span>
+    <h2>Featured story + supporting grid</h2>
+    <p>Stripe / Webflow pattern. Capium gets a full-width feature card led by one huge stat; the other three stay as the current-style cards below it. Instant hierarchy - the best number carries the page.</p>
+  </div>
+  <div class="wrap">
+    <div class="feat-card" style="--accent:var(--a1);--accent-br:var(--a1-br)">
+      <div>
+        <div class="feat-stat">£600k+</div>
+        <div class="feat-statlabel">new recurring revenue in 12 months</div>
+        <div class="feat-substats">
+          <div><b>~50%</b><span>shorter sales cycle</span></div>
+          <div><b>+£250</b><span>average order value</span></div>
+        </div>
+      </div>
+      <div class="feat-side">
+        <div class="story-client" style="font-size:22px">Capium</div>
+        <div class="story-industry" style="margin-bottom:16px">Accounting software (SaaS)</div>
+        <p style="font-size:14.5px;color:rgb(var(--body));line-height:1.65;margin:0 0 18px">Personalised video and email outreach to higher-end accountancy firms - a channel that repositioned Capium from entry-level to mid-tier.</p>
+        <div class="story-quote" style="margin-top:0">“It’s opened up many, many different doors. It’s made a massive difference for us.”<cite>Satinder, Marketing Director</cite></div>
+      </div>
+    </div>
+    <div class="story-grid" style="margin-top:24px;grid-template-columns:repeat(3,1fr)">
+      <div class="story-card" style="--accent:var(--a4);--accent-br:var(--a4-br);padding:28px 26px">
+        <div class="story-client" style="font-size:18px">Clarion Events</div>
+        <div class="story-industry" style="margin-bottom:14px">Events · ITC Vegas</div>
+        <div class="story-metrics" style="margin-top:0">
+          <div class="story-metric"><b>535+</b><span>genuine replies</span></div>
+          <div class="story-metric"><b>2nd yr</b><span>renewed on results</span></div>
+        </div>
+      </div>
+      <div class="story-card" style="--accent:var(--a6);--accent-br:var(--a6-br);padding:28px 26px">
+        <div class="story-client" style="font-size:18px">Knight Frank</div>
+        <div class="story-industry" style="margin-bottom:14px">Real estate recruitment</div>
+        <div class="story-metrics" style="margin-top:0">
+          <div class="story-metric"><b>£595k</b><span>agency spend avoided</span></div>
+          <div class="story-metric"><b>66%</b><span>engagement uplift</span></div>
+        </div>
+      </div>
+      <div class="story-card" style="--accent:var(--a3);--accent-br:var(--a3-br);padding:28px 26px">
+        <div class="story-client" style="font-size:18px">Signs Express</div>
+        <div class="story-industry" style="margin-bottom:14px">Signage &amp; brand</div>
+        <div class="story-metrics" style="margin-top:0">
+          <div class="story-metric"><b>2 wks</b><span>to first new leads</span></div>
+          <div class="story-metric"><b>9 sites</b><span>Mears rebrand contract</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═════════ OPTION B ═════════ -->
+  <div class="lab-divider">
+    <span class="lab-badge">Option B</span>
+    <h2>Editorial rows with a stat rail</h2>
+    <p>Vercel / Ramp pattern. One full-width row per client: hero number pinned in a left rail, story and quote breathing on the right. Reads like journalism, not tiles - strongest option for exactly four stories with no logos or photos.</p>
+  </div>
+  <div class="wrap">
+    <div class="row-story" style="--accent:var(--a1);--accent-br:var(--a1-br)">
+      <div class="row-rail">
+        <div class="row-client">Capium</div>
+        <div class="row-ind">Accounting software (SaaS)</div>
+        <b>£600k+</b><span>new recurring revenue</span>
+      </div>
+      <div class="row-body">
+        <p>A combined video and email outreach channel aimed at higher-end accountancy firms, personalised at the individual level. It didn’t just generate leads - it repositioned Capium from an entry-level provider to a mid-tier one in the market’s eyes.</p>
+        <div class="row-quote">“It’s opened up many, many different doors. Our offer is now aimed more towards mid-tier and larger practices. It’s made a massive difference for us.”<cite>Satinder, Marketing Director, Capium</cite></div>
+        <div class="row-minis">
+          <div><b>~50%</b><span>shorter sales cycle</span></div>
+          <div><b>+£250</b><span>average order value</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="row-story" style="--accent:var(--a4);--accent-br:var(--a4-br)">
+      <div class="row-rail">
+        <div class="row-client">Clarion Events</div>
+        <div class="row-ind">Events · ITC Vegas</div>
+        <b>535+</b><span>genuine replies from 57,000+ emails</span>
+      </div>
+      <div class="row-body">
+        <p>Cutting through the noise at insurance’s largest annual conference: every email linked to a dynamic, personalised landing page, tracked in real time into HubSpot and Slack. A three-month sprint became a twelve-month engagement, extended on results alone.</p>
+        <div class="row-minis">
+          <div><b>4.3%</b><span>positive interest rate</span></div>
+          <div><b>2nd year</b><span>renewed on results</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═════════ OPTION C ═════════ -->
+  <div class="lab-divider">
+    <span class="lab-badge">Option C</span>
+    <h2>Stat-first tiles → full story on click</h2>
+    <p>Clay / Linear pattern. The index is a wall of huge numbers, one per client; each tile opens a dedicated story (its own page or an expanding panel). Best if we plan to grow past four studies and want per-study URLs for sales links.</p>
+  </div>
+  <div class="wrap" style="margin-bottom:120px">
+    <div class="tile-grid">
+      <div class="tile" style="--accent:var(--a1);--accent-br:var(--a1-br)">
+        <div class="tile-head"><b>£600k+</b><span>new recurring revenue from one outreach channel</span></div>
+        <div class="tile-client"><b>Capium</b> · Accounting software</div>
+        <div class="tile-more">Read their story →</div>
+      </div>
+      <div class="tile" style="--accent:var(--a4);--accent-br:var(--a4-br)">
+        <div class="tile-head"><b>535+</b><span>genuine replies from 57,000 emails at ITC Vegas</span></div>
+        <div class="tile-client"><b>Clarion Events</b> · Events</div>
+        <div class="tile-more">Read their story →</div>
+      </div>
+      <div class="tile" style="--accent:var(--a6);--accent-br:var(--a6-br)">
+        <div class="tile-head"><b>£595k</b><span>agency spend avoided in year one</span></div>
+        <div class="tile-client"><b>Knight Frank</b> · Recruitment</div>
+        <div class="tile-more">Read their story →</div>
+      </div>
+      <div class="tile" style="--accent:var(--a3);--accent-br:var(--a3-br)">
+        <div class="tile-head"><b>2 weeks</b><span>to first new leads, plus a nine-site Mears contract</span></div>
+        <div class="tile-client"><b>Signs Express</b> · Signage</div>
+        <div class="tile-more">Read their story →</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

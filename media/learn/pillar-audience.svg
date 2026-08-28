@@ -1,0 +1,141 @@
+<svg viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg">
+  <title>Radar Targeting Animation</title>
+
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#1a2535" />
+    </pattern>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <radialGradient id="sweepGradient">
+      <stop offset="10%" stop-color="#03AD9C" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#03AD9C" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+      }
+    }
+
+    .center-transform {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .sweep {
+      animation: rotateSweep 4s linear infinite;
+    }
+    @keyframes rotateSweep {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .ring {
+      animation: expandRing 4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      animation-fill-mode: both;
+      stroke: #03AD9C;
+      stroke-width: 1.5;
+      fill: none;
+    }
+    @keyframes expandRing {
+      from {
+        transform: scale(0.1);
+        opacity: 0.8;
+      }
+      to {
+        transform: scale(1.5);
+        opacity: 0;
+      }
+    }
+    #ring-2 { animation-delay: 1s; }
+    #ring-3 { animation-delay: 2s; }
+    #ring-4 { animation-delay: 3s; }
+
+    .selected-dot {
+      animation: findTarget 4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      animation-fill-mode: both;
+    }
+    @keyframes findTarget {
+      0%, 24% {
+        fill: #334155;
+        opacity: 0.5;
+        transform: scale(1);
+        filter: none;
+      }
+      25% {
+        fill: #03AD9C;
+        opacity: 1;
+        transform: scale(1.6);
+        filter: url(#glow);
+      }
+      40%, 90% {
+        fill: #03AD9C;
+        opacity: 1;
+        transform: scale(1);
+        filter: url(#glow);
+      }
+      65% {
+        fill: #03AD9C;
+        opacity: 1;
+        transform: scale(1.3);
+        filter: url(#glow);
+      }
+      100% {
+        fill: #334155;
+        opacity: 0.5;
+        transform: scale(1);
+        filter: none;
+      }
+    }
+    #dot-sel-1 { animation-delay: -3s; } /* Found at 0s */
+    #dot-sel-2 { animation-delay: -2s; } /* Found at 1s */
+    #dot-sel-3 { animation-delay: -1s; } /* Found at 2s */
+    #dot-sel-4 { animation-delay: 0s;  } /* Found at 3s */
+  </style>
+
+  <rect width="480" height="320" fill="#070b18" />
+  <rect width="480" height="320" fill="url(#grid)" opacity="0.5" />
+
+  <g id="prospects">
+    <circle cx="50" cy="60" r="6" fill="#334155" opacity="0.5"/>
+    <circle cx="120" cy="280" r="6" fill="#334155" opacity="0.5"/>
+    <circle cx="150" cy="40" r="6" fill="#334155" opacity="0.5"/>
+    <circle cx="200" cy="250" r="6" fill="#334155" opacity="0.5"/>
+    <circle cx="300" cy="50" r="6" fill="#334155" opacity="0.5"/>
+    <circle cx="380" cy="100" r="6" fill="#334155" opacity="0.5"/>
+    <circle cx="420" cy="260" r="6" fill="#334155" opacity="0.5"/>
+    <circle cx="450" cy="160" r="6" fill="#334155" opacity="0.5"/>
+
+    <g transform="translate(100, 100)">
+      <circle id="dot-sel-1" class="selected-dot center-transform" r="6" />
+    </g>
+    <g transform="translate(180, 200)">
+      <circle id="dot-sel-2" class="selected-dot center-transform" r="6" />
+    </g>
+    <g transform="translate(350, 220)">
+      <circle id="dot-sel-3" class="selected-dot center-transform" r="6" />
+    </g>
+    <g transform="translate(400, 120)">
+      <circle id="dot-sel-4" class="selected-dot center-transform" r="6" />
+    </g>
+  </g>
+
+  <g transform="translate(240, 160)">
+    <path class="sweep center-transform" d="M 0 0 L 160 0 A 160 160 0 0 1 0 -160 Z" fill="url(#sweepGradient)" />
+    <circle id="ring-1" class="ring center-transform" r="100" />
+    <circle id="ring-2" class="ring center-transform" r="100" />
+    <circle id="ring-3" class="ring center-transform" r="100" />
+    <circle id="ring-4" class="ring center-transform" r="100" />
+    <path d="M -120 0 H 120 M 0 -120 V 120" stroke="#03AD9C" stroke-width="1" opacity="0.2" />
+    <path d="M -15 0 H 15 M 0 -15 V 15" stroke="#03AD9C" stroke-width="1.5" />
+    <circle r="4" fill="none" stroke="#03AD9C" stroke-width="1.5" />
+  </g>
+</svg>

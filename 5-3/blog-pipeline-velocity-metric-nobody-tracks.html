@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline Velocity: The Metric Nobody Tracks (But Should) · Sixty Seconds</title>
+<meta name="description" content="One formula, four inputs, and the single number that tells you more about your sales health than any pipeline report. Teams that track velocity weekly">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pipeline Velocity: The Metric Nobody Tracks (But Should) · Sixty Seconds">
+<meta property="og:description" content="One formula, four inputs, and the single number that tells you more about your sales health than any pipeline report. Teams that track velocity weekly">
+<meta property="og:image" content="https://www.sixtyseconds.ai/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pipeline Velocity: The Metric Nobody Tracks (But Should) · Sixty Seconds">
+<meta name="twitter:description" content="One formula, four inputs, and the single number that tells you more about your sales health than any pipeline report. Teams that track velocity weekly">
+<meta name="twitter:image" content="https://www.sixtyseconds.ai/og-image.png">
+<link rel="canonical" href="https://www.sixtyseconds.ai/blog-pipeline-velocity-metric-nobody-tracks">
+<meta property="og:url" content="https://www.sixtyseconds.ai/blog-pipeline-velocity-metric-nobody-tracks">
+<meta property="og:site_name" content="Sixty Seconds">
+<script defer data-domain="sixtyseconds.ai" src="https://plausible.io/js/script.js"></script>
+<link rel="icon" type="image/png" sizes="32x32" href="../media/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../media/favicon-16.png">
+<link rel="apple-touch-icon" href="../media/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="shared.css?v=1792700033">
+<style>
+.learn-wrap{max-width:1120px;margin:0 auto;padding:130px 28px 80px}
+.crumb{font-size:12.5px;color:rgb(var(--muted));margin-bottom:22px}
+.crumb a{color:inherit;text-decoration:none}
+.crumb a:hover{color:rgb(var(--emerald-br))}
+.tagrow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.tag{font-size:11.5px;font-weight:700;color:rgb(var(--emerald-br));border:1px solid rgb(var(--emerald)/.4);border-radius:99px;padding:4px 11px}
+.learn-h1{font-family:'Cabinet';font-weight:800;font-size:clamp(30px,4.4vw,52px);line-height:1.08;letter-spacing:-.02em;margin:0 0 20px;max-width:24ch}
+.byline{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13.5px;color:rgb(var(--muted));margin-bottom:40px}
+.byline .avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;border:1px solid rgb(var(--line-br)/.5)}
+.byline b{display:block;color:rgb(var(--ink));font-size:14px;font-weight:700}
+.byline .role{display:block;font-size:12px}
+.byline .dot{color:rgb(var(--faint))}
+.art-cols{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:56px;align-items:start}
+.toc{position:sticky;top:100px;border:1px solid rgb(var(--line)/.6);border-radius:var(--r3);padding:22px 24px;background:rgb(255 255 255/.02)}
+.toc h4{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgb(var(--faint));margin:0 0 14px;font-weight:800}
+.toc a{display:block;font-size:13px;color:rgb(var(--muted));text-decoration:none;padding:5px 0;line-height:1.4;border-left:2px solid transparent;padding-left:12px;margin-left:-12px}
+.toc a:hover{color:rgb(var(--ink))}
+.toc a.on{color:rgb(var(--emerald-br));border-left-color:rgb(var(--emerald-br))}
+.callout{border:1px solid rgb(var(--emerald)/.35);background:rgb(var(--emerald)/.06);border-radius:var(--r3);padding:20px 24px;margin:0 0 32px}
+.callout h5{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgb(var(--emerald-br));margin:0 0 8px;font-weight:800}
+.callout p{margin:0;font-size:15px;line-height:1.65;color:rgb(var(--ink))}
+.art{font-size:16.5px;line-height:1.75;color:rgb(var(--body))}
+.art h2{font-family:'Cabinet';font-weight:800;font-size:26px;color:rgb(var(--ink));margin:44px 0 14px;letter-spacing:-.01em;scroll-margin-top:100px}
+.art h3{font-weight:700;font-size:19px;color:rgb(var(--ink));margin:32px 0 10px}
+.art p{margin:0 0 18px}
+.art ul,.art ol{margin:0 0 18px;padding-left:24px}
+.art li{margin-bottom:8px}
+.art a{color:rgb(var(--emerald-br))}
+.art blockquote{border-left:3px solid rgb(var(--violet-br)/.7);margin:24px 0;padding:12px 20px;color:rgb(var(--ink));background:rgb(var(--violet)/.07);border-radius:0 12px 12px 0;font-style:italic}
+.art table{width:100%;border-collapse:collapse;margin:24px 0;font-size:14px;display:block;overflow-x:auto}
+.art th,.art td{border:1px solid rgb(var(--line-br)/.5);padding:9px 12px;text-align:left}
+.art th{color:rgb(var(--ink));background:rgb(255 255 255/.04)}
+.art em{color:rgb(var(--muted))}
+.art-img{margin:28px 0}
+.art-img img{width:100%;height:auto;border-radius:var(--r3);border:1px solid rgb(var(--line)/.5)}
+.art-logo{margin:36px 0 -6px}
+.art-logo img{width:48px;height:48px;border-radius:12px;border:1px solid rgb(var(--line)/.5);background:rgb(255 255 255/.05);padding:4px}
+.bio{display:flex;gap:18px;align-items:flex-start;border:1px solid rgb(var(--line)/.6);border-radius:var(--r3);padding:26px 28px;margin-top:56px;background:rgb(255 255 255/.02)}
+.bio .avatar{flex-shrink:0;width:64px;height:64px;border-radius:50%;object-fit:cover;border:1px solid rgb(var(--line-br)/.5)}
+.bio b{display:block;font-size:15px;color:rgb(var(--ink));margin-bottom:2px}
+.bio .role{font-size:12.5px;color:rgb(var(--muted));margin-bottom:10px}
+.bio p{margin:0;font-size:14px;line-height:1.6;color:rgb(var(--body))}
+.rel{margin-top:56px}
+.rel h3{font-family:'Cabinet';font-weight:800;font-size:22px;margin:0 0 18px}
+.rel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.rel-card{display:block;padding:20px 22px;border-radius:var(--r3);background:rgb(255 255 255/.03);border:1px solid rgb(255 255 255/.09);text-decoration:none;transition:transform 200ms cubic-bezier(0.23,1,0.32,1),border-color 200ms cubic-bezier(0.23,1,0.32,1)}
+@media (hover:hover) and (pointer:fine){.rel-card:hover{transform:translateY(-3px);border-color:rgb(var(--emerald-br)/.45)}}
+.rel-card .tagrow{margin-bottom:10px}
+.rel-card b{display:block;font-family:'Cabinet';font-weight:800;font-size:16px;line-height:1.3;color:rgb(var(--ink));margin-bottom:8px}
+.rel-card span{font-size:12.5px;font-weight:700;color:rgb(var(--emerald-br))}
+.learn-cta{margin-top:60px;padding:30px;border-radius:18px;text-align:center;background:rgb(var(--emerald)/.07);border:1px solid rgb(var(--emerald)/.3)}
+.learn-cta p{margin:0 0 16px;color:rgb(var(--ink));font-weight:600}
+@media (max-width:900px){.art-cols{grid-template-columns:1fr}.toc{position:static;order:-1}.rel-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<span class="grid-tex" aria-hidden="true"></span>
+<nav id="nav">
+  <div class="inner">
+    <a class="brand" href="index.html"><img src="../logo.png" alt="Sixty Seconds"></a>
+    <ul class="navlinks">
+      <li><a href="how-it-works.html">How it works</a></li>
+      
+      <li><a href="proof.html">Case studies</a></li>
+      <li class="nav-drop"><button type="button" class="nd-toggle" aria-haspopup="true" aria-expanded="false">Learn <svg class="nd-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <ul class="nav-dropmenu">
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="guides.html">Guides</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="navbtns">
+      <a class="btn ghost small" href="https://savvycal.com/sixtyseconds/U065T5J2M61" target="_blank" rel="noopener noreferrer"><span class="full">Book a call</span><span class="short" aria-hidden="true">Call</span></a>
+      <a class="btn small" href="index.html#hero"><span class="full">Try the live demo</span><span class="short" aria-hidden="true">Demo</span></a>
+      <button type="button" id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="navDrawer" aria-label="Open menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navDrawer" class="nav-drawer">
+    <a href="how-it-works.html">How it works</a>
+    
+    <a href="proof.html">Case studies</a>
+    <a href="blog.html">Blog</a>
+    <a href="guides.html">Guides</a>
+  </div>
+</nav>
+<main id="main">
+<div class="learn-wrap">
+<div class="crumb"><a href="blog.html">‹ Blog</a> <span style="opacity:.4">/</span> Pipeline Velocity: The Metric Nobody Tracks (But Should)</div><div class="tagrow"><span class="tag">Pipeline</span><span class="tag">Metrics</span><span class="tag">Strategy</span></div><h1 class="learn-h1">Pipeline Velocity: The Metric Nobody Tracks (But Should)</h1><div class="byline"><img class="avatar" src="../media/learn/avatar-andrew.jpg" alt="Andrew Bryce" loading="lazy"><span><b>Andrew Bryce</b><span class="role">Founder &amp; CEO, Sixty Seconds</span></span><span class="dot">·</span><span>1 April 2026</span><span class="dot">·</span><span>6 min read</span></div><div class="art-cols"><div><div class="callout"><h5>Quick Take</h5><p>Pipeline velocity tells you how many dollars per day your sales engine generates. Most teams track pipeline value and win rate separately, but never the combined metric that actually predicts revenue. Here's the formula and how to use it.</p></div><article class="art"><p>Ask most salespeople what their pipeline is worth and they'll give you a number. Ask them how fast that pipeline converts to revenue and you'll get a blank stare.</p><p>That blank stare is the difference between teams that hit their number and teams that are "always nearly there." Pipeline value without velocity is like knowing how much petrol is in the tank without knowing how fast the car is moving. You can't predict when you'll arrive.</p><h2 id="the-formula">The Formula</h2><p>Pipeline velocity is simple maths. Four inputs, one output:</p><blockquote><p><strong>(Number of Opportunities x Average Deal Size x Win Rate) / Average Sales Cycle Length = Revenue per Day</strong></p></blockquote><p>Real example: you have <strong>150 qualified opportunities</strong>, your average deal is <strong>$15,000</strong>, your win rate is <strong>22%</strong>, and your average sales cycle is <strong>75 days</strong>.</p><p>150 x $15,000 x 0.22 / 75 = <strong>$6,600 per day</strong>.</p><p>That single number tells you more about your sales health than any pipeline report. It accounts for volume, deal quality, execution, and speed — all in one metric. When velocity goes up, revenue follows. When it drops, trouble is coming, even if your pipeline total looks healthy.</p><h2 id="why-nobody-tracks-it">Why Nobody Tracks It</h2><p>Because CRMs don't surface it by default. HubSpot shows you pipeline value. Salesforce shows you win rate. Your spreadsheet shows you deal count. But nobody combines the four variables into one number and tracks it week over week.</p><p>So what happens? You celebrate when pipeline value goes up, even if your cycle length is getting longer and your win rate is dropping. You've got more fuel in the tank, sure. But the car is slowing down. Revenue stalls and nobody can explain why because "the pipeline looks great."</p><p>The teams that track velocity weekly see <strong>34% annual revenue growth</strong>. Teams that track it irregularly or not at all? 11%. That's not a subtle difference. That's three times the growth rate from one habit: measuring the right thing, consistently.</p><h2 id="the-four-levers">The Four Levers</h2><p>Pipeline velocity has four inputs. Each one is a lever you can pull:</p><ul><li><strong>More opportunities.</strong> More qualified deals entering the pipeline. This is the outbound/inbound/marketing lever. It's the most obvious one, and the most expensive.</li><li><strong>Bigger deals.</strong> Increase your average deal size through better targeting, upselling, or moving upmarket. A 20% increase in deal size is a 20% increase in velocity with zero extra leads.</li><li><strong>Higher win rate.</strong> Close more of what you've got. Better discovery, better demos, better follow-up. Improving from 20% to 25% is a 25% velocity increase — that's an extra $375K per month without a single additional opportunity in your pipeline.</li><li><strong>Shorter cycles.</strong> Get deals through faster. Eliminate stalls, reduce procurement friction, get to decision-makers earlier. Cutting your cycle from 75 days to 45 days increases velocity by 67%. That's the most underrated lever of all.</li></ul><h2 id="which-lever-do-you-pull-first">Which Lever Do You Pull First?</h2><p>Find your weakest link. Run the numbers and ask: which variable is dragging my velocity down?</p><p>If you've got plenty of opportunities but a 12% win rate, you don't need more leads. You need better qualification or a stronger sales process. Pouring more leads into a leaky bucket just wastes marketing spend.</p><p>If your win rate is solid at 30% but your average cycle is 90+ days, focus on speed. Why are deals stalling? Is it procurement? Multi-stakeholder alignment? Unclear next steps? Each day you shave off the cycle directly increases your daily revenue.</p><p>If your deal size is stuck at $5K and your competitors are closing $25K deals, you're probably targeting too small. Move upmarket. One $25K deal at a 20% win rate generates more revenue than five $5K deals at the same rate — with less effort and fewer meetings.</p><p>The mistake most teams make is defaulting to "more leads" because it feels like progress. It's the loudest lever. But it's rarely the most efficient one. If your velocity is slow, more leads just means more slow deals. Fix the engine before you add more fuel.</p><h2 id="how-to-set-up-weekly-velocity-tracking">How to Set Up Weekly Velocity Tracking</h2><p>You need four numbers from your CRM, updated weekly:</p><ul><li>Total qualified opportunities (deals past initial qualification)</li><li>Average deal value (total pipeline / number of deals)</li><li>Win rate over the last 90 days (closed-won / total closed)</li><li>Average days from opportunity creation to close (last 90 days)</li></ul><p>Plug them into the formula. Track the output number every Monday. Plot it on a chart. That's it.</p><p>You're looking for the trend, not the absolute number. Is velocity going up week over week? You're getting healthier. Flat or declining? Something is broken and you can now see exactly which lever is the problem.</p><p>After 4-6 weeks of tracking, you'll spot patterns you never noticed from pipeline reports alone. Maybe velocity dips every time you run a big outbound campaign (more opps, but lower quality). Maybe it spikes when a specific rep runs demos (higher win rate). Maybe it drops when you're selling to enterprise (longer cycles eat the improvement from bigger deals).</p><p>That's the power of velocity. It doesn't just tell you how much is in your pipeline. It tells you how fast your pipeline becomes revenue. And for a small team with limited resources, knowing where to focus is worth more than any amount of pipeline value.</p></article><div class="bio"><img class="avatar" src="../media/learn/avatar-andrew.jpg" alt="Andrew Bryce" loading="lazy"><div><b>Andrew Bryce</b><div class="role">Founder &amp; CEO, Sixty Seconds</div><p>Andrew Bryce is the founder and CEO of Sixty Seconds. Twelve years running go-to-market for high-growth B2B companies — now building personalised video outreach, made for one person at a time.</p></div></div><div class="rel"><h3>Related articles</h3><div class="rel-grid"><a class="rel-card" href="blog-sales-stack-command-center-not-another-tool.html"><div class="tagrow"><span class="tag">Tools</span><span class="tag">Strategy</span><span class="tag">Stack</span></div><b>Why Your Sales Stack Needs a Command Center, Not Another Tool</b><span>Read more →</span></a><a class="rel-card" href="blog-48-hour-rule-deals-die-in-silence.html"><div class="tagrow"><span class="tag">Follow-Up</span><span class="tag">Pipeline</span></div><b>The 48-Hour Rule: Why Most Deals Die in Silence</b><span>Read more →</span></a></div></div></div><aside class="toc"><h4>In this article</h4><a href="#the-formula">The Formula</a><a href="#why-nobody-tracks-it">Why Nobody Tracks It</a><a href="#the-four-levers">The Four Levers</a><a href="#which-lever-do-you-pull-first">Which Lever Do You Pull First?</a><a href="#how-to-set-up-weekly-velocity-tracking">How to Set Up Weekly Velocity Tracking</a></aside></div>
+<div class="learn-cta rv in">
+  <p>From the team behind this guide: personalised video, built for one person at a time. Watch one get built for you.</p>
+  <a class="btn big" href="index.html#hero">Try the live demo</a>
+</div>
+</div>
+</main>
+<footer>
+    <div class="wrap">
+      <div class="foot-inner">
+        <a href="index.html"><img src="../logo.png" alt="Sixty Seconds" loading="lazy"></a>
+        <div class="foot-links">
+          <a href="how-it-works.html">How it works</a>
+          
+          <a href="proof.html">Case studies</a>
+          <a href="blog.html">Learn</a>
+          <a href="guides.html">Guides</a>
+        </div>
+      </div>
+      <p class="foot-legal">© Sixty Seconds Ltd. Personalised video, made for one person at a time. · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+    </div>
+  </footer>
+<script src="shared.js?v=1792700033" defer></script>
+</body>
+</html>

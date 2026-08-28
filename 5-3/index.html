@@ -1,0 +1,1806 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty Seconds · Personalised video, made for one person at a time</title>
+<meta name="description" content="One recording of you becomes a personalised video, on a page of their own, for every person on your list. Type your email and watch one get built.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sixty Seconds · Personalised video, made for one person at a time">
+<meta property="og:description" content="One recording of you becomes a personalised video, on a page of their own, for every person on your list. Type your email and watch one get built.">
+<meta property="og:image" content="https://www.sixtyseconds.ai/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sixty Seconds · Personalised video, made for one person at a time">
+<meta name="twitter:description" content="One recording of you becomes a personalised video, on a page of their own, for every person on your list. Type your email and watch one get built.">
+<meta name="twitter:image" content="https://www.sixtyseconds.ai/og-image.png">
+<link rel="canonical" href="https://www.sixtyseconds.ai/">
+<meta property="og:url" content="https://www.sixtyseconds.ai/">
+<meta property="og:site_name" content="Sixty Seconds">
+<script defer data-domain="sixtyseconds.ai" src="https://plausible.io/js/script.js"></script>
+<link rel="icon" type="image/png" sizes="32x32" href="../media/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../media/favicon-16.png">
+<link rel="apple-touch-icon" href="../media/apple-touch-icon.png">
+
+<!-- 5.3 only: GSAP + ScrollTrigger + Lenis, the wave page's house choreography
+     tools, for the drag-wipe comparator and the pinned engine-assembly scene.
+     No other 5.3 page loads these — additive to this file only. -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" defer></script>
+
+<link rel="stylesheet" href="shared.css?v=1792700033">
+<noscript><style>.rv{opacity:1!important;visibility:visible!important;transform:none!important}</style></noscript>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="field"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+<div class="grid-tex"></div>
+
+<nav id="nav">
+  <div class="inner">
+    <a class="brand" href="index.html"><img src="../logo.png" alt="Sixty Seconds"></a>
+    <ul class="navlinks">
+      <li><a href="how-it-works.html">How it works</a></li>
+      
+      <li><a href="proof.html">Case studies</a></li>
+      <li class="nav-drop"><button type="button" class="nd-toggle" aria-haspopup="true" aria-expanded="false">Learn <svg class="nd-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <ul class="nav-dropmenu">
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="guides.html">Guides</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="navbtns">
+      <a class="btn ghost small" href="https://savvycal.com/sixtyseconds/U065T5J2M61" target="_blank" rel="noopener noreferrer"><span class="full">Book a call</span><span class="short" aria-hidden="true">Call</span></a>
+      <button type="button" class="btn small" data-demo><span class="full">Try the live demo</span><span class="short" aria-hidden="true">Demo</span></button>
+      <button type="button" id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="navDrawer" aria-label="Open menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navDrawer" class="nav-drawer">
+    <a href="how-it-works.html">How it works</a>
+    
+    <a href="proof.html">Case studies</a>
+    <a href="blog.html">Blog</a>
+    <a href="guides.html">Guides</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ══ HERO — the live demo, front and centre ════════════ -->
+  <section id="hero" style="padding-top:128px;padding-bottom:78px">
+    <div class="wrap" style="text-align:center">
+      <!-- the tag earns its place when it names the category and stakes a
+           position. "Personalised video at list scale" did neither, and read
+           as jargon to three of four cold readers. This one at least tells a
+           stranger what kind of company they have landed on. -->
+      <div class="kicker rv" style="justify-content:center;margin-bottom:20px">Personalised video, done properly</div>
+      <h1 class="rv" style="font-size:clamp(38px,6vw,80px);max-width:19ch;margin:0 auto 26px">Type your email. <span class="grad">Watch your video build itself.</span></h1>
+      <p class="rv" style="font-size:clamp(17px,1.7vw,20px);color:rgb(var(--body));max-width:56ch;margin:0 auto 48px;line-height:1.6">One recording of you becomes a personalised sales video, on a page of their own, for every person on your list.</p>
+
+      <div class="demo-shell rv" id="demoShell" style="max-width:900px;margin:0 auto;text-align:left">
+        <!-- no fake window chrome: three grey dots say "this is a screenshot
+             of an app", which is the opposite of what this block is. The
+             header now carries a live state, and the shell carries the
+             thing it is promising — the thumbnail, built as you type. -->
+        <!-- Restacked 25 Aug per the 24 Aug review (PRD-01 §1): the reel first,
+             so a cold visitor sees the thing is real and good BEFORE being
+             asked for an email. The room's own caveat — the input must still
+             be inside a 1280x800 viewport — is what the compact spacing in
+             the short-viewport media block below exists to satisfy. -->
+        <div class="demo-body">
+          <div class="demo-previewcol">
+            <!-- PRD-02 §1: the reel needed a title saying what the moving
+                 thing is and that the visitor gets one — "the videos you
+                 get". It also points at the input now under the reel, which
+                 is the restack's whole logic. -->
+            <!-- the disc was decorative, which is its own defect: a play
+                 button that plays nothing. It now plays a REAL finished
+                 render. Cold readers said the plate proved only that a text
+                 label swaps ("that's a regex, not a pipeline") and that no
+                 video ever actually played, so the plate carries two
+                 separate proofs: the name is yours, and the output is real.
+                 The render is Priya's and the caption says so. -->
+            <div class="pthumb demo-plate" id="demoPlate" style="--pt:126 106 255" role="img"
+                   aria-label="Showreel: real finished videos for real clients, all built from one recording of Andrew">
+              <!-- At rest this is a REAL finished render, not an empty
+                   template. The personalisation payoff only lands AFTER
+                   someone types, which is the wrong way round: the plate's job
+                   is to make them want to type, so at rest it shows the
+                   quality they would get. Typing turns it into theirs. -->
+              <img class="demo-plateex" src="../media/examples/hero-reel-poster.jpg" alt="Real finished videos for real clients, the same recording of Andrew" loading="lazy">
+              <span class="pt-co" id="dpCo">Your company</span>
+              <span class="pt-name" id="dpName">You</span>
+              <!-- the staged build's script card (PRD-01 §6, stage 2) -->
+              <!-- Skeleton bars read as "the universal symbol of fake loading"
+                   (blind reader, 27 Aug). On the company lane real words now
+                   stream into ptScriptText and the bars stand down. -->
+              <span class="pt-script" aria-hidden="true"><b id="ptScriptFor">Your script</b><span id="ptScriptText"></span><i></i><i></i><i></i></span>
+              <!-- 27 Aug (Andrew): the build's FIRST view is their branding,
+                   genuinely scraped — logo fetched live, colours read out of
+                   it — landing on the reel as a card. If the scrape fails the
+                   card stays down and the caption never claims a brand. -->
+              <span class="pt-brand" aria-hidden="true"><img id="ptBrandLogo" alt="" hidden><span class="pt-lm" id="ptBrandLm" hidden></span><span class="pt-sw"><i id="ptSw1"></i><i id="ptSw2"></i><i id="ptSw3"></i></span><span id="ptBrandDom"></span></span>
+              <!-- the identity card: their name (or company, §7 fallback)
+                   landing on the thumbnail while the reel keeps playing -->
+              <span class="pt-id" aria-hidden="true"><b id="ptIdName">You</b><span id="ptIdCo"></span></span>
+              <span class="pt-pip"><img src="../media/poster-andrew.jpg" alt="" loading="lazy"></span>
+              <span class="demo-reeltag" aria-hidden="true">Showreel</span>
+              <!-- Four brands, four files, one presenter — the intended shape,
+                   currently running on ONE while three are pulled for brand
+                   clearance (see the block below). The reel used to be a
+                   single baked MP4 that hard cut; Andrew asked for the versions
+                   to swipe rather than cut, and for the swipe to come from the
+                   SAME side every time, because alternating reads as going
+                   backwards. Each brand is now its own clip on a 3D stage, so
+                   the incoming one always flies in from the right with real
+                   depth and the outgoing one leaves left. Splitting the reel
+                   into per-brand files is also what the fictional rebuild in
+                   MEDIA-BRIEF needs: one file replaced at a time. -->
+              <!-- REAL CLIENT BUILDS, restored 24 Aug on Andrew's instruction.
+                   These are the only genuinely real examples on the site: actual
+                   films built for actual companies. Everything else here is
+                   marked invented, and four blind readers said the same thing
+                   about that — "a wall of beautifully-rendered fiction", "the
+                   better it looks the less I believe it". Real work is the
+                   answer to that and nothing else is.
+
+                   TWO THINGS THE NEXT PERSON MUST KNOW.
+
+                   1. hero-brand-3 is Tylt, and it burns "MATT HODKINSON" into
+                      the frame — a named individual at a company that was a
+                      PROSPECT, was sent that demo, and did not reply. That is a
+                      different question from showing client work, and it is
+                      flagged to Andrew rather than decided here.
+                   2. MEDIA-BRIEF.md still says these "must be replaced before
+                      this ships" and that masking the wordmarks was tried twice
+                      and fails. That note predates the decision to show real
+                      work; it has NOT been overridden for anything except this
+                      reel, and the fictional cuts remain on disk
+                      (cut-*.mp4) if this is reversed.
+
+                   The ticks stay SECTOR-labelled, never company-named: showing
+                   a client's work is one permission, printing their name as a
+                   caption is another, and only the first has been given. -->
+              <div class="reel3d" id="demoReel">
+                <!-- REAL BUILDS + AVATAR SWAP-INS (Andrew, 27 Aug): the real
+                     client builds carry the team's avatars composited into the
+                     presenter pip (ffmpeg circular overlay, each brand's own
+                     ring kept): Northbank/Andrew, Keningford/Raph (brand-2-raph),
+                     Tylt/Cynthia (brand-3-cynthia), Pathway/Cam (brand-4-cam),
+                     plus Vessel/Adam (brand-7, invented) for the fifth face.
+                     Recipe: crop r93 disc from the avatar render's pip
+                     (cx 1118-1120, cy 560-562), alphamerge with an AA circle
+                     mask, overlay inside the target's ring. Sources and the
+                     un-swapped originals stay on disk. hero-brand-3 still
+                     burns "MATT HODKINSON" — an unconverted prospect's name —
+                     flagged to Andrew, not decided here. -->
+                <video class="reel3d-slide is-on" data-i="0" playsinline muted preload="auto" poster="../media/examples/hero-reel-poster.jpg">
+                  <source src="../media/examples/hero-brand-1.mp4" type="video/mp4">
+                </video>
+                <video class="reel3d-slide" data-i="1" playsinline muted preload="auto" poster="../media/examples/hero-brand-2-raph-poster.jpg">
+                  <source src="../media/examples/hero-brand-2-raph.mp4" type="video/mp4">
+                </video>
+                <video class="reel3d-slide" data-i="2" playsinline muted preload="none" poster="../media/examples/hero-brand-3-cynthia-poster.jpg">
+                  <source src="../media/examples/hero-brand-3-cynthia.mp4" type="video/mp4">
+                </video>
+                <video class="reel3d-slide" data-i="3" playsinline muted preload="none" poster="../media/examples/hero-brand-4-cam-poster.jpg">
+                  <source src="../media/examples/hero-brand-4-cam.mp4" type="video/mp4">
+                </video>
+                <video class="reel3d-slide" data-i="4" playsinline muted preload="none" poster="../media/examples/hero-brand-7-poster.jpg">
+                  <source src="../media/examples/hero-brand-7.mp4" type="video/mp4">
+                </video>
+              </div>
+              <span class="demo-platebuild" aria-hidden="true">
+                <span class="demo-platestage" id="demoPlateStage">Reading your site</span>
+                <span class="demo-plateprog"><i id="demoPlateProg"></i></span>
+              </span>
+            </div>
+            <!-- The interactive layer. One tick per brand: which is showing, how
+                 far through it is, and a way to go straight to one. Labels are
+                 SECTORS. No brand is
+                 NAMED here on purpose — three of the four are real companies
+                 (MEDIA-BRIEF), so the ticks count them without identifying them. -->
+            <!-- Four ticks for four slides, restored 25 Aug with the cleared
+                 Tylt slide. The labels are SECTORS, never companies (PRD-02
+                 §4, standing rule), and they stay on the ticks: two blind
+                 cold-reader rounds proved unlabelled bars are an inoperable
+                 control ("I want to click show me a recruiter"), so the 24
+                 Aug tag question resolves as: title line above (the
+                 compromise's one line at top) + labelled ticks as controls. -->
+            <div class="reel-ticks" id="demoReelTicks" role="group" aria-label="Showreel: pick which of the brands to watch">
+              <button type="button" class="reel-tick is-on" data-i="0" aria-label="Client ops, brand 1 of 5"><span class="rt-l">Client ops</span><i></i></button>
+              <button type="button" class="reel-tick" data-i="1" aria-label="Advisory, brand 2 of 5"><span class="rt-l">Advisory</span><i></i></button>
+              <button type="button" class="reel-tick" data-i="2" aria-label="Consulting, brand 3 of 5"><span class="rt-l">Consulting</span><i></i></button>
+              <button type="button" class="reel-tick" data-i="3" aria-label="Recruitment, brand 4 of 5"><span class="rt-l">Recruitment</span><i></i></button>
+              <button type="button" class="reel-tick" data-i="4" aria-label="Delivery, brand 5 of 5"><span class="rt-l">Delivery</span><i></i></button>
+            </div>
+            <!-- Cold readers could not tell the ticks were controls: "I'd assume
+                 it was a passive animation and never touch it". The hint says
+                 so, and doubles as the state readout when the reel is holding,
+                 because a bare "Paused" chip was read as "the video died". -->
+            <p class="reel-hint" id="demoReelHint">Pick one to jump straight to it</p>
+            <!-- The plate is a real render OF AN INVENTED COMPANY, and until now it
+                 said only the first half. Northbank is fictional, so the showreel
+                 is a mocked artefact like every other one on this page and needs
+                 marking beside it. The hint above carries the state, this carries
+                 the claim; they used to open on the same four words, which is the
+                 restatement the copy rules bar. -->
+          </div>
+
+          <div class="demo-formcol">
+          <!-- The 24 Aug review (PRD-01 §3) wants "Get your demo into your work
+               email" here. That wording is only true once Studio flips
+               public-demo delivery live — deliveryMode is still locked to
+               'test' (see the header of index.js) — so until the flip the
+               label carries the payoff without the email-delivery promise.
+               Swap in the review wording the day delivery goes live. -->
+          <label for="dEmail" class="demo-fieldlabel">Get your demo, built for your company</label>
+          <form id="demoForm">
+            <div>
+              <input id="dEmail" type="email" placeholder="you@company.com" autocomplete="off" inputmode="email"
+                style="width:100%;background:rgb(var(--s1)/.9);border:1px solid rgb(var(--line-br)/.6);border-radius:var(--r1);padding:15px 18px;color:rgb(var(--ink));font-family:'Inter';font-size:16px">
+            </div>
+            <!-- 24 Aug room debate, "build my video" vs "free video": the point
+                 that landed is that it's a free video FOR THEM — "it's me
+                 pitching stuff that they've done, that's why people click it".
+                 "Free" lives on the button, once; the label above carries the
+                 for-your-company half. -->
+            <button type="submit" class="btn" id="buildBtn">Build my free video</button>
+          </form>
+          <!-- work-email help (PRD-01 §4): filled and shown by index.js only
+               when the typed domain is a consumer provider, on blur or submit,
+               never on a keystroke. Empty and hidden the rest of the time so
+               the input, button and review row stay contiguous. -->
+          <p class="demo-emailhint" id="dEmailHint" hidden></p>
+          <!-- Rated 4.8, verified 21 Aug from the Sixty Seconds Google Business
+           Profile (26 reviews, profile under Andrew's management). The mark is
+           Google's own asset from their branding path, not a redraw. The
+           review count lives in the aria-label rather than on screen: the
+           badge shape follows the reference, and the count stays available to
+           anyone who needs it. Stars fill to the true fraction, not rounded. -->
+          <div class="trust-row rv">
+          <span class="trust-badge">
+            <img class="trust-mark" src="../media/logos/google-g.png" alt="Google" loading="lazy" width="18" height="18">
+            <span class="stars" style="--fill:96%" role="img" aria-label="Rated 4.8 out of 5 from 26 Google reviews">
+              <span class="stars-on">&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;</span>
+              <span class="stars-off" aria-hidden="true">&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;</span>
+            </span>
+            <b>4.8</b>
+          </span>
+          <!-- Trustpilot verified 21 Aug from uk.trustpilot.com/review/sixtyseconds.video:
+               "Sixty Seconds Reviews 14 • 4.4". Stars fill to the true 88%. -->
+          <span class="trust-badge">
+            <img class="trust-mark trust-mark-tp" src="../media/logos/trustpilot.svg" alt="Trustpilot" loading="lazy">
+            <span class="stars" style="--fill:88%" role="img" aria-label="Rated 4.4 out of 5 from 14 Trustpilot reviews">
+              <span class="stars-on">&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;</span>
+              <span class="stars-off" aria-hidden="true">&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;</span>
+            </span>
+            <b>4.4</b>
+          </span>
+          <!-- G2 verified 21 Aug from g2.com/products/sixty-seconds/reviews:
+               "5/5 (4)", 4 reviews all in the five-star bucket. g2.com 403s every
+               automated route, so the figure and the mark both come from Andrew's
+               own screenshot of the page. Five stars is a true 100% fill here.
+               Briefly removed 28 Aug after two blind readers called the perfect
+               score fake-looking; Andrew overruled - the badge STAYS. -->
+          <span class="trust-badge">
+            <img class="trust-mark" src="../media/logos/g2.svg" alt="G2" loading="lazy" width="18" height="18">
+            <span class="stars" style="--fill:100%" role="img" aria-label="Rated 5.0 out of 5 from 4 G2 reviews">
+              <span class="stars-on">&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;</span>
+              <span class="stars-off" aria-hidden="true">&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;&#9733;&#xFE0E;</span>
+            </span>
+            <b>5.0</b>
+          </span>
+
+        </div>
+          <!-- the AI-face-and-voice line is a real disclosure and survives the
+               §2 de-layering — under the badges at small size, per the PRD -->
+          <p class="demo-disclosure">No spam, ever. One preview only, made with an AI version of our founder&rsquo;s face and voice.</p>
+          </div>
+        </div>
+
+        <div class="demo-rest">
+          <div id="nodeRow" style="display:none;align-items:center;padding-top:24px;border-top:1px solid rgb(var(--line)/.7)">
+            <div class="node" data-n="0" style="display:flex;flex-direction:column;align-items:center;gap:9px;flex:1;min-width:0">
+              <div class="ndot" style="width:14px;height:14px;border-radius:50%;background:rgb(var(--s3));border:2px solid rgb(var(--line-br));transition:background-color .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease),transform .4s var(--ease)"></div>
+              <span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:rgb(var(--muted));transition:color .4s var(--ease)">Input</span>
+            </div>
+            <div class="nline" data-l="0" style="flex:1.3;height:2px;background:rgb(var(--line));margin-bottom:22px;position:relative;overflow:hidden">
+              <i style="position:absolute;inset:0;width:0%;background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)));transition:width .5s var(--ease)"></i>
+            </div>
+            <div class="node" data-n="1" style="display:flex;flex-direction:column;align-items:center;gap:9px;flex:1;min-width:0">
+              <div class="ndot" style="width:14px;height:14px;border-radius:50%;background:rgb(var(--s3));border:2px solid rgb(var(--line-br));transition:background-color .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease),transform .4s var(--ease)"></div>
+              <span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:rgb(var(--muted));transition:color .4s var(--ease)">Script</span>
+            </div>
+            <div class="nline" data-l="1" style="flex:1.3;height:2px;background:rgb(var(--line));margin-bottom:22px;position:relative;overflow:hidden">
+              <i style="position:absolute;inset:0;width:0%;background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)));transition:width .5s var(--ease)"></i>
+            </div>
+            <div class="node" data-n="2" style="display:flex;flex-direction:column;align-items:center;gap:9px;flex:1;min-width:0">
+              <div class="ndot" style="width:14px;height:14px;border-radius:50%;background:rgb(var(--s3));border:2px solid rgb(var(--line-br));transition:background-color .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease),transform .4s var(--ease)"></div>
+              <span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:rgb(var(--muted));transition:color .4s var(--ease)">Avatar</span>
+            </div>
+            <div class="nline" data-l="2" style="flex:1.3;height:2px;background:rgb(var(--line));margin-bottom:22px;position:relative;overflow:hidden">
+              <i style="position:absolute;inset:0;width:0%;background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)));transition:width .5s var(--ease)"></i>
+            </div>
+            <div class="node" data-n="3" style="display:flex;flex-direction:column;align-items:center;gap:9px;flex:1;min-width:0">
+              <div class="ndot" style="width:14px;height:14px;border-radius:50%;background:rgb(var(--s3));border:2px solid rgb(var(--line-br));transition:background-color .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease),transform .4s var(--ease)"></div>
+              <span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:rgb(var(--muted));transition:color .4s var(--ease)">Deliver</span>
+            </div>
+          </div>
+
+          <div id="console" style="display:none;margin-top:26px">
+            <p id="consoleModeNote" style="display:none;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin:0 0 14px"></p>
+            <div id="consoleLines" style="display:flex;flex-direction:column;gap:10px;min-height:130px"></div>
+            <div style="height:5px;border-radius:999px;background:rgb(var(--line));margin-top:20px;overflow:hidden">
+              <div id="progressFill" style="height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--violet-br)),rgb(var(--emerald-br)));transition:width .35s linear"></div>
+            </div>
+          </div>
+
+          <div id="resultShell" style="display:none;margin-top:26px">
+            <div class="video-shell" id="resultCanned">
+              <video id="resultVideo" controls playsinline preload="metadata" poster="../media/examples/example-northbank-priya-poster.jpg">
+                <source src="../media/examples/example-northbank-priya.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div id="resultRealWrap" style="display:none">
+              <p style="font-size:12.5px;color:rgb(var(--emerald-br));font-weight:600;margin:0 0 10px;display:flex;align-items:center;gap:7px">
+                <span style="width:7px;height:7px;border-radius:50%;background:rgb(var(--emerald-br));box-shadow:0 0 8px rgb(var(--emerald)/.9);display:inline-block;flex-shrink:0"></span>
+                <!-- "Genuinely live" cut 28 Aug (Andrew: "why would it not be?
+                     bad") — insisting on liveness invites the doubt. State the
+                     fact, not the defence. Same rule applied to the badge. -->
+                Building right now. Usually 5 to 10 minutes end to end.
+              </p>
+              <div style="position:relative;border-radius:var(--r3);overflow:hidden;border:1px solid rgb(var(--line-br)/.6);background:rgb(var(--s1))">
+                <!-- The wait needs a heartbeat (blind reader, 27 Aug: "the fake
+                     build had better progress feedback than the real one" —
+                     mentally gone at 1:45). The overlay now states the honest
+                     duration, ticks elapsed time every second, and at 25s
+                     surfaces the direct link rather than an eternal grey. -->
+                <div id="resultRealLoading" style="position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:13px;color:rgb(var(--muted));background:rgb(var(--s1));z-index:2">
+                  <span aria-hidden="true" style="display:flex;gap:6px;margin-bottom:2px">
+                    <i style="width:8px;height:8px;border-radius:50%;background:rgb(var(--emerald-br));animation:waitpulse 1.2s ease-in-out infinite"></i>
+                    <i style="width:8px;height:8px;border-radius:50%;background:rgb(var(--emerald-br));animation:waitpulse 1.2s ease-in-out .2s infinite"></i>
+                    <i style="width:8px;height:8px;border-radius:50%;background:rgb(var(--emerald-br));animation:waitpulse 1.2s ease-in-out .4s infinite"></i>
+                  </span>
+                  <span id="realWaitMain" style="color:rgb(var(--body));font-weight:600">Connecting to your live build&hellip;</span>
+                  <span id="realWaitSub" style="font-size:12px">Scripting, avatar and compositing usually take 4 to 5 minutes end to end.</span>
+                </div>
+                <iframe id="resultRealFrame" title="Your live personalised video build" allow="autoplay" loading="lazy" style="width:100%;height:640px;max-height:70vh;display:block;border:0;opacity:0;transition:opacity .5s var(--ease);position:relative"></iframe>
+              </div>
+              <!-- Hidden by default 28 Aug (Andrew: "the open full screen view
+                   is bad") — the embedded page IS the view. The link only
+                   appears if the frame is still loading at 9s (the resilience
+                   path in index.js reveals it), so it exists as an escape
+                   hatch, never as an invitation. -->
+              <div style="margin-top:12px;text-align:right">
+                <a id="resultRealOpenLink" href="#" target="_blank" rel="noopener noreferrer" hidden style="font-size:12.5px;color:rgb(var(--muted));text-decoration:underline">Open in its own tab ↗</a>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:15px;flex-wrap:wrap">
+              <div style="font-size:14px;color:rgb(var(--muted))">Presented by <b style="color:rgb(var(--ink));font-weight:600">Andrew, cloned</b> · <span id="resultForLabel">built live for </span><b id="resultFor" style="color:rgb(var(--ink));font-weight:600">you</b></div>
+              <span id="resultTime" style="font-size:12px;font-weight:700;letter-spacing:.05em;color:rgb(var(--emerald-br));background:rgb(var(--emerald)/.14);border:1px solid rgb(var(--emerald)/.4);border-radius:999px;padding:6px 13px">Sample preview</span>
+            </div>
+
+            <!-- ══ THE ASK ═══════════════════════════════════════════════════
+                 Peak impression is the second the build lands. Before this the
+                 only control in the result shell was "Open full screen", so an
+                 impressed visitor had nowhere to go and nothing was asked of
+                 them. The ask belongs here, not only in the nav and #end. -->
+            <!-- The sample is necessarily about the visitor, because an email address only
+                 yields their own domain. The offer that actually converts points at a company
+                 that should be buying FROM them, with the reasons it was picked. The page could
+                 not execute that (the capture API has no target field), but it can at least stop
+                 leaving it unsaid, which is what turns the button into a reason rather than a
+                 generic ask. No company is named here, per the fact-safety rule. -->
+            <!-- Cut to one line 28 Aug (Andrew: "block of text below video is
+                 bad") — the ask survives, the paragraph doesn't. -->
+            <div style="display:flex;align-items:center;gap:12px;margin-top:20px;flex-wrap:wrap">
+              <a class="btn big" href="https://savvycal.com/sixtyseconds/U065T5J2M61" target="_blank" rel="noopener noreferrer" data-cta="result-book">Book a call and I will bring one</a>
+              <span style="font-size:13.5px;color:rgb(var(--muted));max-width:40ch">The real ones point at companies that should be buying from you. Thirty minutes with Andrew, our founder.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- The 4-wide cred/case-study strip stood here; removed 25 Aug on
+           Andrew's instruction — the #logos marquee below the warm-call
+           section replaces it, and the case-study numbers lead the proof
+           page. Markup in git history. -->
+
+    </div>
+  </section>
+  <!-- SECTION TWO, per the 24 Aug room (ADDENDUM-01 A3): "I think it's
+       that, and that should be section two" — the warm-call argument
+       promoted to the top of the page as a short hook. The full
+       three-hard-stops mechanics stay in #control below; this plants the
+       question, that pays it off. Position 2 also matches the competitor
+       teardown (25 Aug): the differentiation hook lands before any
+       feature depth. -->
+  <section id="moment" style="padding:64px 0 56px;text-align:center">
+    <div class="wrap">
+      <div class="kicker rv" style="justify-content:center;margin-bottom:16px">The warm-call moment</div>
+      <h2 class="sec-head rv" style="margin:0 auto 14px;max-width:22ch">Would you phone someone who&rsquo;s just watched <span class="grad">a video of your face?</span></h2>
+      <p class="sec-sub rv" style="margin:0 auto;max-width:52ch">They would. That is the whole machine: they watch, you know the second they do, and you call warm instead of cold. You approve every video before any of it sends.</p>
+    </div>
+  </section>
+
+  <!-- Logos promoted to position 3 (25 Aug): the competitor teardown put
+       social proof at slot 2-3 on 10 of 12 comparable sites; ours sat
+       dead last. The case-study depth stays late in #proof — the
+       double-proof pattern (logos early, stories late). -->
+  <section id="logos" style="padding:8px 0 40px">
+    <div class="wrap">
+      <!-- "Running for" was a present-tense claim; Andrew cleared the FULL
+      client list for the wall (25 Aug, "need all of them"), past and
+      present, so the label now covers both honestly. -->
+      <p class="rv" style="text-align:center;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:rgb(var(--muted));margin:0 0 18px">Clients we&rsquo;ve built for</p>
+<!-- MARQUEE ON, 25 Aug: Andrew cleared "all current clients" and the
+           set grew from four to nine — the padding objection was four marks
+           styled to feel like fifteen, and nine distinct companies is a real
+           estate, so the ≥15/row bar is superseded by the clearance. The
+           five new marks came from the clients' own published assets
+           (Elite Rewards + Viewpoint from their repos on this machine,
+           FutureSafe from its brand page, Anuncia + Executive Recruit from
+           their live sites). Three cleared clients are HELD on asset
+           quality, verified by one-ink render test 25 Aug:
+           Connectiv (only a 100px icon exists), Viewpoint (its SVG
+           renders empty under the filter), Executive Recruit (its PNG
+           flattens to an illegible pill). Andrew is scraping proper
+           wordmark art for these — drop connectiv wordmark art into
+           media/logos/ and add one <img> per set to include it. Same
+           drop-in for anything else Andrew scrapes: file in media/logos/,
+           one <img> in each row's BOTH .lw-set spans (the second span is
+           the aria-hidden loop copy). -->
+      <div class="logo-wall is-marquee rv" role="img" aria-label="Marks of 25 client companies, past and present">
+        <div class="lw-row">
+          <div class="lw-track"><span class="lw-set"><img src="../media/logos/capium.png" alt="" loading="lazy"><img src="../media/logos/oanda.svg" alt="" loading="lazy"><img src="../media/logos/elite-rewards.svg" alt="" loading="lazy"><img src="../media/logos/hamilton-barnes.webp" alt="" loading="lazy"><img src="../media/logos/futuresafe.svg" alt="" loading="lazy"><img src="../media/logos/aryza.svg" alt="" loading="lazy"><img src="../media/logos/quake-global.png" alt="" loading="lazy"><img src="../media/logos/talent-shore.png" alt="" loading="lazy"><img src="../media/logos/okko-health.svg" alt="" loading="lazy"></span></div>
+        </div>
+        <div class="lw-row lw-row-r">
+          <div class="lw-track"><span class="lw-set"><img src="../media/logos/knight-frank.svg" alt="" loading="lazy"><img src="../media/logos/anuncia.png" alt="" loading="lazy"><img src="../media/logos/tradeify.svg" alt="" loading="lazy"><img src="../media/logos/gemsatwork.png" alt="" loading="lazy"><img src="../media/logos/catalyst-interiors.png" alt="" loading="lazy"><img src="../media/logos/realm.svg" alt="" loading="lazy"><img src="../media/logos/golf-pilot.svg" alt="" loading="lazy"><img src="../media/logos/legal-conversion-center.webp" alt="" loading="lazy"></span></div>
+        </div>
+        <div class="lw-row">
+          <div class="lw-track"><span class="lw-set"><img src="../media/logos/clarion.png" alt="" loading="lazy"><img src="../media/logos/signs-express.svg" alt="" loading="lazy"><img src="../media/logos/accurise.svg" alt="" loading="lazy"><img src="../media/logos/bayou-surgical.svg" alt="" loading="lazy"><img src="../media/logos/kamryc.png" alt="" loading="lazy"><img src="../media/logos/pembrook-resourcing.png" alt="" loading="lazy"><img src="../media/logos/the-wave.svg" alt="" loading="lazy"><img src="../media/logos/wisor.svg" alt="" loading="lazy"></span></div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+
+  <!-- ══ THE COMPARATOR — drag-wipe, the send they delete vs the send they watch ══ -->
+  <section id="comparator">
+    <span class="sec-orb sec-orb-t" aria-hidden="true" style="width:520px;height:520px;left:-200px;top:8%"></span>
+    <span class="sec-orb sec-orb-em" aria-hidden="true" id="compOrbNew" style="width:600px;height:600px;right:-220px;top:2%;opacity:.5"></span>
+    <div class="wrap">
+      <div class="sec-top rv" style="text-align:center;max-width:600px;margin:0 auto 28px">
+        <div class="kicker" style="justify-content:center;margin-bottom:14px">One list. Two sends.</div>
+        <h2 class="sec-head" style="margin:0 auto 16px">The send they delete.<br><span class="grad">The send they watch.</span></h2>
+        <!-- PRD-04 §4: the strongest thing said in the room, now on the page.
+             A deleted template is not one lost send, it is the account closed
+             for good; and the watched send comes from the founder, not the
+             SDR. The reply-rate line stays: it is the only real number here
+             (2026 outbound benchmarks, owned by the caption below). -->
+        <!-- The "under 1% in 2026" figure came off on 25 Aug: uncited, it
+             contradicted both the Knight Frank card's "5% B2B average" and
+             this site's own benchmarks guide (3.43%, Instantly 2026), and a
+             blind reader divided Clarion's 535/57,000 against it in four
+             seconds. The argument survives without the number. "SDR" also
+             went: an outside reader did not know the acronym. -->
+        <!-- the trend claim is anchored to this site's own benchmarks guide
+             (8.5% in 2019 → 3.43% in 2026, Instantly data) and links to it,
+             so it is checkable in one click rather than asserted. Worded to
+             the guide's actual data points, not a year-by-year claim the
+             guide does not make. -->
+        <p class="sec-sub" style="margin:0 auto">Same prospect, same list. The only thing that changes is what lands. Drag the line.</p>
+      </div>
+
+      <!-- interactive wipe — ≥760px -->
+      <div class="comp-shell rv" id="compShell">
+        <div class="comparator" id="compFrame" style="--split:32">
+
+          <div class="comp-layer comp-old">
+            <div class="comp-bar"><span>Bulk send · 4,182 contacts</span></div>
+            <div class="comp-body">
+              <p class="comp-line">Hi <b class="comp-tag">{{first_name}}</b>,</p>
+              <p class="comp-line">I noticed <b class="comp-tag">{{company}}</b> might be a good fit for what we do. Got 15 minutes this week?</p>
+              <p class="comp-line">We work with a lot of businesses in <b class="comp-tag">{{industry}}</b> and thought it was worth reaching out.</p>
+              <p class="comp-line"><span class="comp-link">calendly.com/rep-team/15min</span></p>
+              <span class="comp-skel" aria-hidden="true" style="width:88%"></span>
+              <span class="comp-skel" aria-hidden="true" style="width:94%"></span>
+              <span class="comp-skel" aria-hidden="true" style="width:72%"></span>
+              <span class="comp-skel" aria-hidden="true" style="width:81%"></span>
+              <span class="comp-skel" aria-hidden="true" style="width:58%"></span>
+              <span class="comp-spacer" aria-hidden="true"></span>
+              <!-- the signature is a merge tag too: the send is not just
+                   impersonal about the recipient, it is impersonal about
+                   the sender, which is the whole reason it gets deleted -->
+              <div class="comp-sig">
+                <span class="comp-sigav" aria-hidden="true"></span>
+                <div>
+                  <b class="comp-tag">{{sender_name}}</b>
+                  <span>Sales Development</span>
+                </div>
+              </div>
+              <p class="comp-foot">Unsubscribe &middot; Sent to your whole industry</p>
+            </div>
+          </div>
+
+          <div class="comp-layer comp-new">
+            <div class="comp-bar"><span class="comp-url">northbank.sixtyseconds.ai/priya</span></div>
+            <div class="comp-body">
+              <div class="comp-realframe">
+                <div class="pv-live" aria-label="Priya's page at Northbank: her personalised video playing, a real render">
+                  <video muted loop playsinline preload="metadata" poster="../media/examples/example-northbank-priya-poster.jpg" aria-hidden="true">
+                    <source src="../media/examples/example-northbank-priya.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <!-- the designed personalised thumbnail, built on the site's
+                     own pthumb component rather than a frame grab: every
+                     frame of the render carries her name burned in at the
+                     LEFT, which is the half --split clips away, so a plate
+                     pulled from the video read as "...ya." at rest. Built in
+                     markup, it can be anchored where it survives the clip. -->
+                <div class="comp-thumb" id="compThumb">
+                  <div class="pthumb pt-fill comp-thumbplate" style="--pt:96 199 250">
+                    <span class="pt-co">Northbank</span>
+                    <span class="pt-name">Priya</span>
+                    <span class="comp-thumbsub">This one&rsquo;s for you.</span>
+                    <span class="pt-pip"><img src="../media/poster-andrew.jpg" alt="The presenter, cloned" loading="lazy"></span>
+                  </div>
+                  <span class="comp-thumbplay" id="compThumbPlay" aria-hidden="true"></span>
+                  <span class="comp-thumbdur">0:23</span>
+                </div>
+                <span class="comp-cursor" id="compCursor" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="21" height="21"><path d="M5.5 2.8 19 11.4l-6.1 1.1-2.9 5.9z" fill="#fff" stroke="rgb(10 12 18/.65)" stroke-width="1.3" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="comp-views" id="compViews"><i class="comp-viewsup" aria-hidden="true"></i><b id="compViewsN">212</b> pageviews</span>
+                <div class="comp-watchrow" id="compWatchRow">
+                  <span class="comp-watchlabel">Watched</span>
+                  <div class="comp-watchtrack"><i id="compWatchFill" style="width:87%"></i></div>
+                  <b class="comp-watchpct" id="compWatchPct">87%</b>
+                </div>
+              </div>
+              <div class="comp-signals">
+                <div class="comp-slack armed" id="compSlack"><span class="comp-slackic">#</span><span><b>sales-alerts</b> · Priya watched 87%</span></div>
+                <div class="comp-crm armed" id="compCrm"><span class="comp-crmdot"></span><span id="compCrmLabel">Warm</span></div>
+              </div>
+              <div class="comp-booked armed" id="compBooked">
+                <span class="comp-bookedic" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </span>
+                <span><b>Meeting booked</b> · Thu 14:30, straight into your calendar</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="comp-handle" id="compHandle" role="slider" tabindex="0"
+               aria-label="Drag to compare the templated send with the personalised send"
+               aria-valuemin="0" aria-valuemax="100" aria-valuenow="32">
+            <span class="comp-grip">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6 3 12l5 6M16 6l5 6-5 6"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- stacked fallback — <760px -->
+      <div class="comp-stack rv" id="compStack">
+        <div class="comp-stackcard comp-stackcard-old">
+          <div class="comp-bar"><span>Bulk send · 4,182 contacts</span></div>
+          <div class="comp-body">
+            <p class="comp-line">Hi <b class="comp-tag">Priya</b>,</p>
+            <p class="comp-line">I noticed <b class="comp-tag">Northbank</b> might be a good fit for what we do. Got 15 minutes this week?</p>
+            <p class="comp-line"><span class="comp-link">calendly.com/rep-team/15min</span></p>
+            <span class="comp-spacer" aria-hidden="true"></span>
+            <p class="comp-foot">Unsubscribe &middot; Sent to your whole industry</p>
+          </div>
+          <div class="comp-stacktag">The send they delete</div>
+        </div>
+        <div class="comp-stackcard comp-stackcard-new">
+          <div class="comp-bar"><span class="comp-url">northbank.sixtyseconds.ai/priya</span></div>
+          <div class="comp-body">
+            <div class="comp-realframe">
+              <div class="pv-live" aria-label="Priya's page at Northbank: the personalised video playing, with her name on it">
+                  <video muted loop playsinline preload="metadata" poster="../media/examples/example-northbank-priya-poster.jpg" aria-hidden="true">
+                    <source src="../media/examples/example-northbank-priya.mp4" type="video/mp4">
+                  </video>
+                </div>
+              <span class="comp-views"><b>212</b> pageviews</span>
+              <div class="comp-watchrow">
+                <span class="comp-watchlabel">Watched</span>
+                <div class="comp-watchtrack"><i style="width:87%"></i></div>
+                <b class="comp-watchpct">87%</b>
+              </div>
+            </div>
+            <div class="comp-slack"><span class="comp-slackic">#</span><span><b>sales-alerts</b> · Priya just watched 87% of your video</span></div>
+            <div class="comp-crm comp-crm-warm"><span class="comp-crmdot"></span><span>Warm</span></div>
+            <div class="comp-booked armed"><span class="comp-bookedic" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Meeting booked</b> · Thu 14:30</span></div>
+          </div>
+          <div class="comp-stacktag comp-stacktag-new">The send they watch</div>
+        </div>
+      </div>
+
+    </div>
+      <!-- Both lanes of this comparator are one mocked send and they were
+           carrying the densest run of unmarked numbers on the page: 87%
+           watched, 212 pageviews, a #sales-alerts line, a CRM stage flipping
+           to Warm and a meeting booked at Thu 14:30 — none of it owned by
+           anyone. The marker sits here rather than inside either lane because
+           this caption is outside both #compShell and #compStack, so it is
+           the one place a reader meets it whether they got the drag handle or
+           the stacked cards. The reply-rate note stays: that one is market
+           context, not a customer, and it is the only number here that is. -->
+      <p class="comp-note rv">A deleted template costs more than the send: &ldquo;never contact me again&rdquo; closes that account for good. The send they watch comes from the founder.</p>
+  </section>
+
+  <!-- ══ WHY THIS STILL GETS WATCHED — the product assembling itself, scroll-pinned ══ -->
+  <section id="engine">
+    <span class="sec-orb sec-orb-t" aria-hidden="true" style="width:520px;height:520px;left:-200px;top:-20px"></span>
+    <span class="sec-orb sec-orb-v" aria-hidden="true" style="width:560px;height:560px;right:-180px;bottom:-60px"></span>
+    <div class="wrap">
+      <!-- Headline per the 24 Aug review (PRD-05 §5): "turn a cold list into
+           a warm list" was claimed by both this section and the comparator;
+           it lives HERE because the quote was said pointing at this strip and
+           the three steps literally are a cold list becoming tracked warm
+           signal. The template line folds into the sub rather than dying —
+           it was this section's argument, not its headline. -->
+      <div class="sec-top rv" style="text-align:center;max-width:620px;margin:0 auto 32px">
+        <div class="kicker" style="justify-content:center;margin-bottom:16px">Why this still gets watched</div>
+        <h2 class="sec-head" style="margin:0 auto 16px">Turn a cold list <span class="grad">into a warm list.</span></h2>
+        <p class="sec-sub" style="margin:0 auto">It doesn’t look, sound or feel like a template. It lands with their name on it, opens on a page built for them, and tells you who is worth the call.</p>
+      </div>
+
+      <!-- Was three chips; two restated the stages directly below them
+           (PRD-05 §4), so the name-in-three-seconds claim now lives in step
+           one's own sentence and the page claim in step two's. The approve
+           chip survives alone: it is the trust claim, not a duplicate, and
+           with §control further down it is said twice on the page, not three
+           times. -->
+      <div class="estrip-row rv" style="margin-bottom:20px">
+        <span class="e-chip"><b style="color:rgb(var(--emerald-br))">You approve it</b>&nbsp;before anything is sent</span>
+      </div>
+      <!-- desktop screen strip — ≥980px. Perspective-style: three stripped
+           mock screens, focus glides between them so the story reads without
+           a scroll choreography.
+
+           Three, not five, and in the order the thing actually happens:
+           it lands, they open the page, you see who watched. "The video"
+           was its own step, which was wrong — the video is ON the page, so
+           it now plays inside the page screen rather than beside it. The
+           Slack-and-CRM step is gone because the comparator's right layer
+           plays those beats live; what survives here is the dashboard view,
+           which the comparator does not show. -->
+      <div class="eng-stripwrap rv" id="engStrip">
+        <!-- Dots, not pills (PRD-05 §1): the number moved into each card's
+             corner and the title above each card's content, so the indicator
+             only has to say WHERE the reader is. Still real tabs — focusable,
+             arrow-key navigable (index.js), each announcing its stage name —
+             a dot that is only a decoration would be an a11y regression. -->
+        <div class="eng-tabs" id="engTabs" role="tablist" aria-label="How one send is built">
+          <button type="button" class="eng-tab is-on" data-stage="0" role="tab" aria-selected="true"><span class="eng-dot" aria-hidden="true"></span><span class="eng-tab-label">Earn the click</span></button>
+          <button type="button" class="eng-tab" data-stage="1" role="tab" aria-selected="false"><span class="eng-dot" aria-hidden="true"></span><span class="eng-tab-label">Track the watch</span></button>
+          <button type="button" class="eng-tab" data-stage="2" role="tab" aria-selected="false"><span class="eng-dot" aria-hidden="true"></span><span class="eng-tab-label">Track what matters</span></button>
+        </div>
+        <!-- All three stages are one mocked send — Priya at Northbank, who is
+             fictional — and stage 3 is a dashboard of watch percentages. The
+             marker sits on the strip rather than on one stage so a reader who
+             lands on any tab meets it, which is the same reason the chooser
+             panel carries its tag in the frame header instead of per beat. -->
+        <div class="eng-strip">
+          <div class="escr is-on" data-stage="0">
+            <!-- the number lives in the card's top-left, the title above the
+                 content (PRD-05 §§2-3) -->
+            <div class="escr-head"><span class="escr-n">1</span><b class="escr-title">Earn the click</b></div>
+            <div class="escr-body escr-pad">
+              <div class="escr-dmfrom">Message &middot; LinkedIn</div>
+              <p class="escr-dmtext">Priya, we made you something. Have a look when you get a minute.</p>
+              <div class="pthumb escr-dmthumb pt-sm" style="--pt:96 199 250">
+                <span class="pt-co">Northbank</span>
+                <span class="pt-name">Priya</span>
+                <span class="pt-play" aria-hidden="true"></span>
+                <span class="pt-pip"><img src="../media/poster-andrew.jpg" alt="The presenter, cloned" loading="lazy"></span>
+              </div>
+            </div>
+            <!-- carries the folded chip claim (PRD-05 §4): the name and the
+                 company, in the first three seconds, before anyone clicks -->
+            <p class="escr-note">Her name and her company are on it in the first three seconds, before anyone clicks.</p>
+          </div>
+          <div class="escr" data-stage="1">
+            <div class="escr-head"><span class="escr-n">2</span><b class="escr-title">Track the watch</b></div>
+            <div class="escr-body">
+              <div class="escr-chrome"><span>northbank.sixtyseconds.ai/priya</span></div>
+              <div class="escr-page">
+                <div class="escr-pagetop">
+                  <span class="escr-brand">Northbank</span>
+                </div>
+                <span class="escr-h"><b>Priya</b>, this one&rsquo;s for you.</span>
+                <div class="escr-thumb"><div class="pv-live" aria-label="Priya's personalised video playing on her page">
+                  <video muted loop playsinline preload="metadata" poster="../media/examples/example-northbank-priya-poster.jpg" aria-hidden="true">
+                    <source src="../media/examples/example-northbank-priya.mp4" type="video/mp4">
+                  </video>
+                </div></div>
+                <div class="escr-pagefoot">
+                  <span class="escr-cta">Book a call</span>
+                  <span class="escr-ctanote">Thirty minutes, with Andrew</span>
+                </div>
+              </div>
+            </div>
+            <p class="escr-note">Their brand, their name, and the video sitting on it. Not a template with the nouns swapped.</p>
+          </div>
+          <div class="escr" data-stage="2">
+            <div class="escr-head"><span class="escr-n">3</span><b class="escr-title">Track what matters</b></div>
+            <div class="escr-body escr-pad">
+              <div class="escr-watchrow"><span>Watch-through</span><b>87%</b></div>
+              <div class="escr-watch"><i></i></div>
+              <div class="escr-chips"><span>Opened</span><span>Watched to 75%</span><span>Clicked</span></div>
+              <div class="escr-viewer"><span class="escr-avatar" aria-hidden="true">P<img src="../media/faces/priya.jpg" alt="" loading="lazy" decoding="async"></span><div><b>Priya</b><span>watched 87%</span></div></div>
+              <div class="escr-viewer"><span class="escr-avatar" aria-hidden="true">J<img src="../media/faces/james.jpg" alt="" loading="lazy" decoding="async"></span><div><b>James</b><span>watched 64%</span></div></div>
+              <div class="escr-viewer escr-viewer-cold"><span class="escr-avatar" aria-hidden="true">D<img src="../media/faces/daniel.jpg" alt="" loading="lazy" decoding="async"></span><div><b>Daniel</b><span>opened, did not watch</span></div></div>
+            </div>
+            <p class="escr-note">You chase the warm ones, not the whole list.</p>
+          </div>
+        </div>
+      </div>
+      <!-- The footnote here read "Watch-through and attribution measured
+           across our own client campaigns." It existed to own the two rates
+           in the chip row above. Those rates are gone, and the line was the
+           weaker half of the pair anyway: it asserts real client data with no
+           client, no period and no sample size, which is the shape a sceptic
+           reads as a number wearing a lab coat. Nothing replaces it — the
+           chips are product specs now and need no footnote. -->
+
+      <!-- mobile build log — <980px, no pin, no scrub.
+           This is the ONLY version of the strip a phone reader sees: the
+           desktop tabs and the whole eng-stripwrap are display:none under
+           980px. So the marker has to be here as well as up there, or the
+           reader most likely to skim meets 87% and 212 pageviews with
+           nothing beside them saying whose they are. -->
+      <div class="eng-log" id="engLog">
+        <div class="eng-log-row rv"><span class="eng-log-ic">1</span><div><b>Earn the click</b><span>A message with her name and her company already on it, in the first three seconds.</span></div></div>
+        <div class="eng-log-row rv"><span class="eng-log-ic">2</span><div><b>Track the watch</b><span>Every send gets a hosted URL, with the video on it. Their brand, their name, one link, one person.</span></div></div>
+        <div class="eng-log-row rv"><span class="eng-log-ic">3</span><div><b>Track what matters</b><span>Watch-through and pageviews from the first second, so you chase the warm ones.</span></div></div>
+        <div class="eng-log-final rv">
+          <div class="eng-frame">
+            <div class="eng-chrome"><span class="eng-url">northbank.sixtyseconds.ai/priya</span></div>
+            <div class="eng-vid"><div class="pv-live" aria-label="Priya's page at Northbank: the personalised video playing, with her name on it">
+                  <video muted loop playsinline preload="metadata" poster="../media/examples/example-northbank-priya-poster.jpg" aria-hidden="true">
+                    <source src="../media/examples/example-northbank-priya.mp4" type="video/mp4">
+                  </video>
+                </div></div>
+            <div class="eng-instruments"><div class="eng-watchbar"><span>Watch-through</span><div class="eng-watchtrack"><i style="width:87%"></i></div><b>87%</b></div><span class="eng-views">212 pageviews</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTROL / GREEN LIGHTS ══════════════════════════════
+       MOVED above the chooser (Andrew, 27 Aug): approval/trust answered
+       straight after "why this still gets watched". Retitled from "You hold
+       the stop button" — the 24 Aug transcript records no agreed wording, so
+       this matches the approve chip; swap if Andrew recalls the phrase.
+       Answers the objection this whole page invites: "you are
+       cloning my face, so what stops it going out without me?"
+       Copy is lifted from the live, approved wave explainer
+       (videos.use60.com/p/wave-explainer) rather than drafted,
+       so it matches what the sales call already promises. -->
+  <section id="control">
+    <span class="sec-orb sec-orb-em" aria-hidden="true" style="width:680px;height:480px;left:50%;top:-30px;transform:translateX(-50%)"></span>
+    <div class="wrap">
+      <div class="sec-top rv" style="text-align:center;max-width:640px;margin:0 auto 40px">
+        <div class="kicker" style="justify-content:center;margin-bottom:16px">Nothing sends without you</div>
+        <h2 class="sec-head" style="margin:0 auto 16px">It is your face. <span class="grad">You sign off before it is built.</span></h2>
+        <p class="sec-sub" style="margin:0 auto">The clone is built from one recording session you book, and used only for your outreach. Between that session and anything being built, there are three hard stops.</p>
+      </div>
+      <div class="gl-grid gl-flow">
+        <div class="pill rv">
+          <div class="n">1</div>
+          <h3>You approve the list</h3>
+          <p>We build and enrich your data, then you check it over before a single video exists.</p>
+        </div>
+        <div class="pill rv">
+          <div class="n">2</div>
+          <h3>You approve the page</h3>
+          <p>One real page for one real prospect. If it is not right, nothing else gets made.</p>
+        </div>
+        <div class="pill rv">
+          <div class="n">3</div>
+          <h3>You approve the full run</h3>
+          <p>We build three more pages so you can see it personalise, and nothing sends until you say go.</p>
+        </div>
+      </div>
+      <p class="rv" style="text-align:center;margin-top:30px">
+        <a href="how-it-works.html" style="display:inline-flex;align-items:center;gap:7px;font-size:14.5px;font-weight:600;color:rgb(var(--muted));text-decoration:none">
+          See how it works, start to finish
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ THE CENTREPIECE — outcome chooser ═════════════════ -->
+  <section id="chooser">
+    <span class="sec-orb sec-orb-v" aria-hidden="true" style="width:620px;height:620px;left:-160px;top:40px"></span>
+    <span class="sec-orb sec-orb-t" aria-hidden="true" style="width:480px;height:480px;right:-140px;bottom:-60px"></span>
+    <div class="wrap">
+      <div class="sec-top rv" style="text-align:center;max-width:640px;margin:0 auto 36px">
+        <div class="kicker" style="justify-content:center;margin-bottom:16px">Start with the outcome</div>
+        <h2 class="sec-head" style="margin:0 auto 16px">What do you want more of?</h2>
+        <p class="sec-sub" style="margin:0 auto">Pick one and watch how a personalised video gets made, sent and tracked. All four run the same way underneath.</p>
+      </div>
+
+      <div class="oc-rail rv" id="ocRail" role="tablist" aria-label="Choose a use case to watch">
+        <button type="button" class="oc-stop is-on" data-live="0" role="tab" aria-selected="true">Prospecting &amp; outreach</button>
+        <button type="button" class="oc-stop" data-live="1" role="tab" aria-selected="false">Follow-up</button>
+        <button type="button" class="oc-stop" data-live="2" role="tab" aria-selected="false">Proposal</button>
+        <button type="button" class="oc-stop" data-live="3" role="tab" aria-selected="false">Hiring</button>
+      </div>
+      <div class="oc-live rv" id="ocLive">
+        <div class="ocx-frame">
+          <!-- animated use-case explainer: four beats per stage, swapped by the rail -->
+          <div class="ocx-head">
+            <span class="ocx-out" id="ocxOut">More replies, from lists that went cold.</span>
+            
+          </div>
+          <div class="ocx-stage" id="ocxStage" aria-hidden="true">
+          <div class="ocx-scene is-on" data-scene="0">
+            <div class="ocx-prog" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i></div>
+            <div class="ocx-beat" style="--i:0">
+              <span class="ocx-step">Step 1<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-card ocx-in" style="--d:.3s"><span class="ocx-lbl">Your list &middot; the ones who never replied</span><div class="ocx-row is-hit"><span class="ocx-av">P</span><span class="ocx-name">Priya Raman</span><span class="ocx-note">Head of Ops &middot; Northbank</span><span class="ocx-quiet">no reply</span></div><div class="ocx-row"><span class="ocx-av">D</span><span class="ocx-name">Daniel Okafor</span><span class="ocx-note">Operations manager &middot; Halgrove</span><span class="ocx-quiet">no reply</span></div><div class="ocx-row"><span class="ocx-av">R</span><span class="ocx-name">Ruth Adeyemi</span><span class="ocx-note">Managing director &middot; Wren &amp; Bell</span><span class="ocx-quiet">no reply</span></div><span class="ocx-rule ocx-in" style="--d:1.1s">We do the digging and build them. You approve and send.</span></div></div>
+              <span class="ocx-cap"><b>1</b><em>What goes in</em>A list you already have. We build every video; you approve before it sends.</span>
+            </div>
+            <div class="ocx-beat" style="--i:1">
+              <span class="ocx-step">Step 2<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-plate ocx-in" style="--d:.45s"><span class="brand"><i>Made for</i>NORTHBANK</span><h4>Priya</h4><span class="rule"></span><span class="sub">This one&rsquo;s for you.</span><span class="ocx-play"><b>0:23</b></span><span class="ocx-pip"><b>Andrew, Sixty Seconds</b></span></div><span class="ocx-said">&ldquo;Priya &mdash; I had a look at how Northbank runs ops.&rdquo;</span><span class="ocx-src ocx-in" style="--d:1.05s">Your videos carry your face and voice. Film once; every video after is rebuilt from that.</span></div>
+              <span class="ocx-cap"><b>2</b><em>What comes out</em>One video per person, with their name and their company on it.</span>
+            </div>
+            <div class="ocx-beat" style="--i:2">
+              <span class="ocx-step">Step 3<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-msg ocx-in" style="--d:.3s"><span class="ocx-msg-from">Message from you</span><span class="ocx-msg-txt">Priya, this one&rsquo;s for you.</span></div><div class="ocx-win ocx-in" style="--d:.7s"><div class="ocx-win-bar"><span>northbank.sixtyseconds.ai/priya</span></div><div class="ocx-win-body"><div class="ocx-plate ocx-plate-sm"><span class="brand"><i>Made for</i>NORTHBANK</span><h4>Priya</h4><span class="rule"></span><span class="sub">This one&rsquo;s for you.</span><span class="ocx-play"></span><span class="ocx-pip"><b>Andrew, Sixty Seconds</b></span></div><div class="ocx-stack ocx-in" style="--d:.9s;width:76%"><span class="ocx-line"><i></i>Her name visible before she clicks</span><span class="ocx-pagecta ocx-in" style="--d:1.05s">Grab fifteen minutes</span></div></div></div></div>
+              <span class="ocx-cap"><b>3</b><em>Where it lands</em>You send one link. It opens on a page of her own.</span>
+            </div>
+            <div class="ocx-beat" style="--i:3">
+              <span class="ocx-step">Step 4<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-card ocx-in" style="--d:.3s"><span class="ocx-lbl">Your team channel, minutes later</span><div class="ocx-slack ocx-in" style="--d:.7s"><span class="ocx-slack-msg">Priya at Northbank watched hers to the end</span></div><div class="ocx-reply ocx-in" style="--d:1.1s"><span class="ocx-reply-who">Who to call first</span><span class="ocx-reply-txt">Sorted by how much of it they actually watched.</span></div></div></div>
+              <span class="ocx-cap"><b>4</b><em>What comes back</em>Who watched, and how far. Call those.</span>
+            </div>
+          </div>
+          <div class="ocx-scene" data-scene="1">
+            <div class="ocx-prog" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i></div>
+            <div class="ocx-beat" style="--i:0">
+              <span class="ocx-step">Step 1<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-card ocx-in" style="--d:.3s"><span class="ocx-lbl">In &middot; whatever you already have</span><div class="ocx-pick"><span class="ocx-opt on ocx-in" style="--d:.55s">A call transcript</span><span class="ocx-opt">A deal gone quiet</span><span class="ocx-opt">Your call notes</span></div></div></div>
+              <span class="ocx-cap"><b>1</b><em>What goes in</em>Nothing to write, nothing to prepare.</span>
+            </div>
+            <div class="ocx-beat" style="--i:1">
+              <span class="ocx-step">Step 2<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-plate ocx-in" style="--d:.45s"><span class="brand"><i>Your brand</i>YOUR LOGO</span><h4>Nadia, two things.</h4><span class="rule"></span><span class="sub">Forty seconds on the pricing question.</span><span class="ocx-play"><b>0:40</b></span><span class="ocx-pip"><b>Andrew, Sixty Seconds</b></span></div><span class="ocx-said">&ldquo;Nadia &mdash; the two things you asked about on Tuesday.&rdquo;</span><span class="ocx-src ocx-in" style="--d:1.05s">Your videos carry your face and voice. Film once; every video after is rebuilt from that.</span></div>
+              <span class="ocx-cap"><b>2</b><em>What comes out</em>A forty-second recap, sent the same day.</span>
+            </div>
+            <div class="ocx-beat" style="--i:2">
+              <span class="ocx-step">Step 3<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-win ocx-in" style="--d:.3s"><div class="ocx-win-bar"><span>your-brand.sixtyseconds.ai/nadia</span></div><div class="ocx-win-body"><div class="ocx-plate ocx-plate-sm"><span class="brand"><i>Your brand</i>YOUR LOGO</span><h4>Nadia, two things.</h4><span class="rule"></span><span class="sub">Forty seconds on the pricing question.</span><span class="ocx-play"></span><span class="ocx-pip"><b>Andrew, Sixty Seconds</b></span></div><div class="ocx-slots ocx-in" style="--d:.9s"><span class="ocx-slot">Tue 10:00</span><span class="ocx-slot on">Tue 14:15 &middot; booked</span><span class="ocx-slot">Wed 09:30</span></div></div></div></div>
+              <span class="ocx-cap"><b>3</b><em>Where it lands</em>She watches, then books from the same page. No chasing.</span>
+            </div>
+            <div class="ocx-beat" style="--i:3">
+              <span class="ocx-step">Step 4<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-card ocx-in" style="--d:.3s"><span class="ocx-lbl">Your pipeline, the same afternoon</span><div class="ocx-stagepair ocx-in" style="--d:.6s"><span>Discovery</span><svg viewBox="0 0 24 24" class="ocx-arrow"><path d="M5 12h14M13 6l6 6-6 6"/></svg><b>Meeting booked</b></div></div></div>
+              <span class="ocx-cap"><b>4</b><em>What comes back</em>&ldquo;Let&rsquo;s circle back&rdquo; becomes a date in the diary.</span>
+            </div>
+          </div>
+          <div class="ocx-scene" data-scene="2">
+            <div class="ocx-prog" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i></div>
+            <div class="ocx-beat" style="--i:0">
+              <span class="ocx-step">Step 1<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-card ocx-in" style="--d:.3s"><span class="ocx-lbl">In &middot; the call transcript</span><div class="ocx-doc" style="margin-top:.5em"><i style="width:88%"></i><i style="width:72%"></i><i style="width:80%"></i><i style="width:46%"></i></div><span class="ocx-note" style="display:block;margin-top:.6em">The call goes in, exactly as it was recorded.</span></div></div>
+              <span class="ocx-cap"><b>1</b><em>What goes in</em>The scope, the numbers and the objections, pulled out for you.</span>
+            </div>
+            <div class="ocx-beat" style="--i:1">
+              <span class="ocx-step">Step 2<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-plate ocx-in" style="--d:.45s"><span class="brand"><i>Your brand</i>YOUR LOGO</span><h4>Sarah, page four.</h4><span class="rule"></span><span class="sub">The scope, and Tuesday&rsquo;s numbers.</span><span class="ocx-play"><b>0:24</b></span><span class="ocx-pip"><b>Andrew, Sixty Seconds</b></span></div><span class="ocx-said">&ldquo;Sarah &mdash; page four is the bit worth arguing about.&rdquo;</span><span class="ocx-src ocx-in" style="--d:1.05s">Your videos carry your face and voice. Film once; every video after is rebuilt from that.</span></div>
+              <span class="ocx-cap"><b>2</b><em>What comes out</em>You, walking her through it, page by page.</span>
+            </div>
+            <div class="ocx-beat" style="--i:2">
+              <span class="ocx-step">Step 3<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-win ocx-in" style="--d:.3s"><div class="ocx-win-bar"><span>your-brand.sixtyseconds.ai/sarah</span></div><div class="ocx-win-body"><div class="ocx-plate ocx-plate-sm"><span class="brand"><i>Your brand</i>YOUR LOGO</span><h4>Sarah, page four.</h4><span class="rule"></span><span class="sub">The scope, and Tuesday&rsquo;s numbers.</span><span class="ocx-play"></span><span class="ocx-pip"><b>Andrew, Sixty Seconds</b></span></div><div class="ocx-docblock" style="width:76%"><div class="ocx-doc"><i style="width:96%"></i><i style="width:80%"></i></div></div><div class="ocx-pills ocx-in" style="--d:.95s"><span class="ocx-pill">Pay now</span><span class="ocx-pill sign">Sign here</span></div></div></div></div>
+              <span class="ocx-cap"><b>3</b><em>Where it lands</em>Pitch, paperwork and payment, all on one page.</span>
+            </div>
+            <div class="ocx-beat" style="--i:3">
+              <span class="ocx-step">Step 4<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-card ocx-in" style="--d:.3s"><span class="ocx-lbl">What she did, and what came of it</span><span class="ocx-bub re">3 viewers &middot; two you have never met</span><span class="ocx-note ocx-in" style="--d:.9s;display:block;margin-top:.5em">Opened three times. Longest on the numbers.</span><div class="ocx-sign ocx-in" style="--d:1.1s"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Signed and paid, without a second call</div></div></div>
+              <span class="ocx-cap"><b>4</b><em>What comes back</em>Every viewer, and how far each one got.</span>
+            </div>
+          </div>
+          <div class="ocx-scene" data-scene="3">
+            <div class="ocx-prog" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i></div>
+            <div class="ocx-beat" style="--i:0">
+              <span class="ocx-step">Step 1<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-card ocx-in" style="--d:.3s"><span class="ocx-lbl">In &middot; name, role, start date</span><div class="ocx-row is-hit"><span class="ocx-av">M</span><span class="ocx-name">Maya Ellison</span><span class="ocx-note">Head of Customer Success</span></div><div class="ocx-row"><span class="ocx-av">&middot;</span><span class="ocx-name">Start date</span><span class="ocx-note">First Monday in March</span></div></div></div>
+              <span class="ocx-cap"><b>1</b><em>What goes in</em>Three fields, and the offer video is ready to approve.</span>
+            </div>
+            <div class="ocx-beat" style="--i:1">
+              <span class="ocx-step">Step 2<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-plate ocx-in" style="--d:.45s"><span class="brand"><i>Your brand</i>YOUR LOGO</span><h4>Maya, it&rsquo;s a yes.</h4><span class="rule"></span><span class="sub">The panel&rsquo;s verdict. Your offer below.</span><span class="ocx-play"><b>0:27</b></span><span class="ocx-pip"><b>Andrew, Sixty Seconds</b></span></div><span class="ocx-said">&ldquo;Maya &mdash; the whole panel came out saying the same thing.&rdquo;</span><span class="ocx-src ocx-in" style="--d:1.05s">Your videos carry your face and voice. Film once; every video after is rebuilt from that.</span></div>
+              <span class="ocx-cap"><b>2</b><em>What comes out</em>A welcome video with the offer, not a PDF.</span>
+            </div>
+            <div class="ocx-beat" style="--i:2">
+              <span class="ocx-step">Step 3<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-win ocx-in" style="--d:.3s"><div class="ocx-win-bar"><span>your-brand.sixtyseconds.ai/maya</span></div><div class="ocx-win-body"><div class="ocx-plate ocx-plate-sm"><span class="brand"><i>Your brand</i>YOUR LOGO</span><h4>Maya, it&rsquo;s a yes.</h4><span class="rule"></span><span class="sub">The panel&rsquo;s verdict. Your offer below.</span><span class="ocx-play"></span><span class="ocx-pip"><b>Andrew, Sixty Seconds</b></span></div><div class="ocx-stack" style="width:76%"><span class="ocx-line"><i></i>Salary, options and start date, in full</span><span class="ocx-line ocx-in" style="--d:.95s"><i></i>What the team said about her, in writing</span></div></div></div></div>
+              <span class="ocx-cap"><b>3</b><em>Where it lands</em>The full offer, under the video, on her own page.</span>
+            </div>
+            <div class="ocx-beat" style="--i:3">
+              <span class="ocx-step">Step 4<i> of 4</i></span>
+              <div class="ocx-art"><div class="ocx-card ocx-in" style="--d:.3s"><span class="ocx-lbl">Your team channel, that evening</span><div class="ocx-slack ocx-in" style="--d:.7s"><span class="ocx-slack-msg">Maya watched her offer video twice.</span></div><div class="ocx-sign ocx-in" style="--d:1.05s"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Accepted, before the counter-offer</div></div></div>
+              <span class="ocx-cap"><b>4</b><em>What comes back</em>You know she watched before you know she accepted.</span>
+            </div>
+          </div>
+          </div>
+        </div>
+        <ol class="ocx-steps" id="ocxSteps">
+          <li>What goes in: a list you already have. We write and build each video; you approve them before any of it sends.</li>
+          <li>What comes out: one video per person, each one naming them and their company. You film once; your face and voice are rebuilt for every one after that.</li>
+          <li>Where it lands: you send one link; it opens on a page of her own.</li>
+          <li>What comes back: who watched, and how far, so you know who is worth a call.</li>
+        </ol>
+      </div>
+      <!-- LAUNCH SCOPE (Andrew, 25 Aug — ADDENDUM-01 A1/A2): the examples page
+           is DELINKED from nav/drawer/footer on every page (file kept on disk,
+           returns post-launch), and the seven-card use-case grid that stood
+           here is CUT for launch — the chooser panel above covers the outcome
+           story on its own. The grid markup is in git history; the seven
+           outcome-*.html pages stay live for ads/direct links. -->
+    </div>
+  </section>
+
+
+
+  <!-- ══ PROOF STRIP ═════════════════════════════════════════ -->
+  <!-- §proof removed 25 Aug (Andrew): the logo marquee at #logos carries
+       the trust job up top and the case studies live on proof.html via the
+       nav. Section markup in git history. -->
+
+
+  <!-- ══ COMPACT FOOTER-ADJACENT CTA ════════════════════════ -->
+  <section id="end" style="padding:70px 0 40px;text-align:center">
+    <div class="wrap">
+      <h2 class="rv" style="font-size:clamp(32px,4.6vw,58px);margin:0 auto 20px;max-width:17ch">People buy from people. <span class="grad">Make sure yours is the first face they see.</span></h2>
+      <p class="rv" style="font-size:17px;color:rgb(var(--body));max-width:46ch;margin:0 auto 34px;line-height:1.6">Everyone else is sending templates. You&rsquo;re about to send yourself: try the live demo above, or skip straight to a conversation.</p>
+      <div class="rv" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <button type="button" class="btn big" data-demo>Try the live demo</button>
+        <a class="btn ghost big" href="https://savvycal.com/sixtyseconds/U065T5J2M61" target="_blank" rel="noopener noreferrer">Book a call</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-inner">
+        <a href="index.html"><img src="../logo.png" alt="Sixty Seconds" loading="lazy"></a>
+        <div class="foot-links">
+          <a href="how-it-works.html">How it works</a>
+          
+          <a href="proof.html">Case studies</a>
+          <a href="blog.html">Learn</a>
+          <a href="guides.html">Guides</a>
+        </div>
+      </div>
+      <p class="foot-legal">© Sixty Seconds Ltd. Personalised video, made for one person at a time. · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+    </div>
+  </footer>
+</main>
+
+<style>
+/* page-local styles — outcome chooser + engine strip */
+#demoForm{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end}
+/* ── the demo shell ──────────────────────────────────────────────
+   Was a fake app window: three grey macOS traffic lights over a form.
+   Those dots are the most generic signal on the web and they actively
+   work against this block, because they say "screenshot of software"
+   when the whole point is that it is running right now, on you.
+
+   Replaced with two honest things: a live state in the header, and the
+   product's own output beside the form — a thumbnail that reads the
+   address as it is typed. The headline promises "watch your video build
+   itself"; this is the smallest true version of that promise, visible
+   before anyone presses anything. Nothing is sent while typing. */
+.demo-head{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:12px 26px;border-bottom:1px solid rgb(var(--line)/.8)}
+.demo-live{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.16em;
+  text-transform:uppercase;font-weight:800;color:rgb(var(--emerald-br))}
+.demo-live i{position:relative;width:8px;height:8px;border-radius:50%;background:rgb(var(--emerald-br));flex-shrink:0}
+/* the pulsing "live" ring only exists while something is genuinely being
+   built. Two cold readers watched this panel type into itself and animate a
+   pipeline under a BUILDING LIVE banner without touching anything, and both
+   concluded the vendor fakes live behaviour in its own demo — one called it
+   deceptive "before I've even bought it". At rest the panel now says what it
+   is: an example. It says BUILDING LIVE when it is building live. */
+.demo-live{color:rgb(var(--muted))}
+.demo-live i{background:rgb(var(--muted))}
+.demo-live.is-live{color:rgb(var(--emerald-br))}
+.demo-live.is-live i{background:rgb(var(--emerald-br))}
+.demo-live.is-live i:after{content:'';position:absolute;inset:-3px;border-radius:50%;
+  border:1.5px solid rgb(var(--emerald-br));animation:demoLive 2.4s cubic-bezier(.23,1,.32,1) infinite}
+@keyframes demoLive{0%{transform:scale(.85);opacity:.8}70%,100%{transform:scale(2.2);opacity:0}}
+.demo-headnote{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:rgb(var(--muted))}
+/* no panel, no padding, no chrome: the form is a form. It was wrapped in a
+   fake window, then in a bordered card, and neither was doing anything the
+   page needed — a box around a form only ever says "this is a designed
+   thing", which is not a message. */
+/* One column, centred. The whole page composes on a centre axis — headline,
+   subhead, proof, every section below it — and this band was the only
+   left/right split on it, which is why it read as off even though nothing
+   in it was wrong. Restacked 25 Aug (PRD-01 §1): the reel now sits ABOVE the
+   input, in the cold visitor's order of thought — see that it is real and
+   good, then be asked for an email. */
+.demo-body{display:flex;flex-direction:column;align-items:center;gap:28px;padding:0}
+.demo-formcol{width:100%;max-width:620px;text-align:center}
+.demo-previewcol{width:100%;max-width:580px}
+/* work-email help (PRD-01 §4) — help, not refusal, and hidden until earned */
+/* the reel's own title (PRD-02 §1) */
+.reel-title{font-size:14px;font-weight:600;color:rgb(var(--body));text-align:center;margin:0 0 12px;line-height:1.45}
+.demo-emailhint{font-size:13px;color:rgb(var(--amber-br));margin:10px 0 0;text-align:center;line-height:1.5}
+.demo-emailhint[hidden]{display:none}
+/* the AI-face-and-voice disclosure, relocated under the badges (PRD-01 §2) */
+.demo-disclosure{font-size:12px;color:rgb(var(--muted));margin:14px 0 0;text-align:center;line-height:1.5}
+/* ── the staged build (PRD-01 §6): three real states, not a spinner ──
+   1 their name lands on the thumbnail · 2 a script is written for them ·
+   3 their brand colours come in (index.js swaps --pt). The script card is a
+   real overlay that assembles line by line; transform/opacity only. */
+.demo-plate .pt-script{position:absolute;left:5.5%;bottom:15%;z-index:5;width:46%;max-width:270px;
+  background:rgb(10 14 22/.88);border:1px solid rgb(255 255 255/.16);border-radius:10px;padding:12px 14px;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .28s cubic-bezier(.23,1,.32,1),transform .28s cubic-bezier(.23,1,.32,1)}
+.demo-plate.st-script .pt-script{opacity:1;transform:none}
+.pt-script b{display:block;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:rgb(255 255 255/.75);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pt-script i{display:block;height:6px;border-radius:99px;background:rgb(255 255 255/.22);margin-top:7px;
+  transform-origin:left}
+.pt-script i:nth-child(3){width:88%}.pt-script i:nth-child(4){width:72%}.pt-script i:nth-child(5){width:54%}
+#ptScriptText{display:none;font-size:11.5px;line-height:1.5;color:rgb(255 255 255/.86);font-weight:500}
+#ptScriptText:after{content:"";display:inline-block;width:6px;height:12px;margin-left:2px;vertical-align:-2px;
+  background:rgb(var(--teal-br));animation:ptcaret 1s steps(2) infinite}
+@keyframes ptcaret{50%{opacity:0}}
+@keyframes waitpulse{0%,100%{opacity:.25;transform:scale(.85)}50%{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){#resultRealLoading i{animation:none;opacity:.7}}
+.demo-plate.st-scripttext #ptScriptText{display:block}
+.demo-plate.st-scripttext .pt-script i{display:none}
+.demo-plate.built #ptScriptText:after{display:none}
+.demo-plate.st-script .pt-script i{animation:ptline .5s cubic-bezier(.23,1,.32,1) backwards}
+.demo-plate.st-script .pt-script i:nth-child(3){animation-delay:.18s}
+.demo-plate.st-script .pt-script i:nth-child(4){animation-delay:.36s}
+@keyframes ptline{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .demo-plate .pt-script{transition:none}
+  .demo-plate.st-script .pt-script i{animation:none}
+}
+/* ── short-viewport compaction (PRD-01 §1's own caveat) ──────────────
+   The restack only ships if the email field and Build button sit inside a
+   1280x800 and 1440x900 viewport without scrolling. Tall screens keep the
+   generous rhythm above; laptop-height screens compact the top of the hero
+   instead of pushing the input under the fold. !important because the hero
+   type carries inline sizes. */
+@media (min-width:821px) and (max-height:900px){
+  #hero{padding-top:74px!important;padding-bottom:48px!important}
+  #hero .kicker{margin-bottom:12px!important}
+  #hero h1{font-size:clamp(32px,4.2vw,54px)!important;margin-bottom:12px!important}
+  #hero .wrap > p.rv{font-size:16.5px!important;margin-bottom:16px!important}
+  .demo-body{gap:12px}
+  .demo-previewcol{max-width:472px}
+  .reel-title{margin-bottom:8px}
+  .demo-platecap{margin-top:6px}
+  .reel-tick{padding-bottom:7px}
+}
+  /* Review counts were shown on screen for one round and taken back off:
+     Andrew's call, the badge carries the score and nothing else. The counts
+     stay in each aria-label, where they were all along. */
+/* the field and the button read as one control, centred on the axis */
+#demoForm{display:flex;gap:12px;align-items:flex-end;justify-content:center}
+#demoForm > div{flex:1;min-width:0}
+.demo-plate{aspect-ratio:16/9;border-radius:13px;display:block;width:100%;padding:0;border:1px solid rgb(255 255 255/.16);overflow:hidden;
+  box-shadow:0 24px 60px rgb(0 0 0/.5),0 0 0 1px rgb(0 0 0/.3);
+  text-align:left;font:inherit;color:inherit}
+/* the real render, revealed in place once the disc is pressed */
+.demo-plateex{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:2;border-radius:11px}
+.demo-plate.example .demo-plateex{display:block}
+/* the example IS the thumbnail, so the generated furniture stands down */
+.demo-plate.example .pt-co,.demo-plate.example .pt-name,.demo-plate.example .pt-pip{opacity:0}
+/* Play only exists where there is something honest to play. At rest the plate
+   IS Priya's finished render and pressing play gives you exactly that. Once
+   someone types, the plate is THEIR thumbnail and their video does not exist
+   yet — a disc there plays Priya's render over Dawn's name, which is the
+   "whose video is this?" confusion both non-technical readers described. */
+.demo-plate:not(.example) .pt-play{display:none}
+.demo-plate:not(.example):not(.building){cursor:default}
+  /* THE 3D SHOWREEL STAGE.
+     The plate is the window; the slides are cards on a stage behind it. One
+     direction only, every time: the new brand flies in from the right, the old
+     one leaves to the left. Alternating direction was tried first and reads as
+     an undo rather than a next.
+     Only transform / opacity / filter animate, all GPU-composited. */
+  /* pan-y: a horizontal drag belongs to the reel, a vertical one to the page.
+     Without it the UA can claim the gesture and fire pointercancel instead. */
+  .reel3d{position:absolute;inset:0;z-index:6;display:none;border-radius:11px;overflow:hidden;touch-action:pan-y;
+    background:#050a12;perspective:1150px;perspective-origin:50% 50%;transform-style:preserve-3d}
+  .demo-plate.example .reel3d{display:block}
+  /* Cards are OPAQUE and park fully outside the frame. A cross-fade was tried
+     first and mid-transition it just read as a dissolve: two half-transparent
+     brands at once, muddy, and it hid the direction. Opaque cards mean the
+     incoming brand covers the outgoing one edge-first, which is the swipe. */
+  /* Direction lives in custom properties so a swipe back can animate back:
+     auto-advance always sets the forward pair, a backward gesture sets the
+     mirror. The rule that the reel always moves the same way is about the
+     AUTOMATIC advance; a card that arrives from the right when you swiped
+     right is just wrong feedback. */
+  .reel3d-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+    --from:112%;--from-rot:-19deg;--to:-34%;--to-rot:13deg;
+    transform-origin:50% 50%;backface-visibility:hidden;will-change:transform;
+    transform:translate3d(var(--from),0,-150px) rotateY(var(--from-rot));filter:brightness(.78);
+    /* the shadow the arriving card throws onto the one it is covering: the
+       cue that says layered, not cross-faded */
+    box-shadow:-26px 0 54px rgb(2 4 9/.62);
+    transition:transform 380ms cubic-bezier(.23,1,.32,1),filter 380ms cubic-bezier(.23,1,.32,1)}
+  .reel3d-slide.is-on{transform:translate3d(0,0,0) rotateY(0deg);filter:none;z-index:3}
+  /* The outgoing card gives way rather than racing off. Sending both cards the
+     same distance at the same time leaves a fixed gap between them and you see
+     the empty stage through the middle of the swipe. So the old brand slides a
+     third of a frame, sinks back and dims, and the new one covers it — and it
+     starts 70ms late so the new card is already over the top before it moves. */
+  /* Frozen in a screenshot, a bright legible outgoing card reads as "an
+     under-layer that did not clear" — three cold readers said exactly that,
+     and at 440ms of travel per 1.4s clip a reader has a one-in-three chance of
+     glancing at that frame. Dimmed and blurred it reads as depth instead. */
+  .reel3d-slide.is-out{transform:translate3d(var(--to),0,-110px) rotateY(var(--to-rot));
+    filter:brightness(.5) blur(3px);z-index:2;transition-delay:45ms}
+  /* the edge the card turns on, so the depth reads as an edge and not a fade */
+  .reel3d::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:11px;
+    box-shadow:inset 0 0 46px rgb(4 7 13/.55)}
+
+  /* One tick per brand: which is showing, how far through, and a way to jump. */
+  .reel-ticks{display:none;justify-content:center;align-items:flex-end;gap:2px;margin:4px 0 0;padding:0;flex-wrap:wrap}
+  .demo-plate.example ~ .reel-ticks{display:flex}
+  /* Labelled, because two readers in two rounds could not act on the control.
+     "Dashes aren't brands, they're not labelled." "I want to click show me a
+     recruiter, not sit through a fixed loop hoping one resembles my patch."
+     The label is the SECTOR, never the company: three of the four brands are
+     real companies and naming them here is the thing we are not allowed to do.
+     That reasoning stands for the labels, but it was never sufficient — the
+     wordmarks are burned into the frames the ticks play, so withholding the
+     name from the label withheld nothing. Those three clips are now pulled
+     at source; only the fictional brand remains. */
+  .reel-tick{-webkit-appearance:none;appearance:none;background:none;border:0;padding:8px 9px 12px;margin:0;
+    cursor:pointer;line-height:1;border-radius:9px;touch-action:manipulation;
+    display:flex;flex-direction:column;align-items:center;gap:7px}
+  .rt-l{font-size:11px;font-weight:600;letter-spacing:.01em;white-space:nowrap;
+    color:rgb(var(--muted));transition:color 200ms cubic-bezier(.23,1,.32,1)}
+  .reel-tick.is-on .rt-l{color:rgb(var(--body))}
+  /* No fade on the track. Fading the old tick out over 200ms left two bars
+     reading as active, and the one that looked MORE active was the wrong
+     brand — the previous defect (nothing lit) swapped for a worse one. */
+  /* The bar is a FIXED width. Letting it stretch to its label gave four
+     progress bars of four different lengths (54, 87, 59, 65px measured), which
+     reads as "this clip runs longer than that one". */
+  .reel-tick i{display:block;height:3px;border-radius:99px;background:rgb(255 255 255/.2);width:40px;
+    overflow:hidden;position:relative}
+  .reel-tick i::after{content:"";position:absolute;left:0;top:0;bottom:0;width:var(--p,0%);border-radius:99px;
+    background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)))}
+  /* The active tick has to be obvious with the fill at 0%, which is where it
+     sits for the whole of a transition. Four cold readers photographed this
+     mid-swipe and all four said no tick was lit and the indicator looked dead.
+     The track itself now goes teal, so position never depends on the fill. */
+  .reel-tick.is-on i{background:rgb(var(--teal-br)/.34);height:4px}
+  .reel-tick:focus-visible{outline:2px solid rgb(var(--teal-br));outline-offset:2px}
+  /* Four labels do not fit one line on a phone: the row silently wrapped to
+     three ragged lines. Two by two, on purpose.
+
+     Raised from 440px to 768px on 24 Aug, when the ticks started naming the
+     brands. Measured: the four labels total 372px and the tick container is
+     256px at 320, 326 at 390, 340 from 430 to 768 — so every width in that
+     band ragged-wrapped to two or three uneven lines. 2x2 is ~208px and fits
+     the whole band. Above 768 the container is 580px and one row fits. If the
+     labels ever change, re-measure rather than assume this still holds. */
+  /* Andrew, 27 Aug: on small views the reel carries no lane labels at all —
+     the videos just rotate. Ticks and the "pick one" hint (which only makes
+     sense with ticks to pick) are desktop furniture from 769px up. */
+  @media (max-width:768px){
+    .demo-plate.example ~ .reel-ticks,
+    .demo-plate.example ~ .reel-hint{display:none}
+  }
+  .reel-hint{display:none;font-size:12px;letter-spacing:.01em;color:rgb(var(--body)/.72);
+    margin:6px 0 0;text-align:center;min-height:16px}
+  .demo-plate.example ~ .reel-hint{display:block}
+  /* small views: no ticks, so nothing to pick — this must sit AFTER the
+     display:block rule above; same specificity, source order decides */
+  @media (max-width:768px){
+    .demo-plate.example ~ .reel-hint{display:none}
+  }
+  .reel-hint b{color:rgb(var(--body));font-weight:600}
+  /* Tap/Click is set in JS, not by hiding one of two spans: a hidden span is
+     still in the accessible name, so a screen reader heard "Tap Click a bar". */
+  @media (hover:hover) and (pointer:fine){
+    .reel-tick:hover i{background:rgb(255 255 255/.42)}
+  }
+  /* Motion is the whole point of the reel, so reduced-motion keeps the swap and
+     drops the travel: the card fades rather than flies, and nothing autoplays. */
+  @media (prefers-reduced-motion:reduce){
+    .reel3d-slide{transform:none;filter:none;opacity:0;transition:opacity 200ms linear}
+    .reel3d-slide.is-on{opacity:1}
+    .reel3d-slide.is-out{transform:none;filter:none;opacity:0}
+  }
+.demo-plate.example .demo-plateex{display:none}
+.demo-plate.example .pt-play{display:none}
+.demo-plate.playing .pt-co,.demo-plate.playing .pt-name,
+.demo-plate.playing .pt-play,.demo-plate.playing .pt-pip{opacity:0;pointer-events:none}
+.demo-plate.playing{cursor:default}
+.demo-platecap b{color:rgb(var(--body));font-weight:700}
+/* says plainly what it is, so nobody tries to click into a reel */
+.demo-reeltag{position:absolute;right:11px;top:11px;z-index:8;
+  font-size:9.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#fff;
+  background:rgb(6 9 16/.62);border:1px solid rgb(255 255 255/.22);border-radius:999px;padding:4px 9px;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.demo-plate:not(.example) .demo-reeltag{display:none}
+#dEmail:focus-visible{outline:2px solid rgb(var(--emerald-br));outline-offset:2px}
+.demo-fieldlabel{display:block;text-align:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:600;color:rgb(var(--muted));margin-bottom:11px}
+.demo-platebuild{position:absolute;inset:0;z-index:7;display:none;flex-direction:column;justify-content:flex-end;
+  padding:14px;background:linear-gradient(0deg,rgb(6 9 16/.86),rgb(6 9 16/.35) 55%,rgb(6 9 16/.15));border-radius:11px}
+.demo-plate.building .demo-platebuild{display:flex}
+.demo-platestage{font-size:12px;font-weight:700;letter-spacing:.04em;color:#fff;margin-bottom:9px;
+  /* clears the presenter PiP, which owns the bottom-right of the plate */
+  padding-right:23%;text-shadow:0 2px 10px rgb(0 0 0/.7)}
+.demo-plateprog{display:block;height:4px;border-radius:99px;background:rgb(255 255 255/.22);overflow:hidden}
+.demo-plateprog i{display:block;height:100%;width:0%;border-radius:99px;
+  background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)));transition:width .4s var(--ease)}
+.demo-plate.building .pt-play{opacity:0}
+/* ── the build runs ON the reel (Andrew, 27 Aug): the videos keep rotating
+   and the stages land over them as cards. The reel is z6, the strip z7, so
+   every build card sits at z8; the ticks and hint stand down while it runs
+   so the plate reads as one thing being assembled, not two competing UIs. */
+.demo-plate.building .pt-script,.demo-plate.built .pt-script{z-index:8}
+.demo-plate.building .demo-reeltag,.demo-plate.built .demo-reeltag{display:none}
+.demo-plate.building ~ .reel-ticks,.demo-plate.building ~ .reel-hint{display:none!important}
+/* ONE identity per frame (three blind readers, 27 Aug): the reel keeps
+   moving during the build, but the other brands' burned-in names must not
+   compete with the visitor's cards — "Tom, this one's for Vessel" over a
+   Frame build read as the exact merge-field failure a buyer fears. Dim and
+   defocus the clips while building; the motion stays, the names don't. */
+.demo-plate.building .reel3d-slide,.demo-plate.building .reel3d-slide.is-on{
+  filter:brightness(.35) blur(5px)}
+/* the blur outlives the build for as long as the cards do (round-2
+   adversary: a sharp Pathway frame wearing a Frame chip re-triggers the
+   collision) — lighter than mid-build so the motion still reads */
+.demo-plate.built .reel3d-slide,.demo-plate.built .reel3d-slide.is-on{
+  filter:brightness(.5) blur(3px)}
+/* after the build lands, the visitor's cards STAY on the plate — their
+   input visibly persisted; the reel sharpens back underneath */
+.demo-plate.built .pt-brand,.demo-plate.built .pt-id{display:flex}
+.demo-plate.built.st-brandcard .pt-brand,.demo-plate.built.st-id .pt-id{opacity:1;transform:none}
+.demo-plate.building{border-color:rgb(var(--pt)/.75);
+  box-shadow:0 24px 60px rgb(0 0 0/.5),0 0 0 1px rgb(var(--pt)/.35);
+  transition:border-color .4s cubic-bezier(.23,1,.32,1),box-shadow .4s cubic-bezier(.23,1,.32,1)}
+/* the brand card: the scraped logo + the colours read out of it */
+.pt-brand{position:absolute;right:5.5%;top:11%;z-index:8;display:none;align-items:center;gap:9px;
+  background:rgb(10 14 22/.88);border:1px solid rgb(255 255 255/.16);border-radius:10px;padding:9px 12px;
+  opacity:0;transform:translateY(-8px);
+  transition:opacity .28s cubic-bezier(.23,1,.32,1),transform .28s cubic-bezier(.23,1,.32,1)}
+.demo-plate.building .pt-brand{display:flex}
+.demo-plate.st-brandcard .pt-brand{opacity:1;transform:none}
+.pt-brand img{width:24px;height:24px;border-radius:6px;object-fit:contain;background:#fff;padding:2px}
+.pt-brand img[hidden]{display:none}
+/* lettermark fallback: when no logo scrapes, the brand card still carries
+   the company (Andrew, 28 Aug: "branding has to be there") */
+.pt-lm{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;background:rgb(var(--pt,126 106 255))}
+.pt-lm[hidden]{display:none}
+.pt-sw{display:flex;gap:4px}
+.pt-sw i{width:11px;height:11px;border-radius:3.5px;display:block;background:rgb(255 255 255/.2)}
+#ptBrandDom{font-size:10.5px;font-weight:700;letter-spacing:.06em;color:rgb(255 255 255/.82);max-width:120px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* the identity card: name (or company) landing on the thumbnail */
+.pt-id{position:absolute;left:5.5%;top:11%;z-index:8;display:none;flex-direction:column;gap:2px;
+  background:rgb(10 14 22/.88);border:1px solid rgb(255 255 255/.16);border-radius:10px;padding:9px 14px;
+  opacity:0;transform:translateY(-8px);
+  transition:opacity .28s cubic-bezier(.23,1,.32,1),transform .28s cubic-bezier(.23,1,.32,1)}
+.demo-plate.building .pt-id{display:flex}
+.demo-plate.st-id .pt-id{opacity:1;transform:none}
+.pt-id b{font-size:14px;font-weight:800;color:#fff;line-height:1.2}
+.pt-id span{font-size:10.5px;font-weight:600;letter-spacing:.05em;color:rgb(255 255 255/.68)}
+.pt-id span:empty{display:none}
+@media (prefers-reduced-motion:reduce){
+  .pt-brand,.pt-id{transition:none}
+  .demo-plate.building{transition:none}
+}
+.demo-plate .pt-name{transition:opacity .2s cubic-bezier(.23,1,.32,1)}
+.demo-plate.swapping .pt-name,.demo-plate.swapping .pt-co{opacity:.35}
+.demo-platecap{font-size:12px;color:rgb(var(--muted));margin:14px 0 0;text-align:center;line-height:1.4}
+.demo-rest{padding:26px 0 0;max-width:900px;margin:0 auto;width:100%}
+#buildBtn{white-space:nowrap}
+@media (max-width:820px){
+  .demo-body{gap:18px;padding:0}
+  /* the pipeline row overflowed a 390px screen and clipped DELIVER off the
+     right edge: the four labels plus three connectors need less of both */
+  #nodeRow .node span{font-size:9.5px!important;letter-spacing:.04em!important}
+  #nodeRow .nline{flex:0.7!important}
+  #nodeRow .node .ndot{width:11px!important;height:11px!important}
+  #demoForm{flex-direction:column;align-items:stretch;gap:12px}
+  #demoForm > div{text-align:center}
+  .demo-previewcol{max-width:340px}
+  .demo-rest{padding:20px 0 0}
+  /* the plate's drop shadow was landing on the first row of lane labels —
+     4px of clearance read as a collision on a phone */
+  .reel-ticks{margin-top:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  .demo-live i:after{animation:none;opacity:.5}
+  .demo-plate .pt-name{transition:none}
+}
+/* explicit placeholder colour — without this the browser default placeholder
+   rendering (a low-opacity tint of the input's own --ink colour) measured
+   low-contrast against the input's dark fill */
+#dEmail::placeholder{color:rgb(var(--muted));opacity:1}
+@media (max-width:480px){
+  #demoForm{grid-template-columns:1fr}
+  #buildBtn{width:100%;justify-content:center}
+}
+
+#chooser{padding-top:70px;padding-bottom:70px}
+#engine{padding-top:70px;padding-bottom:70px}
+#proof{padding-top:70px;padding-bottom:70px}
+#pricing{padding-top:70px;padding-bottom:76px}
+.chooser-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+/* seventh card sits alone on the last row; centre it rather than
+   letting it stretch into a differently-shaped component */
+.ocard-last{grid-column:2}
+.ocard{position:relative;display:block;text-decoration:none;color:rgb(var(--ink));padding:28px 26px;border-radius:var(--r3);
+  background:radial-gradient(ellipse 140% 60% at 50% -10%,rgb(var(--accent)/.16),transparent 60%),
+             linear-gradient(158deg,rgb(var(--s2)/.85),rgb(var(--s1)/.92));
+  border:1px solid rgb(var(--line-br)/.5);overflow:hidden;
+  transition:transform .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+.ocard:before{content:'';position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .5s var(--ease);
+  background:radial-gradient(ellipse 90% 90% at 20% 0%,rgb(var(--accent)/.28),transparent 70%)}
+.ocard:hover,.ocard:focus-visible{transform:translateY(-6px);border-color:rgb(var(--accent)/.6);
+  box-shadow:0 26px 60px rgb(0 0 0/.5),0 0 60px rgb(var(--accent)/.22)}
+.ocard:hover:before,.ocard:focus-visible:before{opacity:1}
+.ocard:focus-visible{outline:2px solid rgb(var(--accent));outline-offset:3px}
+.ocard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;position:relative;z-index:1}
+.oic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:rgb(var(--accent)/.16);border:1px solid rgb(var(--accent)/.4);color:rgb(var(--accent));
+  box-shadow:0 0 22px rgb(var(--accent)/.22)}
+.oic svg{width:20px;height:20px}
+.oarrow{width:16px;height:16px;color:rgb(var(--muted));transition:transform .4s var(--ease),color .4s var(--ease)}
+.ocard:hover .oarrow{transform:translateX(4px);color:rgb(var(--accent))}
+.ocard h3{position:relative;z-index:1;font-size:21px;margin-bottom:8px;letter-spacing:-.01em}
+.ocard p{position:relative;z-index:1;font-size:14.5px;color:rgb(var(--muted));line-height:1.55}
+
+/* per-outcome micro-visuals — fill the dead middle of each chooser card so
+   it reads as a designed artefact rather than an empty box with a label.
+   Fixed height keeps every card in a row the same size regardless of which
+   visual (grid / bars / mini-page) it holds. */
+/* was height:60px, which clipped the three-row mocks (diary, modules) and
+   let the card title overlap their last row. Sized to the tallest mock so
+   the titles still line up across a row. */
+/* the panel stamps every frame; the grid holds the more screenshot-like
+   artefacts and was leaning on one grey line above it */
+.ovis{position:relative;z-index:1;height:84px;margin-bottom:26px;opacity:.92;display:flex;flex-direction:column;justify-content:center}
+/* .ovis 'Invented example' stamp removed 25 Aug (Andrew): all invented tags off the homepage */
+.ov-chat{display:flex;flex-direction:column;gap:7px;justify-content:center}
+.ov-chat .bar{height:10px;border-radius:5px;background:rgb(var(--s3)/.9);border:1px solid rgb(var(--line-br)/.4)}
+.ov-chat .bar.hi{background:rgb(var(--accent)/.35);border-color:rgb(var(--accent)/.65);position:relative}
+.ov-chat .bar.hi:after{content:'';position:absolute;right:-4px;top:-4px;width:8px;height:8px;border-radius:50%;
+  background:rgb(var(--emerald-br));box-shadow:0 0 8px rgb(var(--emerald)/.8)}
+.ov-chat .w1{width:56%}
+.ov-chat .w2{width:84%}
+.ov-chat .w3{width:38%}
+
+/* fixed pixel cell sizes, not fractional grid tracks — 1fr columns crossed
+   with a height-constrained container stretched every cell into an ellipse
+   (wide column track × short row track). justify-content:space-between
+   keeps the row spanning the card's full width without the cells themselves
+   growing off-square. */
+.ov-cal{display:grid;grid-template-columns:repeat(5,18px);grid-auto-rows:18px;row-gap:7px;justify-content:space-between}
+.ov-cal i{border-radius:4px;background:rgb(var(--s3)/.8);border:1px solid rgb(var(--line-br)/.35);display:flex;align-items:center;justify-content:center}
+.ov-cal i.hi{background:rgb(var(--accent)/.32);border-color:rgb(var(--accent)/.75);box-shadow:0 0 10px rgb(var(--accent)/.35)}
+.ov-cal i.hi b{width:6px;height:6px;border-radius:50%;background:rgb(var(--accent-br,var(--accent)));display:block}
+
+.ov-page{display:flex;flex-direction:column;gap:9px;justify-content:center}
+.ov-page .ln{height:8px;border-radius:4px;background:rgb(var(--s3)/.8)}
+.ov-page .l1{width:92%}
+.ov-page .l2{width:62%}
+.ov-page .pay{align-self:flex-start;margin-top:1px;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  color:rgb(var(--accent-br,var(--accent)));background:rgb(var(--accent)/.2);border:1px solid rgb(var(--accent)/.55);border-radius:999px;padding:4px 11px}
+
+
+.ov-ticks{display:grid;grid-template-columns:repeat(5,18px);grid-auto-rows:18px;row-gap:7px;justify-content:space-between}
+.ov-ticks i{border-radius:5px;background:rgb(var(--s3)/.7);border:1px solid rgb(var(--line-br)/.35);
+  display:flex;align-items:center;justify-content:center;color:rgb(var(--accent-br,var(--accent)))}
+.ov-ticks i svg{width:11px;height:11px;opacity:0}
+.ov-ticks i.on{background:rgb(var(--accent)/.3);border-color:rgb(var(--accent)/.75)}
+.ov-ticks i.on svg{opacity:1}
+
+
+@media (max-width:900px){
+  .chooser-grid{grid-template-columns:repeat(2,1fr)}
+  .ocard-last{grid-column:auto}
+  }
+@media (max-width:600px){
+  .chooser-grid{grid-template-columns:1fr}
+  .ocard-last{grid-column:auto}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   5.3 ADDITIONS — drag-wipe comparator, pinned engine assembly,
+   chooser hover polish. Page-local (index.html only), same
+   convention as the chooser/engine-strip block above.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── THE COMPARATOR ── */
+#comparator{padding-top:44px;padding-bottom:52px}
+.comp-shell{max-width:800px;margin:0 auto}
+.comparator{position:relative;aspect-ratio:4/3;border-radius:var(--r4);overflow:hidden;
+  border:1px solid rgb(var(--line-br)/.6);background:rgb(var(--s1));
+  box-shadow:0 40px 100px rgb(0 0 0/.55),0 0 120px rgb(var(--violet)/.14);
+  touch-action:none;user-select:none;-webkit-user-select:none;cursor:ew-resize}
+.comp-layer{position:absolute;inset:0;display:flex;flex-direction:column}
+.comp-old{background:linear-gradient(165deg,rgb(40 43 50/.92),rgb(20 22 27/.97));filter:grayscale(.55) saturate(.65);z-index:1}
+.comp-new{background:linear-gradient(168deg,rgb(var(--s2)),rgb(var(--s1)));z-index:2;
+  clip-path:inset(0 0 0 calc(var(--split,50) * 1%))}
+.comp-bar{display:flex;align-items:center;gap:7px;padding:14px 20px;border-bottom:1px solid rgb(255 255 255/.08);flex-shrink:0}
+.comp-bar i{width:8px;height:8px;border-radius:50%;background:rgb(255 255 255/.16);display:block}
+.comp-bar span{margin-left:8px;font-size:12px;color:rgb(var(--muted));font-family:'Inter';white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.comp-bar span.comp-url{color:rgb(var(--emerald-br));font-weight:600}
+.comp-body{flex:1;min-height:0;padding:20px 24px;display:flex;flex-direction:column;gap:12px}
+.comp-line{font-size:14.5px;line-height:1.55;color:rgb(var(--muted))}
+.comp-tag{color:rgb(255 176 130);font-weight:600;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.9em;
+  background:rgb(255 176 130/.1);border:1px dashed rgb(255 176 130/.4);border-radius:5px;padding:1px 5px}
+.comp-deadframe{position:relative;flex:1;min-height:0;border-radius:14px;
+  border:1.5px dashed rgb(var(--line-br)/.9);background:rgb(255 255 255/.035);display:flex;align-items:center;justify-content:center}
+.comp-deadplay{width:38px;height:38px;border-radius:50%;border:1.5px solid rgb(var(--muted));opacity:.7;position:relative}
+.comp-deadplay:after{content:'';position:absolute;left:53%;top:50%;transform:translate(-50%,-50%);
+  border-left:11px solid rgb(var(--muted));border-top:7px solid transparent;border-bottom:7px solid transparent}
+.comp-deadcap{position:absolute;left:14px;bottom:11px;font-size:11px;color:rgb(var(--muted));font-family:ui-monospace,monospace}
+/* .comp-realframe and .comp-old .comp-deadframe are the two layers' media
+   elements — both flex:1/min-height:0 so they simply fill whatever space
+   remains after their card's fixed-height siblings (chrome bar, text lines,
+   signals row). This is deliberate: the outer .comparator is a FIXED
+   aspect-ratio box (both layers must share identical geometry for the
+   clip-path wipe to line up), so the media element inside each card must be
+   flexible, not aspect-ratio-locked — an aspect-ratio box here previously
+   demanded more height than a 4:3 frame could give it at some widths,
+   silently overflowing the card (video/watch-bar/Slack/CRM got squeezed out
+   below the visible frame). flex:1 can never overflow its parent. */
+.comp-realframe{position:relative;flex:1;min-height:0;border-radius:14px;overflow:hidden;border:1px solid rgb(255 255 255/.14)}
+.comp-realframe img{width:100%;height:100%;object-fit:cover;display:block}
+.comp-realplay{position:absolute;left:50%;top:50%;width:42px;height:42px;margin:-21px 0 0 -21px;border-radius:50%;
+  background:rgb(255 255 255/.95);display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgb(255 255 255/.3);z-index:2}
+.comp-realplay:after{content:'';border-left:13px solid rgb(var(--bg));border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px}
+.comp-views{position:absolute;top:10px;right:10px;z-index:2;font-size:10px;font-weight:700;letter-spacing:.05em;color:#fff;
+  background:rgb(0 0 0/.45);border:1px solid rgb(255 255 255/.2);padding:4px 9px;border-radius:999px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+/* watch-bar rides as a scrubber overlay on the video itself (like a real
+   player), rather than a separate block below it — this is what buys back
+   the vertical room the video needs inside a fixed-height frame, and it
+   reads as more authentic UI chrome than a detached progress bar would. */
+.comp-watchrow{position:absolute;left:0;right:0;bottom:0;z-index:3;display:flex;align-items:center;gap:8px;
+  padding:22px 12px 10px;background:linear-gradient(0deg,rgb(0 0 0/.75),rgb(0 0 0/.32) 60%,transparent)}
+.comp-watchlabel{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgb(255 255 255/.75);flex-shrink:0}
+.comp-watchtrack{flex:1;height:5px;border-radius:99px;background:rgb(255 255 255/.22);overflow:hidden}
+.comp-watchtrack i{display:block;height:100%;width:0%;border-radius:99px;
+  background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)));transition:width 1.1s var(--ease)}
+.comp-watchpct{font-family:'Cabinet';font-size:12.5px;color:rgb(var(--emerald-br));flex-shrink:0;font-variant-numeric:tabular-nums}
+.comp-signals{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.comp-slack{display:flex;align-items:center;gap:8px;font-size:11.5px;line-height:1.35;color:rgb(var(--body));
+  background:rgb(var(--s1)/.8);border:1px solid rgb(var(--line-br)/.5);border-radius:11px;padding:9px 11px;
+  flex:1;min-width:0;overflow:hidden;
+  /* all three signals now enter the same way — a toast popping in, not one
+     sliding sideways while another scales — so the cascade reads as one
+     chain rather than three unrelated effects */
+  opacity:0;transform:translateY(9px) scale(.97);
+  transition:opacity .32s cubic-bezier(.23,1,.32,1),transform .32s cubic-bezier(.23,1,.32,1)}
+.comp-slack.armed{opacity:1;transform:none}
+.comp-slack b{color:rgb(var(--ink))}
+/* :not(.comp-slackic) matters — .comp-slackic IS a span, so this rule used
+   to outrank its own display:flex and render the # as a block text node in
+   the top-left corner of its purple tile instead of centred in it. */
+.comp-slack span:not(.comp-slackic){overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.comp-slackic{flex-shrink:0;width:20px;height:20px;border-radius:6px;background:rgb(var(--violet)/.22);color:rgb(var(--violet-br));
+  display:flex;align-items:center;justify-content:center;font-family:'Cabinet';font-weight:800;font-size:12px}
+.comp-crm{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;
+  padding:6px 12px;border-radius:999px;background:rgb(var(--s3)/.7);border:1px solid rgb(var(--line-br)/.5);color:rgb(var(--muted));
+  flex-shrink:0;transition:background .5s var(--ease),border-color .5s var(--ease),color .5s var(--ease)}
+.comp-crmdot{width:6px;height:6px;border-radius:50%;background:rgb(var(--faint));transition:background .5s var(--ease),box-shadow .5s var(--ease)}
+.comp-crm.armed{background:rgb(var(--emerald)/.18);border-color:rgb(var(--emerald)/.55);color:rgb(var(--emerald-br));animation:compCrmPop .5s var(--ease)}
+.comp-crm.armed .comp-crmdot{background:rgb(var(--emerald-br));box-shadow:0 0 10px rgb(var(--emerald)/.9)}
+.comp-crm-warm{background:rgb(var(--emerald)/.18);border-color:rgb(var(--emerald)/.55);color:rgb(var(--emerald-br))}
+.comp-crm-warm .comp-crmdot{background:rgb(var(--emerald-br));box-shadow:0 0 10px rgb(var(--emerald)/.9)}
+@keyframes compCrmPop{0%{transform:scale(1)}45%{transform:scale(1.16)}100%{transform:scale(1)}}
+/* ── the right layer's payoff row ────────────────────────────────
+   The panel was showing the mechanism (a video, a watch bar, a status)
+   and stopping at "Warm". The section's whole claim is that this ends
+   in a meeting, so the cascade now finishes on the meeting. Ships
+   .armed so a no-JS / static render reads as the success state; the
+   script demotes it on load and replays it as the wipe crosses. */
+.comp-booked{display:flex;align-items:center;gap:9px;flex-shrink:0;margin-top:-3px;
+  font-size:11.5px;line-height:1.35;color:rgb(var(--emerald-br));
+  background:rgb(var(--emerald)/.13);border:1px solid rgb(var(--emerald)/.42);border-radius:11px;padding:9px 11px;
+  opacity:0;transform:translateY(9px) scale(.97);
+  transition:opacity .32s cubic-bezier(.23,1,.32,1),transform .32s cubic-bezier(.23,1,.32,1)}
+.comp-booked.armed{opacity:1;transform:none}
+.comp-booked b{color:rgb(var(--ink));font-weight:700}
+.comp-booked > span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.comp-bookedic{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:rgb(var(--emerald-br));color:#06251c;
+  display:flex;align-items:center;justify-content:center}
+.comp-booked.armed .comp-bookedic{animation:compCrmPop .5s var(--ease) .1s both}
+/* her name and her brand belong ON the render — without them the right
+   layer is "a video", not "her video", which is the entire difference
+   the wipe is there to show.
+
+   EVERYTHING that has to read at rest is anchored RIGHT. The new layer is
+   clipped from its own left edge by --split, so at the resting 50 only its
+   right half is on screen: left-anchored content (the shared .pv-co /
+   .pv-cap defaults, a full-width Slack row) renders into the hidden half
+   and the panel reads as empty boxes. Anchoring right also happens to be
+   how notification stacks really sit, so it still reads at split 0. */
+/* no overlaid brand or name caption here on purpose: the thumbnail below
+   IS the personalisation, and the render opens on Northbank's own branded
+   scene, so overlays printed the same two words three times over.
+   The personalised URL is the cheapest proof on the panel and it was
+   sitting in the clipped half, so it goes to the right edge of the chrome. */
+.comp-new .comp-bar span.comp-url{margin-left:auto;margin-right:2px}
+.comp-signals{justify-content:flex-end}
+.comp-new .comp-slack{flex:0 1 auto;max-width:62%}
+.comp-booked{margin-left:auto;max-width:62%}
+
+/* ── the thumbnail, the cursor, and the click ────────────────────
+   The panel used to open on a video already playing, which skips the
+   only part a cold reader recognises: someone gets a thumbnail with
+   their name on it, and decides to press it. So it now opens on the
+   designed thumbnail, a cursor arrives, presses play, and the render
+   takes over. The plate is a real frame of Priya's own render, not a
+   mock. Transform/opacity only. */
+/* opaque base: the pthumb plate's own background is a translucent gradient,
+   so without this the render underneath bled its burned-in name through the
+   thumbnail and you could read "...ya." behind the plate */
+.comp-thumb{position:absolute;inset:0;z-index:4;overflow:hidden;background:#0a1524;
+  transition:opacity .28s cubic-bezier(.23,1,.32,1),transform .28s cubic-bezier(.23,1,.32,1)}
+.comp-thumb.gone{opacity:0;transform:scale(1.03);pointer-events:none}
+/* the site's thumbnail standard, unmodified: brand top-left, the name big
+   and dead-centre, the play disc over the name, the presenter's PiP in the
+   corner. It survives the clip because the name is CENTRED — at the resting
+   split of 32 the frame's centre is comfortably on screen. */
+/* brand centred on THIS plate only: the standard puts it top-left, and
+   top-left is the corner --split clips away at rest, so it read as "...NK" */
+.comp-thumbplate .pt-co{left:0;right:0;top:11%;max-width:none;text-align:center}
+/* the name runs bigger here than the shared clamp so the disc sits over it
+   in the same proportion the rendered thumbnails use — a 74px disc on a
+   200px name covers most of it; on a 280px name it reads as a layer */
+.comp-thumbplate .pt-name{font-size:clamp(34px,25cqi,132px)}
+.comp-thumbsub{position:absolute;left:0;right:0;bottom:13%;z-index:2;text-align:center;
+  font-size:clamp(12px,3.2cqi,20px);font-weight:600;color:rgb(255 255 255/.82);text-shadow:0 2px 10px rgb(0 0 0/.5)}
+.comp-thumbplate .pt-pip{border-width:3px}
+/* the disc lives outside the plate rather than using the plate's own
+   .pt-play, because this one has to carry a press state and a ripple that
+   the shared component has no concept of */
+.comp-thumbplay{position:absolute;left:50%;top:50%;width:clamp(48px,13cqi,96px);height:clamp(48px,13cqi,96px);border-radius:50%;
+  transform:translate(-50%,-50%);z-index:5;
+  background:rgb(255 255 255/.97);
+  box-shadow:0 0 0 6px rgb(8 10 16/.55),0 0 0 8px rgb(255 255 255/.14),0 10px 34px rgb(0 0 0/.55);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .14s cubic-bezier(.23,1,.32,1)}
+.comp-thumbplay:after{content:'';border-left:clamp(15px,4.2cqi,30px) solid rgb(10 12 18);border-top:clamp(9px,2.6cqi,19px) solid transparent;border-bottom:clamp(9px,2.6cqi,19px) solid transparent;margin-left:11%}
+/* the ring only exists during the press, so nothing pulses forever */
+.comp-thumbplay:before{content:'';position:absolute;inset:-3px;border-radius:50%;border:2px solid rgb(255 255 255/.75);opacity:0}
+.comp-thumbplay.pressed{transform:translate(-50%,-50%) scale(.94)}
+.comp-thumbplay.pressed:before{animation:compRipple .5s cubic-bezier(.23,1,.32,1)}
+@keyframes compRipple{0%{transform:scale(1);opacity:.85}100%{transform:scale(1.75);opacity:0}}
+/* clear of the PiP, which owns the bottom-right corner of the plate */
+.comp-thumbdur{position:absolute;right:104px;bottom:24px;z-index:3;font-size:10.5px;font-weight:700;letter-spacing:.04em;color:#fff;
+  background:rgb(0 0 0/.55);border:1px solid rgb(255 255 255/.16);border-radius:6px;padding:3px 7px}
+.comp-cursor{position:absolute;left:50%;top:50%;z-index:6;pointer-events:none;opacity:0;
+  filter:drop-shadow(0 3px 7px rgb(0 0 0/.5));
+  transform:translate(calc(-50% + 128px),calc(-50% + 104px));
+  transition:opacity .18s linear,transform .62s cubic-bezier(.23,1,.32,1)}
+.comp-cursor.in{opacity:1}
+.comp-cursor.landed{transform:translate(-46%,-40%)}
+/* the watch bar is player chrome: it belongs to a video that is running */
+.comp-watchrow{opacity:0;transition:opacity .3s cubic-bezier(.23,1,.32,1)}
+.comp-realframe.played .comp-watchrow{opacity:1}
+@media (prefers-reduced-motion:reduce){
+  .comp-thumb{transition:opacity .2s linear;transform:none}
+  .comp-thumb.gone{transform:none}
+  .comp-cursor{display:none}
+  .comp-thumbplay.pressed:before{animation:none}
+}
+.comp-views b{font-variant-numeric:tabular-nums;font-weight:800;color:#fff}
+.comp-viewsup{display:inline-block;width:0;height:0;margin-right:5px;vertical-align:1px;opacity:0;
+  border-left:3.5px solid transparent;border-right:3.5px solid transparent;border-bottom:5px solid rgb(var(--emerald-br));
+  transition:opacity .4s var(--ease)}
+.comp-views.live .comp-viewsup{opacity:1}
+.comp-views.tick{animation:compTick .45s cubic-bezier(.23,1,.32,1)}
+@keyframes compTick{0%{transform:scale(1)}40%{transform:scale(1.09)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){
+  .comp-booked{transition:opacity .3s linear;transform:none}
+  .comp-booked.armed .comp-bookedic,.comp-views.tick{animation:none}
+}
+/* the stacked <760px fallback has no wipe, so nothing is clipped and the
+   right-anchoring the interactive frame needs is wrong here: the booked
+   row goes back to full width, and the overlaid caption goes entirely
+   (at this size it lands on the render's own headline, and the bold
+   personalised URL in the chrome already carries the name). */
+.comp-stackcard .comp-booked{margin-left:0;max-width:none}
+/* the stacked card has no thumbnail and no click sequence, so its player
+   chrome is never gated behind .played — show it straight away */
+.comp-stackcard .comp-watchrow{opacity:1}
+/* the grip is anchored near the TOP (in the chrome-bar band) rather than
+   vertically centered across the whole frame — at rest (--split:50) that
+   centre point is exactly where the old-side dead-frame's own centred play
+   icon sits, so a full-height-centred grip painted straight over it,
+   hiding it completely at every split value near the middle. Pinning the
+   grip to the chrome band keeps it clear of all body content (video /
+   dead-frame) at every split position; the thin connector line still runs
+   the full height as the visual seam. */
+.comp-handle{position:absolute;top:0;bottom:0;left:calc(var(--split,50) * 1%);width:0;z-index:5}
+.comp-handle:before{content:'';position:absolute;top:0;bottom:0;left:-1px;width:2px;background:rgb(255 255 255/.75);box-shadow:0 0 16px rgb(0 0 0/.4)}
+.comp-grip{position:absolute;top:22px;left:0;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;
+  background:rgb(255 255 255/.98);color:rgb(20,22,30);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 8px 26px rgb(0 0 0/.4),0 0 0 6px rgb(255 255 255/.12);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.comp-handle:hover .comp-grip{transform:translate(-50%,-50%) scale(1.08)}
+.comp-handle:focus-visible{outline:none}
+.comp-handle:focus-visible .comp-grip{box-shadow:0 8px 26px rgb(0 0 0/.4),0 0 0 4px rgb(var(--violet-br)/.9)}
+.comparator.dragging .comp-grip{transform:translate(-50%,-50%) scale(1.12)}
+.comp-caption{text-align:center;font-size:13px;color:rgb(var(--muted));margin-top:22px}
+.comp-caption span{color:rgb(var(--faint))}
+.comp-stack{display:none;max-width:480px;margin:0 auto;flex-direction:column;gap:18px}
+.comp-stackcard{position:relative;border-radius:var(--r3);overflow:hidden;border:1px solid rgb(var(--line-br)/.55);
+  display:flex;flex-direction:column;box-shadow:0 24px 60px rgb(0 0 0/.4)}
+.comp-stackcard-old{background:linear-gradient(165deg,rgb(40 43 50/.92),rgb(20 22 27/.97));filter:grayscale(.55) saturate(.65)}
+.comp-stackcard-new{background:linear-gradient(168deg,rgb(var(--s2)),rgb(var(--s1)))}
+.comp-stackcard .comp-body{padding:18px}
+/* the stacked cards have no fixed aspect-ratio (they grow to fit content,
+   unlike the interactive frame where both layers must share one exact box)
+   so their media element goes back to a natural aspect-ratio here rather
+   than the flex:1 used inside the fixed-height interactive frame. */
+.comp-stackcard .comp-realframe,.comp-stackcard .comp-deadframe{flex:none;aspect-ratio:16/9}
+.comp-stackcard .comp-slack{opacity:1;transform:none;flex:none}
+.comp-stacktag{padding:14px 18px 18px;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  color:rgb(var(--muted));border-top:1px solid rgb(var(--line)/.5)}
+.comp-stacktag-new{color:rgb(var(--emerald-br))}
+@media (max-width:900px){
+  .comp-body{padding:16px 18px;gap:10px}
+  .comp-line{font-size:13.5px}
+}
+@media (max-width:760px){
+  .comp-shell{display:none}
+  .comp-stack{display:flex}
+}
+
+/* ── ENGINE ASSEMBLY — pinned scroll-choreographed build ── */
+#engine{padding-top:64px;padding-bottom:70px}
+.eng-pin-wrap{position:relative}
+.eng-pin-inner{padding:30px 0 6px;display:flex;flex-direction:column;align-items:center}
+.eng-stagelabel-row{display:flex;flex-direction:column;align-items:center;gap:11px;margin-bottom:32px}
+.eng-stagelabel{font-family:'Cabinet';font-weight:700;font-size:15px;color:rgb(var(--ink));text-align:center}
+.eng-stagedots{display:flex;gap:8px}
+.eng-stagedots i{width:7px;height:7px;border-radius:50%;background:rgb(var(--line-br));display:block;
+  transition:background .4s var(--ease),box-shadow .4s var(--ease),transform .4s var(--ease)}
+.eng-stagedots i.on{background:rgb(var(--violet-br));box-shadow:0 0 10px rgb(var(--violet)/.8);transform:scale(1.3)}
+.eng-assembly{position:relative;width:min(600px,74vw);display:flex;flex-direction:column;align-items:center}
+.eng-frame{position:relative;width:100%;border-radius:var(--r3);overflow:hidden;
+  background:linear-gradient(168deg,rgb(var(--s2)),rgb(var(--s1)));border:1px solid rgb(var(--line-br)/.6);
+  box-shadow:0 40px 100px rgb(0 0 0/.55),0 0 120px rgb(var(--violet)/.16)}
+.eng-chrome{display:flex;align-items:center;gap:7px;padding:14px 20px;border-bottom:1px solid rgb(var(--line)/.7)}
+.eng-dot{width:8px;height:8px;border-radius:50%;background:rgb(var(--line-br))}
+.eng-url{margin-left:9px;font-size:12.5px;color:rgb(var(--emerald-br));font-weight:600;font-family:'Inter'}
+.eng-vid{position:relative;aspect-ratio:16/9;overflow:hidden}
+.eng-vid img{width:100%;height:100%;object-fit:cover;display:block}
+.eng-play{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;
+  background:rgb(255 255 255/.96);display:flex;align-items:center;justify-content:center;box-shadow:0 0 34px rgb(255 255 255/.3)}
+.eng-play:after{content:'';border-left:15px solid rgb(var(--bg));border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.eng-instruments{padding:18px 22px 22px}
+.eng-watchbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.eng-watchbar span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgb(var(--muted));flex-shrink:0}
+.eng-watchtrack{flex:1;height:5px;border-radius:99px;background:rgb(var(--s3));overflow:hidden}
+.eng-watchtrack i{display:block;height:100%;width:87%;border-radius:99px;background:linear-gradient(90deg,rgb(var(--teal-br)),rgb(var(--emerald-br)))}
+.eng-watchbar b{font-family:'Cabinet';font-size:13px;color:rgb(var(--emerald-br));flex-shrink:0;font-variant-numeric:tabular-nums}
+.eng-views{font-size:12px;color:rgb(var(--muted))}
+.eng-sat{position:absolute;display:flex;align-items:center;gap:10px;padding:11px 15px;border-radius:14px;
+  background:rgb(var(--s2)/.97);border:1px solid rgb(var(--line-br)/.6);box-shadow:0 20px 50px rgb(0 0 0/.5);
+  font-size:12px;max-width:214px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.eng-sat b{display:block;color:rgb(var(--ink));font-size:12px}
+.eng-sat span{display:block;color:rgb(var(--muted));font-size:11px;margin-top:2px;line-height:1.35}
+.eng-sat-slack{left:-36px;top:12%}
+.eng-sat-slack .eng-sat-ic{flex-shrink:0;width:24px;height:24px;border-radius:8px;background:rgb(var(--violet)/.22);color:rgb(var(--violet-br));
+  display:flex;align-items:center;justify-content:center;font-family:'Cabinet';font-weight:800;font-size:13px}
+.eng-sat-crm{right:-32px;top:40%}
+/* muted by default (matches .comp-crmdot's own Cold-state resting colour in
+   the comparator section above) — only .armed (toggled in JS exactly when
+   engCrmState's text flips to "Warm") lights it emerald. Previously this was
+   a bare, unconditional emerald fill, so the dot read "Warm" the instant it
+   faded in even while the label beside it still said "Cold" mid-scrub. */
+.eng-sat-crm .eng-sat-dot{flex-shrink:0;width:10px;height:10px;border-radius:50%;background:rgb(var(--faint));transition:background .4s var(--ease),box-shadow .4s var(--ease)}
+.eng-sat-crm.armed .eng-sat-dot{background:rgb(var(--emerald-br));box-shadow:0 0 12px rgb(var(--emerald)/.9)}
+/* -6% alone measured 45px short at 1440w — the badge's resting box genuinely
+   overlapped #engViews's rendered rect (confirmed via getBoundingClientRect,
+   not just during the entrance fade), since both sit in the same bottom-left
+   corner. The extra fixed px keeps a real clearance gap at every width the
+   pin runs at (assembly width, and therefore frame height, is constant
+   above the 980px pin breakpoint), on top of the original %-of-height offset. */
+.eng-sat-retarget{left:-14px;bottom:calc(-6% - 56px)}
+.eng-sat-retarget b{font-family:'Cabinet';font-size:19px;color:rgb(var(--emerald-br))}
+@media (max-width:1180px){
+  .eng-sat-slack{left:-6px}
+  .eng-sat-crm{right:-6px}
+  .eng-sat-retarget{left:18px}
+}
+.eng-log{display:none;flex-direction:column;gap:14px;max-width:500px;margin:0 auto}
+.eng-log-row{display:flex;gap:15px;align-items:flex-start;padding:16px 18px;border-radius:16px;
+  background:rgb(var(--s1)/.75);border:1px solid rgb(var(--line)/.7)}
+.eng-log-ic{flex-shrink:0;width:29px;height:29px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Cabinet';font-weight:800;font-size:12.5px;background:rgb(var(--violet)/.16);color:rgb(var(--violet-br));border:1px solid rgb(var(--violet)/.4)}
+.eng-log-row b{display:block;font-family:'Cabinet';font-weight:700;font-size:14.5px;margin-bottom:3px}
+.eng-log-row span{display:block;font-size:13px;color:rgb(var(--muted));line-height:1.55}
+.eng-log-final{margin-top:4px}
+.eng-log-final .eng-frame{box-shadow:0 30px 70px rgb(0 0 0/.5),0 0 80px rgb(var(--violet)/.14)}
+@media (max-width:979px){
+  .eng-pin-wrap{display:none}
+  /* .eng-log no longer shows anywhere — phones get the real stage panels
+     (shared.css .eng-stripwrap block); the log markup stays as copy record */
+}
+
+/* ── chooser hover polish only (structure/copy otherwise untouched) ── */
+.ocard:hover,.ocard:focus-visible{box-shadow:0 30px 72px rgb(0 0 0/.55),0 0 76px rgb(var(--accent)/.3)}
+
+/* ── "Example, not a customer", for the engine strip ─────────────────
+   Same words, weight, tracking and colour as the chooser panel's
+   .ocx-tag and the outcome cards' .ovis:before. Deliberately not a
+   softer variant: three markers saying three different things reads as
+   three different degrees of hedging, and a reader who has already met
+   one on this page should recognise the second without re-reading it.
+
+   Lives here rather than in shared.css because shared.css is being
+   edited by another session for the outcome pages; nothing below is
+   needed anywhere but index. */
+/* FIRST NAMES ONLY on any row carrying a face. These three read "Priya
+   Raman" / "James Fenwick" / "Daniel Okoro" until 24 Aug. PLACEMENT-ss53.md:
+   "No face is ever paired with a full surname anywhere on the page — a blind
+   sceptic flagged that pairing as the line that flips an illustrative record
+   into an apparently real one." The block was already marked, which makes it
+   the marked-but-maximally-realistic case: the one that survives a fast read
+   as a genuine customer list. Every other faced artefact on this site is
+   first-name-only; these were the exception.
+
+   the watcher rows take generated faces (media/faces/, see its README):
+   nobody real is depicted, so there is no model release to need. The initial
+   stays underneath as the fallback, same pattern as .loop-avatar. The cold
+   row's face is desaturated rather than hidden — "opened, did not watch" is
+   a state of a person, not an absence of one. */
+.escr-avatar{position:relative;overflow:hidden}
+.escr-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.escr-viewer-cold .escr-avatar img{filter:grayscale(1);opacity:.55}
+/* Four blind cold readers independently called these markers unreadable —
+   "the heaviest credibility work on the page in the lightest typeface", and
+   "if I cannot read it, it does not exist". They were set at the smallest
+   size and lowest contrast in the palette, which is what alibi text looks
+   like. Now a readable sentence at body-note size, matching the outcome
+   pages exactly rather than being a quieter variant of them. */
+.eng-mark{
+  display:block;text-align:center;margin:-14px auto 22px;max-width:62ch;
+  font-size:12.5px;font-weight:400;line-height:1.55;letter-spacing:0;
+  color:rgb(var(--muted));
+}
+/* the mobile log's marker sits under the instrument frame it marks, not
+   under the tab row, so it stays beside the numbers rather than floating
+   above three rows of prose */
+.eng-mark-log{margin:12px auto 0}
+</style>
+
+<script src="shared.js?v=1792700033" defer></script>
+<script src="index.js?v=1792700033" defer></script>
+</body>
+</html>
